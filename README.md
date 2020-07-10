@@ -1,9 +1,4 @@
 # Normal Hermite Splines
-[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://IgorKohan.github.io/NormalSplines.jl/stable)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3735116.svg)](https://doi.org/10.5281/zenodo.3735116)
-<!-- [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://IgorKohan.github.io/NormalSplines.jl/dev) -->
-[![Build Status](https://travis-ci.com/IgorKohan/NormalSplines.jl.svg?branch=master)](https://travis-ci.com/github/IgorKohan/NormalSplines.jl)
-[![codecov.io](https://codecov.io/github/IgorKohan/NormalSplines.jl/coverage.svg?branch=master)](https://codecov.io/github/IgorKohan/NormalSplines.jl?branch=master) 
 
 ![Problem definition](/images/problem-definition.gif)
 
