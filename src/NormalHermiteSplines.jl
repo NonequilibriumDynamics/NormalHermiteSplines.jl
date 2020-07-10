@@ -148,15 +148,13 @@ Evaluate normal spline at the locations defined in `points`.
                        This should be an `n×m` matrix, where `n` is dimension of the sampled space
                        and `m` is the number of locations where spline values are evaluating.
                        It means that each column in the matrix defines one location.
-- `do_parallel::Bool`: calculate spline values in parallel.
 
 Return: `Vector{T}` of spline values at the locations defined in `points`.
 """
 function evaluate(spline::NormalSpline{T, RK},
-                  points::Matrix{T},
-                  do_parallel::Bool = false
+                  points::Matrix{T}
                  ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    return _evaluate(spline, points, do_parallel)
+    return _evaluate(spline, points)
 end
 
 """

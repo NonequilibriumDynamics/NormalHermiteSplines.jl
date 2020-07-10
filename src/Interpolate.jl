@@ -236,7 +236,7 @@ end
 
 function _evaluate(spline::NormalSpline{T, RK},
                    points::Matrix{T},
-                   do_parallel::Bool
+                   do_parallel::Bool = false
                   ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     if isnothing(spline._mu)
         error("Spline coefficients were not calculated.")
@@ -248,8 +248,8 @@ function _evaluate(spline::NormalSpline{T, RK},
     n = size(spline._nodes, 1)
     n_1 = size(spline._nodes, 2)
     m = size(points, 2)
-    pts = similar(points)
 
+    pts = similar(points)
     @inbounds for i = 1:n
         for j = 1:m
             pts[i,j] = (points[i,j] - spline._min_bound[i]) / spline._compression
