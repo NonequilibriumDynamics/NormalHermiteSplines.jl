@@ -7,25 +7,27 @@ Order   = [:function, :type]
 ## Functions
 ```@docs
 interpolate
+prepare
+construct
 evaluate
+evaluate_grad
 get_cond
 get_epsilon
+estimate_epsilon
 ```
 
 ## Types
 
-### Sobolev space Reproducing Kernels
-
-```@docs
-RK_W1
-RK_W2
-RK_W3
-```
-
 ### Bessel Potential space Reproducing Kernels
 
 ```@docs
+RK_H0
 RK_H1
 RK_H2
-RK_H3
+```
+
+### NormalSpline structure
+
+```@docs
+NormalSpline
 ```
