@@ -292,7 +292,7 @@ The normal splines method for one-dimensional function interpolation and linear 
 
 [2] D. Adams, L. Hedberg, Function spaces and potential theory. Berlin, Springer, 1996.
 
-[3] M.S. Agranovich, Sobolev Spaces, Their Generalizations and Elliptic Problems in Smooth and Lipschitz Domains, Springer, Switzerland, 2015.
+[3] M. Agranovich, Sobolev Spaces, Their Generalizations and Elliptic Problems in Smooth and Lipschitz Domains, Springer, Switzerland, 2015.
 
 [4] N. Aronszajn, Theory of reproducing kernels, Tranzactions of the AMS, Vol. 68, No. 3, 1950.
 

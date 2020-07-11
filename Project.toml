@@ -1,8 +1,8 @@
 name = "NormalHermiteSplines"
 uuid = "67f7b941-d455-546b-99f0-07b665bf0aaf"
-keywords = ["interpolation", "splines", "normal-splines", "rkhs"]
+keywords = ["interpolation", "splines", "hermite-splines", "normal-splines", "rkhs"]
 authors = ["Igor Kohanovsky <nettvor@gmail.com>"]
-version = "0.9.0"
+version = "0.1.0"
 
 [deps]
 DoubleFloats = "497a8b3b-efae-58df-a0af-a86822472b78"

@@ -1,7 +1,7 @@
 ﻿
 # Reproducing Kernel of Bessel Potential space
 
-The standard definition of Bessel potential space ``H^s`` can be found in ([1], [2], [6], [11]). Here the normal splines will be constructed in the Bessel potential space ``H^s_\varepsilon`` defined as:
+The standard definition of Bessel potential space ``H^s`` can be found in ([1], [2], [6], [11], [12]). Here the normal splines will be constructed in the Bessel potential space ``H^s_\varepsilon`` defined as:
 
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
@@ -116,25 +116,27 @@ In particular we have:
 
 **References**
 
-[1] D.R. Adams, L.I. Hedberg, Function spaces and potential theory. Berlin, Springer, 1996.
+[1] D. Adams, L. Hedberg, Function spaces and potential theory. Berlin, Springer, 1996.
 
-[2] M.S. Agranovich, Sobolev Spaces, Their Generalizations and Elliptic Problems in Smooth and Lipschitz Domains, Springer, Switzerland, 2015.
+[2] M. Agranovich, Sobolev Spaces, Their Generalizations and Elliptic Problems in Smooth and Lipschitz Domains, Springer, Switzerland, 2015.
 
-[3] N. Aronszajn, K.T. Smith, Theory of bessel potentials I, Ann.Inst.Fourier, 11, 1961.
+[3] N. Aronszajn, K. Smith, Theory of bessel potentials I, Ann.Inst.Fourier, 11, 1961.
 
 [4] G. Fasshauer, Green’s Functions: Taking Another Look at Kernel Approximation, Radial Basis Functions, and Splines. In: Neamtu M., Schumaker L. (eds) Approximation Theory XIII: San Antonio 2010. Springer Proceedings in Mathematics, vol 13. Springer, New York, 2012.
 
 [5] I. Kohanovsky, Multidimensional Normal Splines and Problem of Physical Field Approximation, International Conference on Fourier Analysis and its Applications, Kuwait, 1998.
 
-[6] S. M. Nikol'skiĭ, Approximation of functions of several variables and imbedding theorems, Grundl. Math. Wissensch., 205, Springer-Verlag, New York, 1975.
+[6] S. Nikol'skiĭ, Approximation of functions of several variables and imbedding theorems, Grundl. Math. Wissensch., 205, Springer-Verlag, New York, 1975.
 
-[7] M. Reed and B. Simon, Methods of Modern Mathematical Physics, I: Functional Analysis, Academic Press, 1972.
+[7] M. Reed, B. Simon, Methods of Modern Mathematical Physics, I: Functional Analysis, Academic Press, 1972.
 
 [8] R. Schaback, Kernel-based Meshless Methods, Lecture Notes, Goettingen, 2011.
 
-[9] H. Triebel, Interpolation. Function Spaces. Differential Operators. North-Holland, Amsterdam, 1978.
+[9] H. Triebel, Interpolation. Function Spaces. Differential Operators, North-Holland, Amsterdam, 1978.
 
-[10] G.N. Watson, A Treatise on the Theory of Bessel Functions ( 2nd.ed.), Cambridge University Press, 1966.
+[10] G. Watson, A Treatise on the Theory of Bessel Functions ( 2nd.ed.), Cambridge University Press, 1966.
 
 [11] H. Wendland, Scattered Data Approximation. Cambridge University Press, 2005.
+
+[12] J. Lions, E. Magenes, Problemes Aux Limites Non-Homogenes et Applications Vol. 1, Dunod, Paris, 1968.
 
