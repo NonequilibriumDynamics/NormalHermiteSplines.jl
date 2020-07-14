@@ -353,7 +353,7 @@ function _evaluate_grad(spline::NormalSpline{T, RK},
         error("Spline coefficients were not calculated.")
     end
     if !isnothing(spline._d_nodes)
-        error("Not implemented.")
+        error("Not yet implemented.")
     end
 
     n = size(spline._nodes, 1)

@@ -17,8 +17,8 @@ function test_2D(model_id::Int,
                  type_of_kernel::Int = 0,
                  eps::Float64 = 0.0,
                  regular_grid_size::Int = 40,
-                 use_grad::Bool = true,
-                 do_parallel::Bool = false
+                 use_grad::Bool = true
+#                 ,do_parallel::Bool = false
                 )
     if use_grad && type_of_kernel == 0
         error("Cannot use derivative data when type_of_kernel is `0` (`RK_H0` kernel)")
@@ -333,7 +333,7 @@ function test_2D(model_id::Int,
              epsilon = estimate_epsilon(nodes, d_nodes)
              @printf "Estimated EPSILON:%0.1e\n" epsilon
         end
-        spline = interpolate(nodes, u, d_nodes, du, es, rk)
+        spline = interpolate(nodes, u, d_nodes, es, du, rk)
     else
         if rk.ε == 0
              epsilon = estimate_epsilon(nodes)
@@ -350,7 +350,8 @@ function test_2D(model_id::Int,
 
     @printf "Evaluating spline..\n"
     ts = time_ns()
-    σ = evaluate(spline, grid, do_parallel)
+    σ = evaluate(spline, grid)
+#    σ = evaluate(spline, grid, do_parallel)
     te = time_ns()
     e_time = (te - ts) / 10^9
     @printf "Spline evaluated. time: %0.1e sec\n" e_time
