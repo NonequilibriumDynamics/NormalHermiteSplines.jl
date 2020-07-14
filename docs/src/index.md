@@ -9,6 +9,7 @@ Pages = [
       "Usage.md",
       "Public-API.md",
       "Interpolating-Normal-Hermite-Splines.md",
+      "Relation-to-Polyharmonic-Splines.md"
       "Reproducing-Kernel-of-Bessel-Potential-space.md"
 ]
 Depth = 3
