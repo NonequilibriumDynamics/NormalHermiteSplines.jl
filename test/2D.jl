@@ -2,6 +2,7 @@
 
     p = [0. 0. 1. 1. 0.5;  0. 1. 0. 1. 0.5] # nodes
     u = [0.0; 0.0; 0.0; 0.0; 1.0]   # function values in nodes
+    u2 = [0.0; 0.0; 0.0; 0.0; 2.0]  # function values in nodes (2)
     t = [0.5 0.5 0.499999; 0.5 0.499999 0.5]  # evaluation points
 
     dp = [0.5 0.5]
@@ -12,10 +13,29 @@
         rk = RK_H0(0.001)
         s = interpolate(p, u, rk)
         σ = evaluate(s, t)
-        @test σ[1] ≈ 1.0
+        @test σ[1] ≈ u[5]
         @test all(isapprox.(σ[2], u[5], atol = 1e-5))
         @test all(isapprox.(σ[3], u[5], atol = 1e-5))
         @test all(isapprox.(σ[2], σ[3], atol = 1e-5))
+        println(σ)
+
+        rk = RK_H0()
+        s = prepare(p, rk)
+        s = construct(s, u)
+        σ1 = evaluate(s, t)
+        @test σ[1] ≈ u[5]
+        @test all(isapprox.(σ[2], u[5], atol = 1e-5))
+        @test all(isapprox.(σ[3], u[5], atol = 1e-5))
+        @test all(isapprox.(σ[2], σ[3], atol = 1e-5))
+        println(σ)
+
+        s = construct(s, u2)
+        σ2 = evaluate(s, t)
+        @test σ2[1] ≈ u2[5]
+        @test all(isapprox.(σ2[2], u2[5], atol = 1e-5))
+        @test all(isapprox.(σ2[3], u2[5], atol = 1e-5))
+        @test all(isapprox.(σ2[2], σ2[3], atol = 1e-5))
+        println(σ2)
 
     #     spl = prepare(p, RK_H0(0.001))                   # prepare spline
     #     c = get_cond(spl)                                # get estimation of the problem's Gram matrix condition number
