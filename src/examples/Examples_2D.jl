@@ -537,7 +537,7 @@ function test_2D(model_id::Int,
     gd = reshape(delta, length(y), length(x))
     PyPlot.clf()
     pygui(false)
-    o = contourf(x, y, gd, cmap=ColorMap("ocean"))
+    o = contourf(x, y, gd, cmap=ColorMap("jet"))
     axis("equal")
     # if n_of_samples <= 2
     #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
@@ -579,7 +579,7 @@ function test_2D(model_id::Int,
     #     PyPlot.view_init(20,30)
     # end
     #o = surf(gx, gy, σ, cmap=ColorMap("viridis"), alpha=0.75)
-    o = surf(gx, gy, delta, cmap=ColorMap("ocean"), linewidth=0, antialiased=false, alpha=1.0)
+    o = surf(gx, gy, delta, cmap=ColorMap("jet"), linewidth=0, antialiased=false, alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o)

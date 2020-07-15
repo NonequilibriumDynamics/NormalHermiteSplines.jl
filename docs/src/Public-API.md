@@ -1,9 +1,5 @@
 # Public API
 
-```@index
-Order   = [:function, :type]
-```
-
 ## Functions
 ```@docs
 interpolate
@@ -30,4 +26,9 @@ RK_H2
 
 ```@docs
 NormalSpline
+```
+
+## Index
+```@index
+Order = [:function, :type]
 ```

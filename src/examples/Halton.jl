@@ -5,7 +5,7 @@
 # 4. R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS) 25 (1),1999
 # 5. S. De Marchi, W. Erb, F. Marchetti, E. Perracchione, M. Rossini, Shape-Driven Interpolation with Discontinuous Kernels: Error Analysis, Edge Extraction and Applications in MPI, arXiv: Numerical Analysis, 2019.
 # 6. S. De Marchi, A. Martinez, E. Perracchione, Fast and stable rational RBF-based partition of unity interpolation. Journal of Computational and Applied Mathematics, 2018.
-# 7. W. Erb, C. Kaethner, M. Ahlborg, T.M. Buzug, Bivariate Lagrange interpolation at the node points of non-degenerate Lissajous nodes, Numer. Math. 133, 1, 2016.
+# 7. [W. Erb, C. Kaethner, M. Ahlborg, T.M. Buzug, Bivariate Lagrange interpolation at the node points of non-degenerate Lissajous nodes, Numer. Math. 133, 1, 2016.](https://www.researchgate.net/publication/268988454_Bivariate_Lagrange_interpolation_at_the_node_points_of_non-degenerate_Lissajous_curves)
 
 ###
 

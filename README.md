@@ -17,7 +17,7 @@ The first example is the function ```φ(x,y) = sin(4.0 * sqrt(x^2 + y^2))```
 
  <img src="/images/m_t_6.png" width="256"/>  <img src="/images/m_cf_6.png" width="256"/>  <img src="/images/m_grid_6,2,3.png" width="256"/> 
 
-We'll construct an interpolating normal spline using this function and its gradient values sampled on the 1000 Halton nodes ([1]) distributed in the [-1,1]x[-1,1] square.
+We'll construct an interpolating normal spline using this function and its gradient values sampled on 1000 Halton nodes ([1]) distributed in the [-1,1]x[-1,1] square.
 ```
 using NormalHermiteSplines
 
@@ -58,7 +58,7 @@ end
 # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
 rk = RK_H1()               
 #
-spline = interpolate(nodes, u, d_nodes, du, es, rk)
+spline = interpolate(nodes, u, d_nodes, es, du, rk)
 σ = evaluate(spline, grid)
 ```
 The spline surface and filled 2-D contour plots:
@@ -74,13 +74,13 @@ Spline was evaluated on a uniform Cartesian grid of size 101x101. Accuracy of th
 
 The second example is the geometric composition ```Ψ``` of a circle and a square. The function ```ψ``` on ```Ω=[0,1]x[0,1]``` is given as ```Ψ = C + S```, where ```C``` and ```S``` denote the characteristic functions of these circle and square.
 
-<img src="/images/m_t_1.png" width="256"/>  <img src="/images/m_cf_1.png" width="256"/>  <img src="/images/m_grid_1,3,5.png" width="256"/> 
+<img src="/images/m_t_1.png" width="256"/>  <img src="/images/m_cf_1.png" width="256"/>  <img src="/images/m_grid_1,2,5.png" width="256"/> 
 
-We'll construct an interpolating normal spline using function ```Ψ``` values sampled on the 4999​ Lissajous nodes ([2]) distributed in the [0,1]x[0,1] square.
+We'll construct an interpolating normal spline using function ```Ψ``` values sampled on the 5000 Halton nodes distributed in the [0,1]x[0,1] square.
 ```
 using NormalHermiteSplines
 
-nodes = get_2D_Lissajous_nodes(49)            # generates 4999 LS_2^{(49,50)} Lissajous nodes
+nodes = get_2D_halton_nodes(5000)             # generates Halton data set in [0,1]x[0,1] 
 n_1 = size(nodes, 2)
 u = Vector{Float64}(undef, n_1)               # function values
 grid = get_2D_grid(100)                       # uniform Cartesian grid of size 101x101
@@ -101,20 +101,20 @@ end
 
 # Here spline is being constructed with ```RK_H0``` kernel,
 # value of the 'scaling parameter' ```ε``` is defined explicitly.
-rk = RK_H0(1.0)
+rk = RK_H0(0.001)
 #
 spline = interpolate(nodes, u, rk)
 σ = evaluate(spline, grid)
 ```
 The spline surface and filled 2-D contour plots:
 
- <img src="/images/s_t_1,3,5,0,_1.0,_.png" width="256"/>  <img src="/images/s_cf_1,3,5,0,_1.0,_.png" width="256"/> 
+ <img src="/images/s_t_1,2,5,0,_1.0,_.png" width="256"/>  <img src="/images/s_cf_1,2,5,0,_1.0,_.png" width="256"/> 
 
 Approximation error plots:
 
- <img src="/images/delta_s_1,3,5,0,_1.0,_.png" width="256"/>  <img src="/images/delta_cf_1,3,5,0,_1.0,_.png" width="256"/> 
+ <img src="/images/delta_s_1,2,5,0,_1.0,_.png" width="256"/>  <img src="/images/delta_cf_1,2,5,0,_1.0,_.png" width="256"/> 
 
-Spline was evaluated on a uniform Cartesian grid of size 101x101. For this case ```RMSE```: 7.7E-02, ```MAE```: 1.0, value of the scaling parameter ```ε``` is 1.0, estimation of the Gram matrix condition number is 1.0e+10.
+Spline was evaluated on a uniform Cartesian grid of size 101x101. For this case ```RMSE```: 7.3E-02, ```MAE```: 0.95, value of the scaling parameter ```ε``` is 0.001, estimation of the Gram matrix condition number is 1.0e+13.
 
 Further examples are given in documentation.
 
@@ -124,7 +124,6 @@ For more information and explanation see [Documentation](https://igorkohan.githu
 
 ## References:
 1. [Halton sequence](https://en.wikipedia.org/wiki/Halton_sequence)
-2. [W. Erb, C. Kaethner, M. Ahlborg, T.M. Buzug, Bivariate Lagrange interpolation at the node points of non-degenerate Lissajous nodes, Numer. Math. 133, 1, 2016.](https://www.researchgate.net/publication/268988454_Bivariate_Lagrange_interpolation_at_the_node_points_of_non-degenerate_Lissajous_curves)
 
 
 
