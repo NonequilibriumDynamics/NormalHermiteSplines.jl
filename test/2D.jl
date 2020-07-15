@@ -1,11 +1,14 @@
-@testset "Test 2D-1" begin
+@testset "Test 2D" begin
 
-    p = [-1.0 2.0; -1.0 4.0; 3.0 2.0; 3.0 4.0; 1.0 3.0]' # function knots
-    u = [0.0; 0.0; 0.0; 0.0; 1.0]                        # function values in knots
+    p = [0. 0. 1. 1. 0.5;  0. 1. 0. 1. 0.5] #  nodes
+    u = [0.0; 0.0; 0.0; 0.0; 1.0]   # function values in nodes
+    t = [0.5 0.5 0.499999; 0.5 0.499999 0.500001]  # evaluation points
 
-    t = [-1.0 3.0; 0.0 3.0; 1.0 3.0; 2.0 3.0; 3.0 3.0]'  # evaluation points
+    dp = [0.5 0.5]
+    es = [1.0; 0.0; 0.0; 1.0]
+    du = [0.]
 
-    @testset "Test 2D-1-RK_H0 kernel" begin
+    @testset "Test 2D-RK_H0 kernel" begin
         spl = prepare(p, RK_H0(0.001))                   # prepare spline
         c = get_cond(spl)                                # get estimation of the problem's Gram matrix condition number
         @test c ≈ 100000.0
