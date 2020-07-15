@@ -9,7 +9,7 @@ Pages = [
       "Usage.md",
       "Public-API.md",
       "Interpolating-Normal-Hermite-Splines.md",
-      "Relation-to-Polyharmonic-Splines.md"
+      "Relation-to-Polyharmonic-Splines.md",
       "Reproducing-Kernel-of-Bessel-Potential-space.md"
 ]
 Depth = 3
@@ -17,8 +17,7 @@ Depth = 3
 
 `NormalHermiteSplines.jl` implements the normal splines method for solving following interpolation problem:
 
-
-*Problem:* Given points ``\{p_i, p_i \in R^n\}_{i=1}^{n_1}``, ``\{s_j, s_j \in R^n\}_{j=1}^{n_2}`` and a set of unit vectors ``\{e_j, e_j \in R^n\}_{j=1}^{n_2}`` find a function ``f`` such that
+*Problem:*   Given points ``\{p_i, p_i \in R^n\}_{i=1}^{n_1}``, ``\{s_j, s_j \in R^n\}_{j=1}^{n_2}`` and a set of unit vectors ``\{e_j, e_j \in R^n\}_{j=1}^{n_2}`` find a function ``f`` such that
 
 ```math
 \tag{1}
@@ -29,7 +28,7 @@ Depth = 3
 \\
 & n_1 \gt 0 \, ,  \ \  n_2 \ge 0 \, .
 \end{aligned}
-``` 
+```
 where ``\frac{ \partial{f} }{ \partial{e_j} }(s_j) = \nabla f(s_j) \cdot e_j = \sum _{k=1}^{n}  \frac{ \partial{f} }{ \partial{x_k} } (s_j) e_{jk}`` is a directional derivative of ``f`` at the point ``s_j`` in the direction of ``e_j``.
 
 We assume that function ``f`` is an element of the Bessel potential space ``H^s_\varepsilon (R^n)`` which is defined as:
@@ -52,7 +51,7 @@ Normal splines method is based on the following functional analysis results:
 
 * Bessel potential space embedding theorem
 * The Riesz representation theorem for Hilbert spaces
-* Reproducing kernel properties 
+* Reproducing kernel properties
 
 Using these results it is possible to reduce the task (2) to solving a system of linear equations with symmetric positive definite Gram matrix.
 
