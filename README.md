@@ -108,11 +108,11 @@ spline = interpolate(nodes, u, rk)
 ```
 The spline surface and filled 2-D contour plots:
 
- <img src="/images/s_t_1,2,5,0,_1.0,_.png" width="256"/>  <img src="/images/s_cf_1,2,5,0,_1.0,_.png" width="256"/> 
+ <img src="/images/s_t_1,2,5,0,_0.001,_.png" width="256"/>  <img src="/images/s_cf_1,2,5,0,_0.001,_.png" width="256"/> 
 
 Approximation error plots:
 
- <img src="/images/delta_s_1,2,5,0,_1.0,_.png" width="256"/>  <img src="/images/delta_cf_1,2,5,0,_1.0,_.png" width="256"/> 
+ <img src="/images/delta_s_1,2,5,0,_0.001,_.png" width="256"/>  <img src="/images/delta_cf_1,2,5,0,_0.001,_.png" width="256"/> 
 
 Spline was evaluated on a uniform Cartesian grid of size 101x101. For this case ```RMSE```: 7.3E-02, ```MAE```: 0.95, value of the scaling parameter ```ε``` is 0.001, estimation of the Gram matrix condition number is 1.0e+13.
 
