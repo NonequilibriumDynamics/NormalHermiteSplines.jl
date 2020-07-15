@@ -138,7 +138,7 @@ function interpolate(nodes::Matrix{T},
 end
 
 """
-`evaluate(spline::NormalSpline{T, RK}, points::Matrix{T}, do_parallel::Bool = false) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+`evaluate(spline::NormalSpline{T, RK}, points::Matrix{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
 Evaluate normal spline at the locations defined in `points`.
 
@@ -158,7 +158,7 @@ function evaluate(spline::NormalSpline{T, RK},
 end
 
 """
-`evaluate(spline::NormalSpline{T, RK}, point::Vector{T}, do_parallel::Bool = false) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+`evaluate(spline::NormalSpline{T, RK}, point::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
 Evaluate normal spline at the location defined in `point`.
 
@@ -172,11 +172,11 @@ Return: spline value at the location defined in `point`.
 function evaluate(spline::NormalSpline{T, RK},
                   point::Vector{T}
                  ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    return _evaluate(spline, reshape(point, length(point), 1), false)[1]
+    return _evaluate(spline, reshape(point, length(point), 1))[1]
 end
 
 """
-`evaluate_grad(spline::NormalSpline{T, RK}, point::Vector{T}, do_parallel::Bool = false) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+`evaluate_grad(spline::NormalSpline{T, RK}, point::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
 Evaluate a gradient of the normal spline at the location defined in `point`.
 
