@@ -3,7 +3,7 @@ module NormalHermiteSplines
 #### Inteface deinition
 export prepare, construct, interpolate, evaluate, evaluate_grad
 export NormalSpline, RK_H0, RK_H1, RK_H2
-export get_epsilon, estimate_epsilon, get_cond
+export get_epsilon, estimate_epsilon, get_cond, get_interpolation_quality
 ####
 export test_2D
 export init_halton, get_halton_node, get_Lissajous_nodes
@@ -246,7 +246,7 @@ function construct(spline::NormalSpline{T, RK},
                    values::Vector{T},
                    d_values::Vector{T}
                   ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
-     spline = _construct(spline, d_values, values)
+     spline = _construct(spline, values, d_values)
      return spline
 end
 
@@ -360,6 +360,14 @@ Return: an estimation of the Gram matrix condition number.
 function get_cond(spline::NormalSpline{T, RK}
                  ) where {T <: AbstractFloat, RK <: ReproducingKernel}
     return spline._cond
+end
+
+
+function get_interpolation_quality(spline::NormalSpline{T, RK},
+                                   nodes::Matrix{T},
+                                   values::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    σ = evaluate(spline, nodes)
+    return norm(values .- σ) / sqrt(length(values))
 end
 
 end # module

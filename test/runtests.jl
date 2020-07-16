@@ -1,4 +1,5 @@
 using NormalHermiteSplines
+using DoubleFloats
 using Test
 
 @testset "NormalHermiteSplines.jl" begin
