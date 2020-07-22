@@ -1,16 +1,6 @@
 using Printf
 using PyPlot
 
-# Return the Root Mean Square Error (RMSE) of interpolation
-function get_RMSE(f::Vector{Float64}, σ::Vector{Float64})
-    return norm(f .- σ) / sqrt(length(f))
-end
-
-# Return the Maximum Absolute Error (MAE) of interpolation
-function get_MAE(f::Vector{Float64}, σ::Vector{Float64})
-    return maximum(abs.(f .- σ))
-end
-
 function test_2D(model_id::Int,
                  type_of_samples::Int = 2,
                  n_of_samples::Int = 1,

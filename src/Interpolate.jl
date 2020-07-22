@@ -79,6 +79,7 @@ function _prepare(nodes::Matrix{T},
                           gram,
                           chol,
                           nothing,
+                          nothing,
                           T(0.0)
                          )
     return spline
@@ -108,6 +109,7 @@ function _construct(spline::NormalSpline{T, RK},
                           cleanup ? nothing : spline._gram,
                           cleanup ? nothing : spline._chol,
                           mu,
+                          values,
                           cond
                          )
     return spline
@@ -196,6 +198,7 @@ function _prepare(nodes::Matrix{T},
                           gram,
                           chol,
                           nothing,
+                          nothing,
                           T(0.0)
                          )
     return spline
@@ -229,6 +232,7 @@ function _construct(spline::NormalSpline{T, RK},
                           cleanup ? nothing : spline._gram,
                           cleanup ? nothing : spline._chol,
                           mu,
+                          values,
                           cond
                          )
     return spline

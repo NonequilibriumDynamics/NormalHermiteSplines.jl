@@ -3,7 +3,7 @@ module NormalHermiteSplines
 #### Inteface deinition
 export prepare, construct, interpolate, evaluate, evaluate_grad
 export NormalSpline, RK_H0, RK_H1, RK_H2
-export get_epsilon, estimate_epsilon, get_cond, get_interpolation_quality
+export get_epsilon, estimate_epsilon, get_cond, estimate_interpolation_quality
 ####
 export test_2D
 export init_halton, get_halton_node, get_Lissajous_nodes
@@ -46,6 +46,7 @@ Define a structure containing full information of a normal spline
 - `_gram`: Gram matrix of the problem
 - `_chol`: Cholesky factorization of the Gram matrix
 - `_mu`: spline coefficients
+- `_values`: function values at interpolation nodes.
 - `_cond`: estimation of the Gram matrix condition number
 "
 struct NormalSpline{T, RK} <: AbstractSpline where {T <: AbstractFloat, RK <: ReproducingKernel_0}
@@ -58,6 +59,7 @@ struct NormalSpline{T, RK} <: AbstractSpline where {T <: AbstractFloat, RK <: Re
     _gram::Union{Matrix{T}, Nothing}
     _chol::Union{Cholesky{T, Matrix{T}}, Nothing}
     _mu::Union{Vector{T}, Nothing}
+    _values::Union{Vector{T}, Nothing}
     _cond::T
 end
 
@@ -362,12 +364,28 @@ function get_cond(spline::NormalSpline{T, RK}
     return spline._cond
 end
 
+# Return the Root Mean Square Error (RMSE) of interpolation
+@inline function get_RMSE(f::Vector{Float64}, σ::Vector{Float64})
+    return norm(f .- σ) / sqrt(length(f))
+end
 
-function get_interpolation_quality(spline::NormalSpline{T, RK},
-                                   nodes::Matrix{T},
-                                   values::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    σ = evaluate(spline, nodes)
-    return norm(values .- σ) / sqrt(length(values))
+# Return the Maximum Absolute Error (MAE) of interpolation
+@inline function get_MAE(f::Vector{Float64}, σ::Vector{Float64})
+    return maximum(abs.(f .- σ))
+end
+
+"""
+`estimate_interpolation_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+
+Estimate the interpolation quality
+# Arguments
+- `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `construct` or `interpolate` function.
+
+Return: RMSE value of interpolation in function nodes.
+"""
+function estimate_interpolation_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    σ = evaluate(spline, spline._nodes)
+    return get_RMSE(σ, spline._values)
 end
 
 end # module
