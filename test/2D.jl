@@ -2,13 +2,13 @@
 
     p = [0. 0. 1. 1. 0.5;  0. 1. 0. 1. 0.5] # nodes
     u = [0.0; 0.0; 0.0; 0.0; 1.0]   # function values in nodes
-    u2 = [0.0; 0.0; 0.0; 0.0; 2.0]  # function values in nodes (2)
+    u2 = [0.0; 0.0; 0.0; 0.0; 2.0]  # second function values in nodes
     t = [0.5 0.5 0.499999; 0.5 0.499999 0.5]  # evaluation points
 
     dp = [0.5 0.5; 0.5 0.5]
     es = [1.0 0.0; 0.0 1.0]
 #    du = [0.; 0.0]
-    du = [0.; 10000.0]
+    du = [0.; 100000.0]
 
     @testset "Test 2D-RK_H0 kernel" begin
         rk = RK_H0(0.001)
@@ -85,10 +85,10 @@
         est_eps = estimate_epsilon(p, dp) # get estimation of the problem's Gram matrix condition number
         @test all(isapprox.(est_eps, 1.37, atol = 1e-2))
 ###
-        rk = RK_H1(0.1)
+        rk = RK_H1(0.001)
         s = interpolate(p, u, dp, es, du, rk)
-        # s = prepare(p, dp, es, rk)
-        # s = construct(s, u, du)
+         # s = prepare(p, dp, es, rk)
+         # s = construct(s, u, du)
         cond = get_cond(s)
         σ = evaluate(s, p[:,5])
         println("point #1")
@@ -99,7 +99,7 @@
         println("point #2")
         println(σ)
 
-        q = get_interpolation_quality(s, p, u)
+        q = estimate_interpolation_quality(s)
         println("point #3")
         println(q)
         println(p)
@@ -127,7 +127,7 @@
         println("point #5")
         println(σ)
 
-        q = get_interpolation_quality(s, p, u)
+        q = estimate_interpolation_quality(s)
         println("point #6")
         println(q)
         println(p)

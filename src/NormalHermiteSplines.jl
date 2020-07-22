@@ -367,12 +367,12 @@ function get_cond(spline::NormalSpline{T, RK}
 end
 
 # Return the Root Mean Square Error (RMSE) of interpolation
-@inline function get_RMSE(f::Vector{Float64}, σ::Vector{Float64})
+@inline function get_RMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
     return norm(f .- σ) / sqrt(length(f))
 end
 
 # Return the Maximum Absolute Error (MAE) of interpolation
-@inline function get_MAE(f::Vector{Float64}, σ::Vector{Float64})
+@inline function get_MAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
     return maximum(abs.(f .- σ))
 end
 
@@ -383,7 +383,7 @@ Estimate the interpolation quality
 # Arguments
 - `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `construct` or `interpolate` function.
 
-Return: RMSE value of interpolation in function nodes.
+Return: RMSE of interpolation in function nodes.
 """
 function estimate_interpolation_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     σ = evaluate(spline, spline._nodes)
