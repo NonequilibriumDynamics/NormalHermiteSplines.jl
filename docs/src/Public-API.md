@@ -7,6 +7,7 @@ prepare
 construct
 evaluate
 evaluate_grad
+estimate_interpolation_quality
 get_cond
 get_epsilon
 estimate_epsilon

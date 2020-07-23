@@ -383,7 +383,7 @@ Estimate the interpolation quality
 # Arguments
 - `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `construct` or `interpolate` function.
 
-Return: RMSE of interpolation in function nodes.
+Return: RMSE of interpolation at function value nodes.
 """
 function estimate_interpolation_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     σ = evaluate(spline, spline._nodes)
