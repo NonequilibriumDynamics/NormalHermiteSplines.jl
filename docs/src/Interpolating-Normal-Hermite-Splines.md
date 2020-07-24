@@ -326,4 +326,4 @@ The normal splines method for one-dimensional function interpolation and linear 
 
 [19] H. Wendland, Scattered Data Approximation. Cambridge University Press, 2005.
 
-[20] [Reproducing Kernel of Bessel Potential space.](https://igorkohan.github.io/NormalSplines.jl/stable/Reproducing-Kernel-of-Bessel-Potential-space)
+[20] [Reproducing Kernel of Bessel Potential space.](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Reproducing-Kernel-of-Bessel-Potential-space)
