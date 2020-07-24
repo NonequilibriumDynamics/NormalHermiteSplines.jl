@@ -4,25 +4,6 @@ module NormalHermiteSplines
 export prepare, construct, interpolate, evaluate, evaluate_grad
 export NormalSpline, RK_H0, RK_H1, RK_H2
 export get_epsilon, estimate_epsilon, get_cond, estimate_interpolation_quality
-
-# ####
-#
-# export test_2D
-# export init_halton, get_halton_node, get_Lissajous_nodes
-# export get_2D_grid, get_2D_grid2, get_2D_test1_nodes, get_2D_Lissajous_nodes, get_2D_halton_nodes
-# export get_2D_rect_grid, get_2D_eps_grid, get_2D_border_nodes
-# export get_2D_model1, get_2D_model2, get_2D_model3, get_2D_model4, get_2D_model5, get_2D_model6
-# export get_2D_test1_nodes, get_2D_Lissajous_nodes, get_2D_halton_nodes
-# export get_2D_model10, get_2D_model11, get_2D_model12
-# export get_2D_model12_Grad
-# export readme_1, readme_2
-# export _gram
-#
-# include("./Examples/Halton.jl")
-# include("./Examples/Grids.jl")
-# include("./Examples/Models.jl")
-# include("./Examples/Examples_2D.jl")
-#
 ####
 
 using LinearAlgebra
