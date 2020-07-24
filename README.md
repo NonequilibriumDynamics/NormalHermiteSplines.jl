@@ -1,5 +1,10 @@
 # Normal Hermite Splines
 
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://IgorKohan.github.io/NormalHermiteSplines.jl/stable)
+[![Build Status](https://travis-ci.com/IgorKohan/NormalHermiteSplines.jl.svg?branch=master)](https://travis-ci.com/github/IgorKohan/NormalHermiteSplines.jl)
+[![codecov.io](https://codecov.io/github/IgorKohan/NormalHermiteSplines.jl/coverage.svg?branch=master)](https://codecov.io/github/IgorKohan/NormalHermiteSplines.jl?branch=master)
+
+
 ![Problem definition](/images/problem-definition.gif)
 
 ## Instalation
@@ -120,7 +125,7 @@ Further examples are given in documentation.
 
 ## Documentation
 
-For more information and explanation see [Documentation](https://igorkohan.github.io/NormalSplines.jl/stable/Interpolating-Normal-Splines/)
+For more information and explanation see [Documentation](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Hermite-Splines/)
 
 ## References:
 1. [Halton sequence](https://en.wikipedia.org/wiki/Halton_sequence)
