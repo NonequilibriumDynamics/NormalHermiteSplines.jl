@@ -284,7 +284,7 @@ We now consider the choice of value for parameterd $\varepsilon$. In a case when
 
 As well, it is useful to preprocess the source data of the problem by transforming the domain where interpolation knots are located into the unit hypercube.
 
-The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [8] and [9] and developed in [10]. Multidimensional normal splines method was developed for two-dimensional problem of low-range computerized tomography in [15] and applied for solving a mathematical economics problem in [11]. Further results were reported on seminars and conferences [14,21,22].
+The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [8] and [9] and developed in [10]. Multivariate generalization of the normal splines method was developed for two-dimensional problem of low-range computerized tomography in [15] and applied for solving a mathematical economics problem in [11]. Further results were reported on seminars and conferences [14,21,22].
 
 **References**
 

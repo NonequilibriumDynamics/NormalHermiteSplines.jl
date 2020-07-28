@@ -50,6 +50,16 @@ Using these results it is possible to reduce the task (2) to solving a system of
 
 Detailed explanation is given in [Multivariate Normal Hermite Splines](https://igorkohan.github.io/NormalSplines.jl/stable/Interpolating-Normal-Splines/)
 
+The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [1]. Multivariate generalization of the normal splines method was developed for two-dimensional problem of low-range computerized tomography in [2] and applied for solving a mathematical economics problem in [3]. Further results were reported on seminars and conferences [4,5,6].
+
+### References:
+1. V. Gorbunov, The method of normal spline collocation. [USSR Computational Mathematics and Mathematical Physics, Vol. 29, No. 1, 1989](https://www.researchgate.net/publication/265357408_Method_of_normal_spline-collocation)
+2. I. Kohanovsky, Normal Splines in Computing Tomography (in Russian). [Avtometriya, No. 2, 1995](https://www.iae.nsk.su/images/stories/5_Autometria/5_Archives/1995/2/84-89.pdf)
+3. V. Gorbunov, I. Kohanovsky, K. Makedonsky, Normal splines in reconstruction of multi-dimensional dependencies. [Papers of WSEAS International Conference on Applied Mathematics, Numerical Analysis Symposium, Corfu, 2004](http://www.wseas.us/e-library/conferences/corfu2004/papers/488-312.pdf)
+4. I. Kohanovsky, Multidimensional Normal Splines and Problem of Physical Field Approximation, International Conference on Fourier Analysis and its Applications, Kuwait, 1998.
+5. I. Kohanovsky, Inequality-Constrained Multivariate Normal Splines with Some Applications in Finance. [27th GAMM-Seminar Leipzig on Approximation of Multiparametric functions, 2011](https://www.ana.iusiani.ulpgc.es/proyecto2015-2017/pdfnew/ESCO2014_Book_of_Abstracts.pdf)
+6. V. Gorbunov, I. Kohanovsky, Heterogeneous Parallel Method for the Construction of Multi-dimensional Smoothing Splines. [ESCO 2014 4th European Seminar on Computing, 2014](https://www.ana.iusiani.ulpgc.es/proyecto2015-2017/pdfnew/ESCO2014_Book_of_Abstracts.pdf)
+
 ## Contents
 
 ```@contents
