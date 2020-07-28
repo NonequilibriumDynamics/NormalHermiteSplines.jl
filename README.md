@@ -127,13 +127,19 @@ Further examples are given in documentation.
 
 For more information and explanation see [Documentation](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Hermite-Splines/)
 
-The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [2]. Multidimensional normal splines method was developed for two-dimensional problem of low-range computerized tomography in [3] and applied for solving a mathematical economics problem in [4].
+The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [2]. Multidimensional normal splines method was developed for two-dimensional problem of low-range computerized tomography in [3] and applied for solving a mathematical economics problem in [4]. Further results were reported on seminars and conferences [5,6,7].
 
 ## References:
 1. [Halton sequence](https://en.wikipedia.org/wiki/Halton_sequence)
-2. V. Gorbunov, The method of normal spline collocation, [USSR Computational Mathematics and Mathematical Physics, Vol. 29, No. 1, 1989.](https://www.researchgate.net/publication/265357408_Method_of_normal_spline-collocation)
-3. I. Kohanovsky, Normal Splines in Computing Tomography (in Russian), [Avtometriya, 1995, N 2.](https://www.iae.nsk.su/images/stories/5_Autometria/5_Archives/1995/2/84-89.pdf)
-4. V. Gorbunov, I. Kohanovsky, K. Makedonsky, Normal splines in reconstruction of multi-dimensional dependencies. [Papers of WSEAS International Conference on Applied Mathematics, Numerical Analysis Symposium, Corfu, 2004.](http://www.wseas.us/e-library/conferences/corfu2004/papers/488-312.pdf)
+2. V. Gorbunov, The method of normal spline collocation. [USSR Computational Mathematics and Mathematical Physics, Vol. 29, No. 1, 1989](https://www.researchgate.net/publication/265357408_Method_of_normal_spline-collocation)
+3. I. Kohanovsky, Normal Splines in Computing Tomography (in Russian). [Avtometriya, No. 2, 1995](https://www.iae.nsk.su/images/stories/5_Autometria/5_Archives/1995/2/84-89.pdf)
+4. V. Gorbunov, I. Kohanovsky, K. Makedonsky, Normal splines in reconstruction of multi-dimensional dependencies. [Papers of WSEAS International Conference on Applied Mathematics, Numerical Analysis Symposium, Corfu, 2004](http://www.wseas.us/e-library/conferences/corfu2004/papers/488-312.pdf)
+5. I. Kohanovsky, Multidimensional Normal Splines and Problem of Physical Field Approximation, International Conference on Fourier Analysis and its Applications, Kuwait, 1998.
+6. I. Kohanovsky, Inequality-Constrained Multivariate Normal Splines with Some Applications in Finance. [27th GAMM-Seminar Leipzig on Approximation of Multiparametric functions, 2011](https://www.ana.iusiani.ulpgc.es/proyecto2015-2017/pdfnew/ESCO2014_Book_of_Abstracts.pdf)
+7. V. Gorbunov, I. Kohanovsky, Heterogeneous Parallel Method for the Construction of Multi-dimensional Smoothing Splines. [ESCO 2014 4th European Seminar on Computing, 2014](https://www.ana.iusiani.ulpgc.es/proyecto2015-2017/pdfnew/ESCO2014_Book_of_Abstracts.pdf)
+
+
+
 
 
 
