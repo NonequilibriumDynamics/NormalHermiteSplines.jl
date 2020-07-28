@@ -62,5 +62,5 @@ Pages = [
       "Relation-to-Polyharmonic-Splines.md",
       "Reproducing-Kernel-of-Bessel-Potential-space.md"
 ]
-Depth = 4
+Depth = 3
 ```
