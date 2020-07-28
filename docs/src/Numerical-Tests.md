@@ -1,4 +1,4 @@
-﻿# Numerical Tests
+# Numerical Tests
 
 ## 1D
 
