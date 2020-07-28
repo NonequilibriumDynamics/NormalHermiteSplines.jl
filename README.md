@@ -5,7 +5,7 @@
 [![codecov.io](https://codecov.io/github/IgorKohan/NormalHermiteSplines.jl/coverage.svg?branch=master)](https://codecov.io/github/IgorKohan/NormalHermiteSplines.jl?branch=master)
 
 
-![Problem definition](/images/problem-definition.png)
+![Problem definition](/images/problem-definition.gif)
 
 ## Instalation
 Start Julia and run the following commands:
