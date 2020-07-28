@@ -1,76 +1,179 @@
-@testset "Test 2D-1" begin
+@testset "Test 1D" begin
+    x = [0.0, 1.0, 2.0]                        # function knots
+    u = x.^2                                   # function values in knots
+    s = [2.0]                                  # function first derivative knots
+    v = [4.0]                                  # function first derivative values
+    t = [0.0, 1.0]                             # function second derivative knots
+    w = [2.0 ,2.0]                             # function second derivative values
+    d1_u = v                                   # exact function first derivative values in knots
+    d2_u = w                                   # exact function second derivative values in knots
 
-    p = [-1.0 2.0; -1.0 4.0; 3.0 2.0; 3.0 4.0; 1.0 3.0]' # function knots
-    u = [0.0; 0.0; 0.0; 0.0; 1.0]                        # function values in knots
+    @testset "Test 1D-RK_H0 kernel" begin
+        interpolate(x, u, RK_H0(0.1))  # create spline
+        cond = get_cond()              # get estimation of the Gram matrix condition number
+        @test cond ≈ 100.0
 
-    t = [-1.0 3.0; 0.0 3.0; 1.0 3.0; 2.0 3.0; 3.0 3.0]'  # evaluation points
+        σ = evaluate(x)                # evaluate spline in knots
+        @test σ ≈ u                    # compare with exact function values in knots
 
-    @testset "Test 2D-1-RK_H0 kernel" begin
-        spl = prepare(p, RK_H0(0.001))                   # prepare spline
-        c = get_cond(spl)                                # get estimation of the problem's Gram matrix condition number
-        @test c ≈ 100000.0
-        spl = construct(spl, u)                          # construct spline
-        vt = [1.0, 3.0]
-        σ = evaluate(spl, vt)                            # evaluate spline in the knot
-        @test σ ≈ 1.0
-
-        wt = [0.0, 3.0]
-        σ1 = evaluate(spl, wt)
-
-        u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
-        spl = construct(spl, u2)
-        σ2 = evaluate(spl, wt)
-        @test σ2 ≈ 2.0 * σ1
-
-        spl = interpolate(p, u, RK_H0(0.001))            # prepare and construct spline
-        σ = evaluate(spl, vt)
-        @test σ ≈ 1.0
+        # Check that we get close when evaluating near the knots
+        p = x .+ 1e-3*randn(size(x))   # evaluation points near the knots
+        f = p.^2                       # exact function values in evaluation points
+        σ = evaluate(p)                # evaluate spline in evaluation points
+        # compare spline values with exact function values in evaluation point
+        @test all(isapprox.(σ, f, atol = 0.05))
     end
 
-    @testset "Test 2D-1-RK_H1 kernel" begin
-        spl = prepare(p, RK_H1(0.001))
-        c = get_cond(spl)
-        @test c ≈ 1.0e11
-        spl = construct(spl, u)
-        vt = [1.0, 3.0]
-        σ = evaluate(spl, vt)
-        @test σ ≈ 1.0
+    @testset "Test 1D-RK_H1 kernel" begin
+        interpolate(x, u, RK_H1(0.1))  # create spline
+        cond = get_cond()              # get estimation of the gram matrix condition number
+        @test cond ≈ 1.0e5
 
-        wt = [0.0, 3.0]
-        σ1 = evaluate(spl, wt)
+        σ = evaluate(x)                # evaluate spline in knots
+        @test σ ≈ u                    # compare with exact function values in knots
 
-        u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
-        spl = construct(spl, u2)
-        σ2 = evaluate(spl, wt)
-        @test σ2 ≈ 2.0 * σ1
+        # Check that we get close when evaluating near the knots
+        p = x .+ 1e-3*randn(size(x))   # evaluation points near the knots
+        f = p.^2                       # exact function values in evaluation points
+        σ = evaluate(p)                # evaluate spline in evaluation points
+        # compare spline values with exact function values in evaluation point
+        @test all(isapprox.(σ, f, atol = 1e-2))
 
-        spl = interpolate(p, u, RK_H1(0.001))
-        σ = evaluate(spl, vt)
-        @test σ ≈ 1.0
+        ###
+        interpolate(x, u, s, v, RK_H1(0.1)) # create spline by function and
+                                            # first derivative values in knots
+        cond = get_cond()              # get estimation of the gram matrix condition number
+        @test cond ≈ 1.0e5
+
+        σ = evaluate(x)                # evaluate spline in knots
+        @test σ ≈ u                    # compare with exact function values in knots
+
+        # Check that we get close when evaluating near the knots
+        p = x .+ 1e-3*randn(size(x))   # evaluation points near the knots
+        f = p.^2                       # exact function values in evaluation points
+        σ = evaluate(p)                # evaluate spline in evaluation points
+        # compare spline values with exact function values in evaluation point
+        @test all(isapprox.(σ, f, atol = 1e-2))
+
+        d1_σ = evaluate(s, 1)             # evaluate spline first derivative in knots
+        @test d1_σ ≈ d1_u                 # compare with exact function first derivative values in knots
+
+        # Check that we get close when evaluating near the knots
+        ps = s .+ 1e-3*randn(size(s))   # evaluation points near the knots
+        d1_f = ps.*2                    # exact function first derivative values in evaluation points
+        d1_σ = evaluate(ps, 1)             # evaluate spline first derivative in evaluation points
+        # compare spline first derivative values with exact function first derivative values in evaluation point
+        @test all(isapprox.(d1_σ, d1_f, atol = 1e-2))
     end
 
-    @testset "Test 2D-1-RK_H2 kernel" begin
-        spl = prepare(p, RK_H2(0.001))
-        c = get_cond(spl)
-        @test c ≈ 1.0e15
+    @testset "Test 1D-RK_H2 kernel" begin
+        interpolate(x, u, RK_H2(0.1))  # create spline
+        cond = get_cond()              # get estimation of the gram matrix condition number
+        @test cond ≈ 1.0e7
 
-        spl = construct(spl, u)
-        vt = [1.0, 3.0]
-        σ = evaluate(spl, vt)
-        @test σ ≈ 1.0
+        σ = evaluate(x)                # evaluate spline in knots
+        @test σ ≈ u                    # compare with exact function values in knots
 
-        wt = [0.0, 3.0]
-        σ1 = evaluate(spl, wt)
+        # Check that we get close when evaluating near the knots
+        p = x .+ 1e-3*randn(size(x))   # evaluation points near the knots
+        f = p.^2                       # exact function values in evaluation points
+        σ = evaluate(p)                # evaluate spline in evaluation points
+        # compare spline values with exact function values in evaluation point
+        @test all(isapprox.(σ, f, atol = 1e-2))
 
-        u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
-        spl = construct(spl, u2)
-        σ2 = evaluate(spl, wt)
-        @test σ2 ≈ 2.0 * σ1
+        ###
+        interpolate(x, u, s, v, RK_H2(0.1))     # create spline
+        cond = get_cond()              # get estimation of the gram matrix condition number
+        @test cond ≈ 1.0e8
 
-        spl = interpolate(p, u, RK_H2(0.001))
-        σ = evaluate(spl, vt)
-        @test σ ≈ 1.0
+        σ = evaluate(x)                # evaluate spline in knots
+        @test σ ≈ u                    # compare with exact function values in knots
+
+        # Check that we get close when evaluating near the knots
+        p = x .+ 1e-3*randn(size(x))   # evaluation points near the knots
+        f = p.^2                       # exact function values in evaluation points
+        σ = evaluate(p)                # evaluate spline in evaluation points
+        # compare spline values with exact function values in evaluation point
+        @test all(isapprox.(σ, f, atol = 1e-2))
+
+        d1_σ = evaluate(s, 1)             # evaluate spline first derivative in knots
+        @test d1_σ ≈ d1_u                 # compare with exact function first derivative values in knots
+
+        # Check that we get close when evaluating near the knots
+        ps = s .+ 1e-3*randn(size(s))   # evaluation points near the knots
+        d1_f = ps.*2                    # exact function first derivative values in evaluation points
+        d1_σ = evaluate(ps, 1)             # evaluate spline first derivative in evaluation points
+        # compare spline first derivative values with exact function first derivative values in evaluation point
+        @test all(isapprox.(d1_σ, d1_f, atol = 1e-2))
+
+        ###
+        interpolate(x, u, t, w, RK_H2(0.1), 2)     # create spline
+        cond = get_cond()              # get estimation of the gram matrix condition number
+        @test cond ≈ 1.0e8
+
+        σ = evaluate(x)                # evaluate spline in knots
+        @test σ ≈ u                    # compare with exact function values in knots
+
+        # Check that we get close when evaluating near the knots
+        p = x .+ 1e-3*randn(size(x))   # evaluation points near the knots
+        f = p.^2                       # exact function values in evaluation points
+        σ = evaluate(p)                # evaluate spline in evaluation points
+        # compare spline values with exact function values in evaluation point
+        @test all(isapprox.(σ, f, atol = 1e-2))
+
+        d1_σ = evaluate(s, 1)          # evaluate spline first derivative in knots
+        @test d1_σ ≈ d1_u atol = 0.05  # compare with exact function first derivative values in knots
+
+        # Check that we get close when evaluating near the knots
+        ps = s .+ 1e-3*randn(size(s))   # evaluation points near the knots
+        d1_f = ps.*2                    # exact function first derivative values in evaluation points
+        d1_σ = evaluate(ps, 1)          # evaluate spline first derivative in evaluation points
+        # compare spline first derivative values with exact function first derivative values in evaluation point
+        @test all(isapprox.(d1_σ, d1_f, atol = 0.05))
+
+        d2_σ = evaluate(t, 2)           # evaluate spline second derivative in knots
+        @test d2_σ ≈ d2_u               # compare with exact function second derivative values in knots
+
+        # Check that we get close when evaluating near the knots
+        pt = t .+ 1e-3*randn(size(t))   # evaluation points near the knots
+        d2_f = 2.0                      # exact function second derivative values in evaluation points
+        d2_σ = evaluate(pt, 2)          # evaluate spline second derivative in evaluation points
+        # compare spline second derivative values with exact function second derivative values in evaluation point
+        @test all(isapprox.(d2_σ, d2_f, atol = 1e-2))
+
+        ###
+        interpolate(x, u, s, v, t, w, RK_H2(0.1)) # create spline
+        cond = get_cond()              # get estimation of the gram matrix condition number
+        @test cond ≈ 1.0e9
+
+        σ = evaluate(x)                # evaluate spline in knots
+        @test σ ≈ u                    # compare with exact function values in knots
+
+        # Check that we get close when evaluating near the knots
+        p = x .+ 1e-3*randn(size(x))   # evaluation points near the knots
+        f = p.^2                       # exact function values in evaluation points
+        σ = evaluate(p)                # evaluate spline in evaluation points
+        # compare spline values with exact function values in evaluation point
+        @test all(isapprox.(σ, f, atol = 1e-2))
+
+        d1_σ = evaluate(s, 1)          # evaluate spline first derivative in knots
+        @test d1_σ ≈ d1_u              # compare with exact function first derivative values in knots
+
+        # Check that we get close when evaluating near the knots
+        ps = s .+ 1e-3*randn(size(s))  # evaluation points near the knots
+        d1_f = ps.*2                   # exact function first derivative values in evaluation points
+        d1_σ = evaluate(ps, 1)         # evaluate spline first derivative in evaluation points
+        # compare spline first derivative values with exact function first derivative values in evaluation point
+        @test all(isapprox.(d1_σ, d1_f, atol = 1e-2))
+
+        d2_σ = evaluate(t, 2)          # evaluate spline second derivative in knots
+        @test d2_σ ≈ d2_u              # compare with exact function second derivative values in knots
+
+        # Check that we get close when evaluating near the knots
+        pt = t .+ 1e-3*randn(size(t))   # evaluation points near the knots
+        d2_f = 2.0                      # exact function second derivative values in evaluation points
+        d2_σ = evaluate(pt, 2)          # evaluate spline second derivative in evaluation points
+        # compare spline second derivative values with exact function second derivative values in evaluation point
+        @test all(isapprox.(d2_σ, d2_f, atol = 1e-2))
     end
-
-
 end

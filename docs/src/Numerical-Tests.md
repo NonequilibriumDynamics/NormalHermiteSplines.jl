@@ -1,14 +1,5 @@
 ﻿# Numerical Tests
 
-## 1D
-d
-### Grids
-f
-### Models
-h
-### Tests
-j
-
 ## 2D
 
 ### Grids

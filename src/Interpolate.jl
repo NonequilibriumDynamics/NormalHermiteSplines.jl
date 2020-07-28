@@ -70,6 +70,8 @@ function _prepare(nodes::Matrix{T},
         error("Cannot prepare the spline: Gram matrix is degenerate.")
     end
 
+    cond = _get_cond(gram, chol)
+
     spline = NormalSpline(kernel,
                           compression,
                           t_nodes,
@@ -81,7 +83,7 @@ function _prepare(nodes::Matrix{T},
                           gram,
                           chol,
                           nothing,
-                          T(0.0)
+                          cond
                          )
     return spline
 end
@@ -100,7 +102,6 @@ function _construct(spline::NormalSpline{T, RK},
     mu = Vector{T}(undef, size(spline._gram, 1))
     ldiv!(mu, spline._chol, values)
 
-    cond = _get_cond(spline)
     spline = NormalSpline(spline._kernel,
                           spline._compression,
                           spline._nodes,
@@ -112,7 +113,7 @@ function _construct(spline::NormalSpline{T, RK},
                           cleanup ? nothing : spline._gram,
                           cleanup ? nothing : spline._chol,
                           mu,
-                          cond
+                          spline._cond
                          )
     return spline
 end
@@ -191,6 +192,8 @@ function _prepare(nodes::Matrix{T},
         error("Cannot prepare the spline: Gram matrix is degenerate.")
     end
 
+    cond = _get_cond(gram, chol)
+
     spline = NormalSpline(kernel,
                           compression,
                           t_nodes,
@@ -202,7 +205,7 @@ function _prepare(nodes::Matrix{T},
                           gram,
                           chol,
                           nothing,
-                          T(0.0)
+                          cond
                          )
     return spline
 end
@@ -225,7 +228,6 @@ function _construct(spline::NormalSpline{T, RK},
     mu = Vector{T}(undef, size(spline._gram, 1))
     ldiv!(mu, spline._chol, [values; spline._compression .* d_values])
 
-    cond = _get_cond(spline)
     spline = NormalSpline(spline._kernel,
                           spline._compression,
                           spline._nodes,
@@ -237,7 +239,7 @@ function _construct(spline::NormalSpline{T, RK},
                           cleanup ? nothing : spline._gram,
                           cleanup ? nothing : spline._chol,
                           mu,
-                          cond
+                          spline._cond
                          )
     return spline
 end
@@ -388,26 +390,30 @@ end
 # Brás, C.P., Hager, W.W. & Júdice, J.J. An investigation of feasible descent algorithms for estimating the condition number of a matrix. TOP 20, 791–809 (2012).
 # https://link.springer.com/article/10.1007/s11750-010-0161-9
 # ```
-function _get_cond(spline::NormalSpline{T, RK},
+function _get_cond(gram::Matrix{T},
+                   chol::LinearAlgebra.Cholesky{T,Array{T,2}},
                    nit = 3
-                  ) where {T <: AbstractFloat, RK <: ReproducingKernel}
-    if isnothing(spline._chol)
-        error("Gram matrix was not factorized.")
+                  ) where T <: AbstractFloat
+    if isnothing(gram)
+        throw(DomainError(gram, "Parameter `gram` is `nothing'."))
     end
-    mat_norm = norm(spline._gram, 1)
-    n = size(spline._gram, 1)
+    if isnothing(chol)
+        throw(DomainError(chol, "Parameter `chol` is `nothing'."))
+    end
+    mat_norm = norm(gram, 1)
+    n = size(gram, 1)
     x = Vector{T}(undef, n)
     x .= T(1.0) / T(n)
     z = Vector{T}(undef, n)
     gamma = T(0.0)
     for it = 1:nit
-        z = ldiv!(z, spline._chol, x)
+        z = ldiv!(z, chol, x)
         gamma = T(0.0);
         for i = 1:n
             gamma += abs(z[i])
             z[i] = sign(z[i])
         end
-        z = ldiv!(z, spline._chol, copy(z))
+        z = ldiv!(z, chol, copy(z))
         zx = z ⋅ x
         idx = 1
         for i = 1:n
