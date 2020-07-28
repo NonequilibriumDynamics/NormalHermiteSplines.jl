@@ -284,7 +284,7 @@ We now consider the choice of value for parameterd $\varepsilon$. In a case when
 
 As well, it is useful to preprocess the source data of the problem by transforming the domain where interpolation knots are located into the unit hypercube.
 
-The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [8] and [9] and developed in [10]. Multidimensional normal splines method was developed for two-dimensional problem of low-range computerized tomography in [15] and applied for solving a mathematical economics problem in [11]. Further results were reported on seminars and conferences.
+The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [8] and [9] and developed in [10]. Multidimensional normal splines method was developed for two-dimensional problem of low-range computerized tomography in [15] and applied for solving a mathematical economics problem in [11]. Further results were reported on seminars and conferences [14,21,22].
 
 **References**
 
@@ -327,3 +327,7 @@ The normal splines method for one-dimensional function interpolation and linear 
 [19] H. Wendland, Scattered Data Approximation. Cambridge University Press, 2005.
 
 [20] [Reproducing Kernel of Bessel Potential space.](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Reproducing-Kernel-of-Bessel-Potential-space)
+
+[21] V. Gorbunov, I. Kohanovsky, Heterogeneous Parallel Method for the Construction of Multi-dimensional Smoothing Splines. [ESCO 2014 4th European Seminar on Computing, 2014.](https://www.ana.iusiani.ulpgc.es/proyecto2015-2017/pdfnew/ESCO2014_Book_of_Abstracts.pdf)
+
+[22] I. Kohanovsky, Inequality-Constrained Multivariate Normal Splines with Some Applications in Finance. [27th GAMM-Seminar Leipzig on Approximation of Multiparametric functions, 2011](https://www.ana.iusiani.ulpgc.es/proyecto2015-2017/pdfnew/ESCO2014_Book_of_Abstracts.pdf)

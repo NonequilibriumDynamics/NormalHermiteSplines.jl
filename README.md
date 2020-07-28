@@ -121,14 +121,20 @@ Approximation error plots:
 
 Spline was evaluated on a uniform Cartesian grid of size 101x101. For this case ```RMSE```: 7.3E-02, ```MAE```: 0.95, value of the scaling parameter ```ε``` is 0.001, estimation of the Gram matrix condition number is 1.0e+13.
 
-Further examples are given in documentation.
+Further examples are given in documentation.  
 
 ## Documentation
 
 For more information and explanation see [Documentation](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Hermite-Splines/)
 
+The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [2]. Multidimensional normal splines method was developed for two-dimensional problem of low-range computerized tomography in [3] and applied for solving a mathematical economics problem in [4].
+
 ## References:
 1. [Halton sequence](https://en.wikipedia.org/wiki/Halton_sequence)
+2. V. Gorbunov, The method of normal spline collocation, [USSR Computational Mathematics and Mathematical Physics, Vol. 29, No. 1, 1989.](https://www.researchgate.net/publication/265357408_Method_of_normal_spline-collocation)
+3. I. Kohanovsky, Normal Splines in Computing Tomography (in Russian), [Avtometriya, 1995, N 2.](https://www.iae.nsk.su/images/stories/5_Autometria/5_Archives/1995/2/84-89.pdf)
+4. V. Gorbunov, I. Kohanovsky, K. Makedonsky, Normal splines in reconstruction of multi-dimensional dependencies. [Papers of WSEAS International Conference on Applied Mathematics, Numerical Analysis Symposium, Corfu, 2004.](http://www.wseas.us/e-library/conferences/corfu2004/papers/488-312.pdf)
+
 
 
 
