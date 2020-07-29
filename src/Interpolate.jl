@@ -54,10 +54,10 @@ function _prepare(nodes::Matrix{T},
         if isa(kernel, RK_H0)
             kernel = RK_H0(ε)
         elseif isa(kernel, RK_H1)
-            ε *= T(2.0)
+            ε *= T(1.5)
             kernel = RK_H1(ε)
         elseif isa(kernel, RK_H2)
-            ε *= T(3.0)
+            ε *= T(2.0)
             kernel = RK_H2(ε)
         else
             error("incorrect `kernel` type.")
@@ -181,7 +181,7 @@ function _prepare(nodes::Matrix{T},
             ε *= T(2.0)
             kernel = RK_H1(ε)
         elseif isa(kernel, RK_H2)
-            ε *= T(3.0)
+            ε *= T(2.5)
             kernel = RK_H2(ε)
         else
             error("incorrect `kernel` type.")
