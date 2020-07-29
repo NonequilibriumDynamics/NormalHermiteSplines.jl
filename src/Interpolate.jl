@@ -178,10 +178,10 @@ function _prepare(nodes::Matrix{T},
     if T(kernel.ε) == T(0.0)
         ε = _estimate_ε(t_nodes, t_d_nodes)
         if isa(kernel, RK_H1)
-            ε *= T(4.0)
+            ε *= T(3.0)
             kernel = RK_H1(ε)
         elseif isa(kernel, RK_H2)
-            ε *= T(8.0)
+            ε *= T(5.0)
             kernel = RK_H2(ε)
         else
             error("incorrect `kernel` type.")
