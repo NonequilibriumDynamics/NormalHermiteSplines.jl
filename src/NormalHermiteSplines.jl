@@ -177,7 +177,7 @@ Return: `Vector{T}` - gradient of the normal spline at the location defined in `
 """
 function evaluate_grad(spline::NormalSpline{T, RK},
                        point::Vector{T}
-                      ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+                      ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
     return _evaluate_grad(spline, point)
 end
 
