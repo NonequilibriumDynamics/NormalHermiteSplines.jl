@@ -429,16 +429,16 @@ function interpolate(nodes::Vector{T},
 end
 
 """
-`evaluate(spline::NormalSpline{T, RK}, points::Vector{T}, derivative::Bool) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+`evaluate(spline::NormalSpline{T, RK}, points::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
 Evaluate a 1D normal spline at the `points` locations.
 
 # Arguments
 - `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `interpolate` or `construct` function.
-- `point::Vector{T}`: location at which spline value is evaluating.
-                       This should be a vector of size `n`, where `n` is dimension of the sampled space.
+- `points::Vector{T}`: location at which spline value is evaluating.
+                       This should be a vector of size `m` where `m` is the number of evaluating points.
 
-Return: spline value at the location defined in `point`.
+Return: spline values at the locations defined in `points`.
 """
 function evaluate(spline::NormalSpline{T, RK},
                   points::Vector{T}

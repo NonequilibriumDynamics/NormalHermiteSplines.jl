@@ -18,7 +18,7 @@
         @test isapprox(σ[3], u[5], atol = 1e-5)
         @test isapprox(σ[2], σ[3], atol = 1e-5)
 
-        σ1 = evaluate(s, t[:,1])
+        σ1 = evaluate_one(s, t[:,1])
         @test σ1[1] ≈ u[5]
 
         rk = RK_H0()
@@ -91,8 +91,8 @@
         cond = get_cond(s)
         @test cond == 1.0e14
 
-        σ = evaluate(s, p[:,5])
-        @test !isapprox(σ[1], u[5], atol = 0.1)
+        σ1 = evaluate_one(s, p[:,5])
+        @test !isapprox(σ1[1], u[5], atol = 0.1)
 
         q = estimate_interpolation_quality(s)
         @test q > 1.0
@@ -164,8 +164,8 @@
         cond = get_cond(s)
         @test cond == 1.0e13
 
-        σ = evaluate(s, p[:,5])
-        @test !isapprox(σ[1], u[5], atol = 0.1)
+        σ1 = evaluate_one(s, p[:,5])
+        @test !isapprox(σ1[1], u[5], atol = 0.1)
 
         q = estimate_interpolation_quality(s)
         @test q > 1.0
@@ -203,19 +203,19 @@ end
 
         spl = construct(spl, u)                          # construct spline
         vt = [1.0, 3.0]
-        σ = evaluate(spl, vt)                            # evaluate spline in the knot
+        σ = evaluate_one(spl, vt)                            # evaluate spline in the knot
         @test σ ≈ 1.0
 
         wt = [0.0, 3.0]
-        σ1 = evaluate(spl, wt)
+        σ1 = evaluate_one(spl, wt)
 
         u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
         spl = construct(spl, u2)
-        σ2 = evaluate(spl, wt)
+        σ2 = evaluate_one(spl, wt)
         @test σ2 ≈ 2.0 * σ1
 
         spl = interpolate(p, u, RK_H0(0.001))            # prepare and construct spline
-        σ = evaluate(spl, vt)
+        σ = evaluate_one(spl, vt)
         @test σ ≈ 1.0
     end
 
@@ -226,19 +226,19 @@ end
 
         spl = construct(spl, u)
         vt = [1.0, 3.0]
-        σ = evaluate(spl, vt)
+        σ = evaluate_one(spl, vt)
         @test σ ≈ 1.0
 
         wt = [0.0, 3.0]
-        σ1 = evaluate(spl, wt)
+        σ1 = evaluate_one(spl, wt)
 
         u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
         spl = construct(spl, u2)
-        σ2 = evaluate(spl, wt)
+        σ2 = evaluate_one(spl, wt)
         @test σ2 ≈ 2.0 * σ1
 
         spl = interpolate(p, u, RK_H1(0.001))
-        σ = evaluate(spl, vt)
+        σ = evaluate_one(spl, vt)
         @test σ ≈ 1.0
     end
 
@@ -250,19 +250,19 @@ end
         spl = construct(spl, u)
 
         vt = [1.0, 3.0]
-        σ = evaluate(spl, vt)
+        σ = evaluate_one(spl, vt)
         @test σ ≈ 1.0
 
         wt = [0.0, 3.0]
-        σ1 = evaluate(spl, wt)
+        σ1 = evaluate_one(spl, wt)
 
         u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
         spl = construct(spl, u2)
-        σ2 = evaluate(spl, wt)
+        σ2 = evaluate_one(spl, wt)
         @test σ2 ≈ 2.0 * σ1
 
         spl = interpolate(p, u, RK_H2(0.001))
-        σ = evaluate(spl, vt)
+        σ = evaluate_one(spl, vt)
         @test σ ≈ 1.0
     end
 end
