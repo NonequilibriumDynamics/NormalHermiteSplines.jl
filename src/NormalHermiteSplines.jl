@@ -1,7 +1,8 @@
 module NormalHermiteSplines
 
 #### Inteface deinition
-export prepare, construct, interpolate, evaluate, evaluate_grad
+export prepare, construct, interpolate
+export evaluate, evaluate_one, evaluate_grad
 export NormalSpline, RK_H0, RK_H1, RK_H2
 export get_epsilon, estimate_epsilon, get_cond, estimate_interpolation_quality
 ####
@@ -146,9 +147,9 @@ function evaluate(spline::NormalSpline{T, RK},
 end
 
 """
-`evaluate(spline::NormalSpline{T, RK}, point::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+`evaluate_one(spline::NormalSpline{T, RK}, point::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Evaluate normal spline at the location defined in `point`.
+Evaluate normal spline at the `point` location.
 
 # Arguments
 - `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `interpolate` or `construct` function.
@@ -157,9 +158,9 @@ Evaluate normal spline at the location defined in `point`.
 
 Return: spline value at the location defined in `point`.
 """
-function evaluate(spline::NormalSpline{T, RK},
-                  point::Vector{T}
-                 ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+function evaluate_one(spline::NormalSpline{T, RK},
+                      point::Vector{T}
+                     ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     return _evaluate(spline, reshape(point, length(point), 1))[1]
 end
 
@@ -440,17 +441,9 @@ Evaluate a 1D normal spline at the `points` locations.
 Return: spline value at the location defined in `point`.
 """
 function evaluate(spline::NormalSpline{T, RK},
-                  points::Vector{T},
-                  derivative::Bool
+                  points::Vector{T}
                  ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    if derivative == 0
-        spline_values = _evaluate(spline, Matrix(points'))
-    elseif derivative == 1
-        spline_values = _evaluate(spline, Matrix(points'))
-    else
-        Throw(DomainError(derivative, "'derivative' parameter value must be 0 or 1."))
-    end
-    return spline_values
+    return _evaluate(spline, Matrix(points'))
 end
 
 
