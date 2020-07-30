@@ -65,7 +65,7 @@
         rk = RK_H1()
         s = prepare(p, rk) # prepare spline
         cond = get_cond(s)
-        @test cond ≈ 100.0
+        @test cond ≈ 10.0
 
         s = construct(s, u) # construct spline
 
@@ -141,7 +141,7 @@
         rk = RK_H2()
         s = prepare(p, rk) # prepare spline
         cond = get_cond(s)
-        @test cond ≈ 1000.0
+        @test cond ≈ 100.0
 
         s = construct(s, u) # construct spline
 
