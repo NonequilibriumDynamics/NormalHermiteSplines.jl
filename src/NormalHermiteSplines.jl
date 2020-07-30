@@ -59,7 +59,7 @@ include("./Interpolate.jl")
 Prepare a normal spline by constructing and factorizing Gram matrix of the interpolation problem.
 Initialize the `NormalSpline` object.
 # Arguments
-- `nodes`: Locations of the function value nodes.
+- `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space and
            `n_1` is the number of function value nodes. It means that each column in the matrix defines one node.
 - `kernel`: reproducing kernel of Bessel potential space the normal spline is constructed in.
@@ -102,7 +102,7 @@ end
 
 Create a normal spline by `values` of function defined at `nodes`.
 # Arguments
-- `nodes`: Locations of the function value nodes.
+- `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
            and `n_1` is the number of function value nodes.
            It means that each column in the matrix defines one node.
@@ -189,11 +189,11 @@ end
 Prepare a normal spline by constructing and factorizing Gram matrix of the interpolation problem.
 Initialize the `NormalSpline` object.
 # Arguments
-- `nodes`: Locations of the function value nodes.
+- `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space and
            `n_1` is the number of function value nodes.
             It means that each column in the matrix defines one node.
-- `d_nodes`: Locations of the function directional derivatives nodes.
+- `d_nodes`: The function directional derivatives nodes.
              This should be an `n×n_2` matrix, where `n` is dimension of the sampled space and
              `n_2` is the number of function directional derivative nodes.
 - `es`: Directions of the function directional derivatives.
@@ -244,12 +244,12 @@ end
 Create a normal spline by `values` of function defined at `nodes` and
 `d_values` of function directional derivatives defined at `d_nodes`.
 # Arguments
-- `nodes`: Locations where function values are defined.
+- `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
            and `n_1` is the number of function value nodes.
            It means that each column in the matrix defines one node.
 - `values::Vector{T}`: function values at `n_1` interpolation nodes.
-- `d_nodes`: Locations where function directional derivatives are defined.
+- `d_nodes`: The function directional derivative nodes.
             This should be an `n×n_2` matrix, where `n` is dimension of the sampled space and
             `n_2` is the number of function directional derivative nodes.
 - `es`: Directions of the function directional derivatives.
@@ -298,7 +298,7 @@ Get an the estimation of the 'scaling parameter' of Bessel Potential space the n
 This coinsides with result returned by `get_epsilon` function if all `nodes` are located in a unit hypercube,
 othewise the estimated value of `ε` can be significantly higher then necessary.
 # Arguments
-- `nodes`: Locations where function values are defined.
+- `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
            and `n_1` is the number of function value nodes.
            It means that each column in the matrix defines one node.
@@ -318,11 +318,11 @@ Get an the estimation of the 'scaling parameter' of Bessel Potential space the n
 This coinsides with result returned by `get_epsilon` function if all `nodes` and `d_nodes` are located in a unit hypercube,
 othewise the estimated value of `ε` can be significantly higher then necessary.
 # Arguments
-- `nodes`: Locations where function values are defined.
+- `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
            and `n_1` is the number of function value nodes.
            It means that each column in the matrix defines one node.
-- `d_nodes`: Locations where function directional derivatives are defined.
+- `d_nodes`: The function directional derivative nodes.
            This should be an `n×n_2` matrix, where `n` is dimension of the sampled space and
            `n_2` is the number of function directional derivative nodes.
 
@@ -379,10 +379,10 @@ end
 """
 `prepare(nodes::Vector{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Prepare a normal spline by constructing and factorizing Gram matrix of the interpolation problem.
+Prepare a 1D normal spline by constructing and factorizing Gram matrix of the interpolation problem.
 Initialize the `NormalSpline` object.
 # Arguments
-- `nodes`: Locations of the function value nodes.
+- `nodes`: The function value nodes.
 - `kernel`: reproducing kernel of Bessel potential space the normal spline is constructed in.
             It must be a struct object of the following type:
               `RK_H0` if the spline is constructing as a continuous function,
@@ -399,7 +399,59 @@ function prepare(nodes::Vector{T},
      return spline
 end
 
+"""
+`interpolate(nodes::Vector{T}, values::Vector{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
+Create a 1D normal spline by `values` of function defined at `nodes`.
+# Arguments
+- `nodes`: The function value nodes.
+           This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
+           and `n_1` is the number of function value nodes.
+           It means that each column in the matrix defines one node.
+- `values::Vector{T}`: function values at `n_1` interpolation nodes.
+- `kernel`: reproducing kernel of Bessel potential space the normal spline is constructed in.
+            It must be a struct object of the following type:
+              `RK_H0` if the spline is constructing as a continuous function,
+              `RK_H1` if the spline is constructing as a differentiable function,
+              `RK_H2` if the spline is constructing as a twice differentiable function.
+
+Return: a completely initialized `NormalSpline` object that can be passed to `evaluate` function
+        to interpolate the data to required points.
+"""
+function interpolate(nodes::Vector{T},
+                     values::Vector{T},
+                     kernel::RK = RK_H0()
+                    ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+     spline = _prepare(Matrix(nodes'), kernel)
+     spline = _construct(spline, values)
+     return spline
+end
+
+"""
+`evaluate(spline::NormalSpline{T, RK}, points::Vector{T}, derivative::Bool) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+
+Evaluate a 1D normal spline at the `points` locations.
+
+# Arguments
+- `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `interpolate` or `construct` function.
+- `point::Vector{T}`: location at which spline value is evaluating.
+                       This should be a vector of size `n`, where `n` is dimension of the sampled space.
+
+Return: spline value at the location defined in `point`.
+"""
+function evaluate(spline::NormalSpline{T, RK},
+                  points::Vector{T},
+                  derivative::Bool
+                 ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    if derivative == 0
+        spline_values = _evaluate(spline, Matrix(points'))
+    elseif derivative == 1
+        spline_values = _evaluate(spline, Matrix(points'))
+    else
+        Throw(DomainError(derivative, "'derivative' parameter value must be 0 or 1."))
+    end
+    return spline_values
+end
 
 
 

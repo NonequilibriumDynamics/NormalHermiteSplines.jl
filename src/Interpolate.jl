@@ -252,11 +252,15 @@ function _evaluate(spline::NormalSpline{T, RK},
                    points::Matrix{T},
                    do_parallel::Bool = false
                   ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    if isnothing(spline)
+        error("Spline was not prepared.")
+    end
     if isnothing(spline._mu)
         error("Spline coefficients were not calculated.")
     end
+
     if size(points, 1) != size(spline._nodes, 1)
-        error("Invalid `points` argument (Incorrect first dimension of the `points` matrix.")
+        error("Invalid `points` argument (Incorrect first dimension of the `points` matrix.)")
     end
 
     n = size(spline._nodes, 1)
