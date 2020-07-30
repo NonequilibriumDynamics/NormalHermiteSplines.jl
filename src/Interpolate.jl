@@ -361,9 +361,9 @@ function _do_work_d(istart::Int,
     end
 end
 
-function _evaluate_grad(spline::NormalSpline{T, RK},
-                        point::Vector{T}
-                       ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+function _evaluate_gradient(spline::NormalSpline{T, RK},
+                            point::Vector{T}
+                           ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     if isa(spline._kernel, RK_H0)
        error("Cannot calculate gradient of spline built with `RK_H0` kernel")
     end

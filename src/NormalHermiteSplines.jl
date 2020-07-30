@@ -2,10 +2,14 @@ module NormalHermiteSplines
 
 #### Inteface deinition
 export prepare, construct, interpolate
-export evaluate, evaluate_one, evaluate_grad
+export evaluate, evaluate_one, evaluate_gradient
 export NormalSpline, RK_H0, RK_H1, RK_H2
 export get_epsilon, estimate_epsilon, get_cond, estimate_interpolation_quality
+# -- 1D case --
+export evaluate_derivative
+# --
 ####
+
 #include("./Examples/Main.jl")
 
 using LinearAlgebra
@@ -57,7 +61,7 @@ include("./Interpolate.jl")
 """
 `prepare(nodes::Matrix{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Prepare a normal spline by constructing and factorizing Gram matrix of the interpolation problem.
+Prepare the normal spline by constructing and factorizing Gram matrix of the interpolation problem.
 Initialize the `NormalSpline` object.
 # Arguments
 - `nodes`: The function value nodes.
@@ -69,7 +73,7 @@ Initialize the `NormalSpline` object.
               `RK_H1` if the spline is constructing as a differentiable function,
               `RK_H2` if the spline is constructing as a twice differentiable function.
 
-Return: a partly initialized `NormalSpline` object that must be passed to `construct` function
+Return: the partly initialized `NormalSpline` object that must be passed to `construct` function
         in order to complete the spline initialization.
 """
 function prepare(nodes::Matrix{T},
@@ -85,10 +89,10 @@ end
 Construct an interpolating spline by calculating coefficients of the spline and completely initializing
 the `NormalSpline` object.
 # Arguments
-- `spline::NormalSpline{T, RK}`: a partly initialized `NormalSpline` object returned by `prepare` function.
+- `spline::NormalSpline{T, RK}`: the partly initialized `NormalSpline` object returned by `prepare` function.
 - `values::Vector{T}`: function values at `n_1` interpolation nodes.
 
-Return: a completely initialized `NormalSpline` object that can be passed to `evaluate` function
+Return: the completely initialized `NormalSpline` object that can be passed to `evaluate` function
         to interpolate the data to required points.
 """
 function construct(spline::NormalSpline{T, RK},
@@ -101,7 +105,7 @@ end
 """
 `interpolate(nodes::Matrix{T}, values::Vector{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Create a normal spline by `values` of function defined at `nodes`.
+Create the normal spline by `values` of function defined at `nodes`.
 # Arguments
 - `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
@@ -114,7 +118,7 @@ Create a normal spline by `values` of function defined at `nodes`.
               `RK_H1` if the spline is constructing as a differentiable function,
               `RK_H2` if the spline is constructing as a twice differentiable function.
 
-Return: a completely initialized `NormalSpline` object that can be passed to `evaluate` function
+Return: the completely initialized `NormalSpline` object that can be passed to `evaluate` function
         to interpolate the data to required points.
 """
 function interpolate(nodes::Matrix{T},
@@ -132,7 +136,7 @@ end
 Evaluate normal spline at the locations defined in `points`.
 
 # Arguments
-- `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `interpolate` or `construct` function.
+- `spline::NormalSpline{T, RK}`: the `NormalSpline` object returned by `interpolate` or `construct` function.
 - `points::Matrix{T}`: locations at which spline values are evaluating.
                        This should be an `n×m` matrix, where `n` is dimension of the sampled space
                        and `m` is the number of locations where spline values are evaluating.
@@ -152,7 +156,7 @@ end
 Evaluate normal spline at the `point` location.
 
 # Arguments
-- `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `interpolate` or `construct` function.
+- `spline::NormalSpline{T, RK}`: the `NormalSpline` object returned by `interpolate` or `construct` function.
 - `point::Vector{T}`: location at which spline value is evaluating.
                        This should be a vector of size `n`, where `n` is dimension of the sampled space.
 
@@ -165,21 +169,21 @@ function evaluate_one(spline::NormalSpline{T, RK},
 end
 
 """
-`evaluate_grad(spline::NormalSpline{T, RK}, point::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+`evaluate_gradient(spline::NormalSpline{T, RK}, point::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Evaluate a gradient of the normal spline at the location defined in `point`.
+Evaluate gradient of the normal spline at the location defined in `point`.
 
 # Arguments
-- `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `interpolate` or `construct` function.
+- `spline::NormalSpline{T, RK}`: the `NormalSpline` object returned by `interpolate` or `construct` function.
 - `point::Vector{T}`: location at which gradient value is evaluating.
                        This should be a vector of size `n`, where `n` is dimension of the sampled space.
 
 Return: `Vector{T}` - gradient of the normal spline at the location defined in `point`.
 """
-function evaluate_grad(spline::NormalSpline{T, RK},
-                       point::Vector{T}
-                      ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
-    return _evaluate_grad(spline, point)
+function evaluate_gradient(spline::NormalSpline{T, RK},
+                           point::Vector{T}
+                          ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
+    return _evaluate_gradient(spline, point)
 end
 
 ########
@@ -187,7 +191,7 @@ end
 """
 `prepare(nodes::Matrix{T}, d_nodes::Matrix{T}, es::Matrix{T}, kernel::RK = RK_H1()) where {T <: AbstractFloat, RK <: ReproducingKernel_1}`
 
-Prepare a normal spline by constructing and factorizing Gram matrix of the interpolation problem.
+Prepare the normal spline by constructing and factorizing Gram matrix of the interpolation problem.
 Initialize the `NormalSpline` object.
 # Arguments
 - `nodes`: The function value nodes.
@@ -206,7 +210,7 @@ Initialize the `NormalSpline` object.
               `RK_H1` if the spline is constructing as a differentiable function,
               `RK_H2` if the spline is constructing as a twice differentiable function.
 
-Return: a partly initialized `NormalSpline` object that must be passed to `construct` function
+Return: the partly initialized `NormalSpline` object that must be passed to `construct` function
         in order to complete the spline initialization.
 """
 function prepare(nodes::Matrix{T},
@@ -224,11 +228,11 @@ end
 Construct an interpolating spline by calculating coefficients of the spline and completely initializing
 the `NormalSpline` object.
 # Arguments
-- `spline::NormalSpline{T, RK}`: a partly initialized `NormalSpline` object returned by `prepare` function.
+- `spline::NormalSpline{T, RK}`: the partly initialized `NormalSpline` object returned by `prepare` function.
 - `values::Vector{T}`: function values at `n_1` interpolation nodes.
 - `d_values::Vector{T}`: function directional derivative values at `n_2` interpolation nodes.
 
-Return: a completely initialized `NormalSpline` object that can be passed to `evaluate` function
+Return: the completely initialized `NormalSpline` object that can be passed to `evaluate` function
         to interpolate the data to required points.
 """
 function construct(spline::NormalSpline{T, RK},
@@ -242,7 +246,7 @@ end
 """
 `interpolate(nodes::Matrix{T}, values::Vector{T}, d_nodes::Matrix{T}, es::Matrix{T}, d_values::Vector{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Create a normal spline by `values` of function defined at `nodes` and
+Create the normal spline by `values` of function defined at `nodes` and
 `d_values` of function directional derivatives defined at `d_nodes`.
 # Arguments
 - `nodes`: The function value nodes.
@@ -263,7 +267,7 @@ Create a normal spline by `values` of function defined at `nodes` and
               `RK_H1` if the spline is constructing as a differentiable function,
               `RK_H2` if the spline is constructing as a twice differentiable function.
 
-Return: a completely initialized `NormalSpline` object that can be passed to `evaluate` function
+Return: the completely initialized `NormalSpline` object that can be passed to `evaluate` function
         to interpolate the data to required points.
 """
 function interpolate(nodes::Matrix{T},
@@ -283,7 +287,7 @@ end
 
 Get a `ε` - 'scaling parameter' of Bessel Potential space the normal spline was built in.
 # Arguments
-- `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `prepare`, `construct` or `interpolate` function.
+- `spline::NormalSpline{T, RK}`: the `NormalSpline` object returned by `prepare`, `construct` or `interpolate` function.
 
 Return: `ε`.
 """
@@ -342,7 +346,7 @@ end
 Get an estimation of the Gram matrix condition number.
 (C. Brás, W. Hager, J. Júdice, An investigation of feasible descent algorithms for estimating the condition number of a matrix. TOP Vol.20, No.3, 2012.)
 # Arguments
-- `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `prepare`, `construct` or `interpolate` function.
+- `spline::NormalSpline{T, RK}`: the `NormalSpline` object returned by `prepare`, `construct` or `interpolate` function.
 
 Return: an estimation of the Gram matrix condition number.
 """
@@ -366,7 +370,7 @@ end
 
 Estimate the interpolation quality
 # Arguments
-- `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `construct` or `interpolate` function.
+- `spline::NormalSpline{T, RK}`: the `NormalSpline` object returned by `construct` or `interpolate` function.
 
 Return: RMSE of interpolation at function value nodes.
 """
@@ -380,7 +384,7 @@ end
 """
 `prepare(nodes::Vector{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Prepare a 1D normal spline by constructing and factorizing Gram matrix of the interpolation problem.
+Prepare 1D normal spline by constructing and factorizing Gram matrix of the interpolation problem.
 Initialize the `NormalSpline` object.
 # Arguments
 - `nodes`: The function value nodes.
@@ -390,7 +394,7 @@ Initialize the `NormalSpline` object.
               `RK_H1` if the spline is constructing as a differentiable function,
               `RK_H2` if the spline is constructing as a twice differentiable function.
 
-Return: a partly initialized `NormalSpline` object that must be passed to `construct` function
+Return: the partly initialized `NormalSpline` object that must be passed to `construct` function
         in order to complete the spline initialization.
 """
 function prepare(nodes::Vector{T},
@@ -403,7 +407,7 @@ end
 """
 `interpolate(nodes::Vector{T}, values::Vector{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Create a 1D normal spline by `values` of function defined at `nodes`.
+Create 1D normal spline by `values` of function defined at `nodes`.
 # Arguments
 - `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
@@ -416,7 +420,7 @@ Create a 1D normal spline by `values` of function defined at `nodes`.
               `RK_H1` if the spline is constructing as a differentiable function,
               `RK_H2` if the spline is constructing as a twice differentiable function.
 
-Return: a completely initialized `NormalSpline` object that can be passed to `evaluate` function
+Return: the completely initialized `NormalSpline` object that can be passed to `evaluate` function
         to interpolate the data to required points.
 """
 function interpolate(nodes::Vector{T},
@@ -431,14 +435,14 @@ end
 """
 `evaluate(spline::NormalSpline{T, RK}, points::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Evaluate a 1D normal spline at the `points` locations.
+Evaluate 1D normal spline at the `points` locations.
 
 # Arguments
-- `spline::NormalSpline{T, RK}`: a `NormalSpline` object returned by `interpolate` or `construct` function.
-- `points::Vector{T}`: location at which spline value is evaluating.
+- `spline::NormalSpline{T, RK}`: the `NormalSpline` object returned by `interpolate` or `construct` function.
+- `points::Vector{T}`: locations at which spline values are evaluating.
                        This should be a vector of size `m` where `m` is the number of evaluating points.
 
-Return: spline values at the locations defined in `points`.
+Return: spline value at the `point` location.
 """
 function evaluate(spline::NormalSpline{T, RK},
                   points::Vector{T}
@@ -446,7 +450,42 @@ function evaluate(spline::NormalSpline{T, RK},
     return _evaluate(spline, Matrix(points'))
 end
 
+"""
+`evaluate_one(spline::NormalSpline{T, RK}, point::T) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
+Evaluate 1D normal spline at the `point` location.
 
+# Arguments
+- `spline::NormalSpline{T, RK}`: the `NormalSpline` object returned by `interpolate` or `construct` function.
+- `point::T`: location at which spline value is evaluating.
+
+Return: spline value at the `point` location.
+"""
+function evaluate_one(spline::NormalSpline{T, RK},
+                      point::T
+                     ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    v_points = Vector{T}(undef, 1)
+    v_points[1] = point
+    return _evaluate(spline, Matrix(v_points'))
+end
+
+"""
+`evaluate_derivative(spline::NormalSpline{T, RK}, point::T) where {T <: AbstractFloat, RK <: ReproducingKernel_1}`
+
+Evaluate 1D normal spline derivative at the `point` location.
+
+# Arguments
+- `spline::NormalSpline{T, RK}`: the `NormalSpline` object returned by `interpolate` or `construct` function.
+- `point::T`: location at which spline value is evaluating.
+
+Return: spline derivative value at the `point` location.
+"""
+function evaluate_derivative(spline::NormalSpline{T, RK},
+                             point::T
+                            ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    v_points = Vector{T}(undef, 1)
+    v_points[1] = point
+    return _evaluate_gradient(spline, Matrix(v_points'))
+end
 
 end # module
