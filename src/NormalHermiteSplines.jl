@@ -5,7 +5,7 @@ export prepare, construct, interpolate, evaluate, evaluate_grad
 export NormalSpline, RK_H0, RK_H1, RK_H2
 export get_epsilon, estimate_epsilon, get_cond, estimate_interpolation_quality
 ####
-include("./Examples/Main.jl")
+#include("./Examples/Main.jl")
 
 using LinearAlgebra
 
