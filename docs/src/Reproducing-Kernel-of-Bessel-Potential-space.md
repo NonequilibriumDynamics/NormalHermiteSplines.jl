@@ -68,7 +68,9 @@ It can be shown ([3], [11], [8], [4], [5]) that function
  & c_V (n,s,\varepsilon) = \frac{\varepsilon ^{n-2s}} { 2^{s-1} (2 \pi )^{n/2} \Gamma (s) }, \ \eta \in R^n, \  x \in R^n, \ \varepsilon \gt 0 ,  s \gt \frac{n}{2}
 \end{aligned}
 ```
-is a reproducing kernel of ``H^s_\varepsilon (R^n)`` space. Here ``K_{\gamma}`` is modified Bessel function of the second kind [10]. The exact value of ``c_V (n,s,\varepsilon)`` is not important here and will be set to ``\sqrt{\frac{2}{\pi}}`` for ease of further calculations. This reproducing kernel sometimes is called as Matérn kernel [4].
+is a reproducing kernel of ``H^s_\varepsilon (R^n)`` space. Here ``K_{\gamma}`` is modified Bessel function of the second kind [10]. The exact value of ``c_V (n,s,\varepsilon)`` is not important here and will be set to ``\sqrt{\frac{2}{\pi}}`` for ease of further calculations. 
+
+This reproducing kernel is known as Matérn kernel [4,13].
 
 The kernel ``K_{\gamma}`` becomes especially simple when ``\gamma``  is half-integer. 
 
@@ -100,6 +102,7 @@ V_{r + \frac{n}{2} + \frac{1}{2}}(\eta , x, \varepsilon) &= \exp (-\varepsilon |
 &  (r = 0, 1, \dots ) \  .
 \end{aligned}
 ```
+
 In particular we have:
 
 ```math
@@ -139,4 +142,6 @@ In particular we have:
 [11] H. Wendland, Scattered Data Approximation. Cambridge University Press, 2005.
 
 [12] J. Lions, E. Magenes, Problemes Aux Limites Non-Homogenes et Applications Vol. 1, Dunod, Paris, 1968.
+
+[13] G. Fasshauer, M. McCourt, Kernel-Based Approximation Methods Using Matlab, World Scientific, Singapore, 2015.
 
