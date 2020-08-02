@@ -16,7 +16,6 @@
         @test σ[1] ≈ u[5]
         @test isapprox(σ[2], u[5], atol = 1e-5)
         @test isapprox(σ[3], u[5], atol = 1e-5)
-        @test isapprox(σ[2], σ[3], atol = 1e-5)
 
         σ1 = evaluate_one(s, t[:,1])
         @test σ1[1] ≈ u[5]
@@ -28,14 +27,12 @@
         @test σ[1] ≈ u[5]
         @test isapprox(σ[2], u[5], atol = 1e-5)
         @test isapprox(σ[3], u[5], atol = 1e-5)
-        @test isapprox(σ[2], σ[3], atol = 1e-5)
 
         s = construct(s, u2)
         σ2 = evaluate(s, t)
         @test σ2[1] ≈ u2[5]
         @test isapprox(σ2[2], u2[5], atol = 1e-5)
         @test isapprox(σ2[3], u2[5], atol = 1e-5)
-        @test isapprox(σ2[2], σ2[3], atol = 1e-5)
 
         cond = get_cond(s)
         @test cond ≈ 10.0
@@ -57,7 +54,6 @@
         @test isapprox(σ[1], u[5], atol = 1e-5)
         @test isapprox(σ[2], u[5], atol = 1e-5)
         @test isapprox(σ[3], u[5], atol = 1e-5)
-        @test isapprox(σ[2], σ[3], atol = 1e-5)
 
         grad = evaluate_grad(s, p[:,5])
         @test abs(grad[1]) < 1.0e-5 && abs(grad[2]) < 1.0e-5
@@ -73,14 +69,12 @@
         @test isapprox(σ[1], u[5], atol = 1e-5)
         @test isapprox(σ[2], u[5], atol = 1e-5)
         @test isapprox(σ[3], u[5], atol = 1e-5)
-        @test isapprox(σ[2], σ[3], atol = 1e-5)
 
         s = construct(s, u2)
         σ2 = evaluate(s, t)
         @test isapprox(σ[1], u[5], atol = 1e-5)
         @test isapprox(σ2[2], u2[5], atol = 1e-5)
         @test isapprox(σ2[3], u2[5], atol = 1e-5)
-        @test isapprox(σ2[2], σ2[3], atol = 1e-5)
 
         est_eps = estimate_epsilon(p, dp) # get estimation of the problem's Gram matrix condition number
         @test est_eps ≈ 1.37 atol = 1e-2
@@ -133,7 +127,6 @@
         @test isapprox(σ[1], u[5], atol = 1e-5)
         @test isapprox(σ[2], u[5], atol = 1e-5)
         @test isapprox(σ[3], u[5], atol = 1e-5)
-        @test isapprox(σ[2], σ[3], atol = 1e-5)
 
         grad = evaluate_grad(s, p[:,5])
         @test abs(grad[1]) < 1.0e-5 && abs(grad[2]) < 1.0e-5
@@ -149,14 +142,12 @@
         @test isapprox(σ[1], u[5], atol = 1e-5)
         @test isapprox(σ[2], u[5], atol = 1e-5)
         @test isapprox(σ[3], u[5], atol = 1e-5)
-        @test isapprox(σ[2], σ[3], atol = 1e-5)
 
         s = construct(s, u2)
         σ2 = evaluate(s, t)
         @test isapprox(σ[1], u[5], atol = 1e-5)
         @test isapprox(σ2[2], u2[5], atol = 1e-5)
         @test isapprox(σ2[3], u2[5], atol = 1e-5)
-        @test isapprox(σ2[2], σ2[3], atol = 1e-5)
 ###
         eps = 0.01
         rk = RK_H2(eps)
@@ -255,7 +246,6 @@ end
 
         wt = [0.0, 3.0]
         σ1 = evaluate_one(spl, wt)
-
         u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
         spl = construct(spl, u2)
         σ2 = evaluate_one(spl, wt)
