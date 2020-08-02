@@ -180,6 +180,8 @@ Reproducing kernel of Bessel potential space was presented in [5] and its simpli
 ```
 ``(``a constant multiplier is omitted here.``)``
 
+This reproducing kernel is known as the Matérn kernel [23].
+
 Therefore for space ``H^{s_1}_\varepsilon (R^n)`` with accuracy to constant multiplier we get:
 
 ```math
