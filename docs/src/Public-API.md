@@ -6,7 +6,9 @@ interpolate
 prepare
 construct
 evaluate
-evaluate_grad
+evaluate_one
+evaluate_gradient
+evaluate_derivative
 estimate_interpolation_quality
 get_cond
 get_epsilon
