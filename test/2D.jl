@@ -55,7 +55,7 @@
         @test isapprox(σ[2], u[5], atol = 1e-5)
         @test isapprox(σ[3], u[5], atol = 1e-5)
 
-        grad = evaluate_grad(s, p[:,5])
+        grad = evaluate_gradient(s, p[:,5])
         @test abs(grad[1]) < 1.0e-5 && abs(grad[2]) < 1.0e-5
 
         rk = RK_H1()
@@ -128,7 +128,7 @@
         @test isapprox(σ[2], u[5], atol = 1e-5)
         @test isapprox(σ[3], u[5], atol = 1e-5)
 
-        grad = evaluate_grad(s, p[:,5])
+        grad = evaluate_gradient(s, p[:,5])
         @test abs(grad[1]) < 1.0e-5 && abs(grad[2]) < 1.0e-5
 
         rk = RK_H2()
