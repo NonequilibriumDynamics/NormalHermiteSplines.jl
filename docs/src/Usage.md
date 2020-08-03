@@ -8,3 +8,5 @@ cc
 
 ## 3D
 d
+
+## Choice of the scaling parameter
