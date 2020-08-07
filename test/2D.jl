@@ -256,3 +256,22 @@ end
         @test σ ≈ 1.0
     end
 end
+
+@testset "Test 2D-Grad" begin
+        p = collect([0.0 0.0; 1.0 0.0; 0.0 1.0]') # function knots
+        u = [0.0; 0.0; 1.0]                       # function values in knots
+        t = [0.1; 0.1]                            # evaluation points
+        @testset "Test 2D-Grad-RK_H1 kernel" begin
+            spl = interpolate(p, u, RK_H1(0.001))
+            grad = evaluate_gradient(spl, t)
+            @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-2
+            @test abs(grad[2]) ≈ 1.0 atol = 1e-2
+        end
+
+        @testset "Test 2D-Grad-RK_H2 kernel" begin
+            spl = interpolate(p, u, RK_H2(0.001))
+            grad = evaluate_gradient(spl, t)
+            @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-4
+            @test abs(grad[2]) ≈ 1.0 atol = 1e-4
+        end
+end
