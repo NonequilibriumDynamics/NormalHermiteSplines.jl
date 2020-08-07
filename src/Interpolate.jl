@@ -388,7 +388,7 @@ function _evaluate_gradient(spline::NormalSpline{T, RK},
         for i = 1:n_1
             d_h_values[i] = _∂rk_∂η_k(spline._kernel, pt, spline._nodes[:,i], k)
         end
-        grad[k] = sum(spline._mu .* d_h_values)
+        grad[k] = sum(spline._mu .* d_h_values) / spline._compression
     end
     return grad
 end

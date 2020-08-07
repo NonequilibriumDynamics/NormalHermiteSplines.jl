@@ -182,8 +182,8 @@ end
 
 @testset "Test 2D-Bis" begin
 
-    p = collect([-1.0 2.0; -1.0 4.0; 3.0 2.0; 3.0 4.0; 1.0 3.0]') # function knots
-    u = [0.0; 0.0; 0.0; 0.0; 1.0]                        # function values in knots
+    p = collect([-1.0 2.0; -1.0 4.0; 3.0 2.0; 3.0 4.0; 1.0 3.0]') # function nodes
+    u = [0.0; 0.0; 0.0; 0.0; 1.0]                        # function values in nodes
 
     t = collect([-1.0 3.0; 0.0 3.0; 1.0 3.0; 2.0 3.0; 3.0 3.0]')  # evaluation points
 
@@ -194,7 +194,7 @@ end
 
         spl = construct(spl, u)                          # construct spline
         vt = [1.0, 3.0]
-        σ = evaluate_one(spl, vt)                            # evaluate spline in the knot
+        σ = evaluate_one(spl, vt)                            # evaluate spline in the node
         @test σ ≈ 1.0
 
         wt = [0.0, 3.0]
@@ -258,12 +258,20 @@ end
 end
 
 @testset "Test 2D-Grad" begin
-        p = collect([0.0 0.0; 1.0 0.0; 0.0 1.0]') # function knots
-        u = [0.0; 0.0; 1.0]                       # function values in knots
-        t = [0.1; 0.1]                            # evaluation points
+        p = collect([0.0 0.0; 1.0 0.0; 0.0 1.0]') # function nodes
+        u = [0.0; 0.0; 1.0]                       # function values in nodes
+        t = [0.5; 0.5]                            # evaluation points
+        p2 = collect([0.0 0.0; 2.0 0.0; 0.0 2.0]') # function nodes
+        u2 = [0.0; 0.0; 2.0]                       # function values in nodes
+        t2 = [1.0; 1.0]                            # evaluation points
         @testset "Test 2D-Grad-RK_H1 kernel" begin
             spl = interpolate(p, u, RK_H1(0.001))
             grad = evaluate_gradient(spl, t)
+            @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-2
+            @test abs(grad[2]) ≈ 1.0 atol = 1e-2
+
+            spl = interpolate(p2, u2, RK_H1(0.001))
+            grad = evaluate_gradient(spl, t2)
             @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-2
             @test abs(grad[2]) ≈ 1.0 atol = 1e-2
         end
@@ -271,6 +279,11 @@ end
         @testset "Test 2D-Grad-RK_H2 kernel" begin
             spl = interpolate(p, u, RK_H2(0.001))
             grad = evaluate_gradient(spl, t)
+            @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-4
+            @test abs(grad[2]) ≈ 1.0 atol = 1e-4
+
+            spl = interpolate(p2, u2, RK_H2(0.001))
+            grad = evaluate_gradient(spl, t2)
             @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-4
             @test abs(grad[2]) ≈ 1.0 atol = 1e-4
         end
