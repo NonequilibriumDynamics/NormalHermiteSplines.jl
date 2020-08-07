@@ -466,7 +466,7 @@ function evaluate_one(spline::NormalSpline{T, RK},
                      ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     v_points = Vector{T}(undef, 1)
     v_points[1] = point
-    return _evaluate(spline, Matrix(v_points'))
+    return _evaluate(spline, Matrix(v_points'))[1]
 end
 
 """
@@ -485,7 +485,7 @@ function evaluate_derivative(spline::NormalSpline{T, RK},
                             ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
     v_points = Vector{T}(undef, 1)
     v_points[1] = point
-    return _evaluate_gradient(spline, Matrix(v_points'))
+    return _evaluate_gradient(spline, v_points)[1]
 end
 
 """
@@ -532,9 +532,9 @@ Create the 1D normal spline by `values` of function defined at `nodes` and
 Return: the completely initialized `NormalSpline` object that can be passed to `evaluate` function
         to interpolate the data to required points.
 """
-function interpolate(nodes::Matrix{T},
+function interpolate(nodes::Vector{T},
                      values::Vector{T},
-                     d_nodes::Matrix{T},
+                     d_nodes::Vector{T},
                      d_values::Vector{T},
                      kernel::RK = RK_H1()
                     ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
