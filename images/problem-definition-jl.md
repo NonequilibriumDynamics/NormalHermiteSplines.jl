@@ -19,11 +19,11 @@ We assume that function ``f`` is an element of the Bessel potential space ``H^s_
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
   ( \varepsilon ^2 + | \xi |^2 )^{s/2}{\mathcal F} [\varphi ] \in L_2 (R^n) \right\} , \quad
-  \varepsilon \gt 0 , \ s \gt \frac{n}{2} + r \, , \quad r = 1,2,\dots \, .
+  \varepsilon \gt 0 , \ \ s = n/2 + 1/2 + r \, , \quad r = 1,2,\dots \, .
 ```
 where ``| \cdot |`` is the Euclidean norm, ``S'  (R^n)`` is space of L. Schwartz tempered distributions, parameter ``s`` may be treated as a fractional differentiation order and ``\mathcal F [\varphi ]`` is a Fourier transform of the ``\varphi``. The parameter ``\varepsilon`` can be considered as a "scaling parameter", it allows to control approximation properties of the normal spline which usually are getting better with smaller values of ``\varepsilon``, also it can be used to reduce the ill-conditioness of the related computational problem (in traditional theory ``\varepsilon = 1``).
 
-The Bessel potential space ``H^s_\varepsilon (R^n), \ (\varepsilon \gt 0 , \ s \gt \frac{n}{2} + r)`` is a Hilbert space, an element ``f`` from that space can be treated as a ``r``-times continuously differentiable function.
+The Bessel potential space ``H^s_\varepsilon (R^n), \ (\varepsilon \gt 0 , \ s = n/2 + 1/2 + r)`` is a Hilbert space, an element ``f`` from that space can be treated as a ``r``-times continuously differentiable function.
 
 The normal splines method consists in finding a solution of system (1) having minimal norm in Hilbert space ``H^s_\varepsilon (R^n)``, thus the interpolation normal spline ``\sigma`` is defined as follows:
 
