@@ -2,12 +2,12 @@ using Printf
 using PyPlot
 
 function test_2D(model_id::Int,
+                 use_grad::Bool,
                  type_of_samples::Int = 2,
                  n_of_samples::Int = 1,
                  type_of_kernel::Int = 0,
                  eps::Float64 = 0.0,
-                 regular_grid_size::Int = 40,
-                 use_grad::Bool = true
+                 regular_grid_size::Int = 100
 #                 ,do_parallel::Bool = false
                 )
     if use_grad && type_of_kernel == 0
@@ -190,7 +190,7 @@ function test_2D(model_id::Int,
         es = es[:,1:k]
         du = du[1:k]
 
-    for i = 1:n_1
+        for i = 1:n_1
             u[i] = get_2D_model4(nodes[:, i])
         end
         for i = 1:m
@@ -302,6 +302,36 @@ function test_2D(model_id::Int,
         for i = 1:m
             f[i] = get_2D_model12(grid[:, i])
         end
+    elseif model_id == 13
+        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
+        es = Matrix{Float64}(undef, 2, 2 * n_1)
+        du = Vector{Float64}(undef, 2 * n_1)
+        k = 0
+        for i = 1:n_1
+            k += 1
+            grad = get_2D_model13_grad(nodes[:, i])
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            du[k] = grad[1]
+            es[1,k] = 1.0
+            es[2,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            du[k] = grad[2]
+            es[1,k] = 0.0
+            es[2,k] = 1.0
+        end
+        d_nodes = d_nodes[:,1:k]
+        es = es[:,1:k]
+        du = du[1:k]
+
+        for i = 1:n_1
+            u[i] = get_2D_model13(nodes[:, i])
+        end
+        for i = 1:m
+            f[i] = get_2D_model13(grid[:, i])
+        end
     else
         error("Incorrect value of 'model_id'")
         return
@@ -408,6 +438,10 @@ function test_2D(model_id::Int,
         lvls=[-0.1;-0.05;0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0;1.05;1.1]
         lvls2 = lvls
     end
+    if model_id == 13
+        lvls=[-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1;1.2;1.3]
+        lvls2 = lvls
+    end
 
     PyPlot.clf()
     pygui(false)
@@ -457,7 +491,10 @@ function test_2D(model_id::Int,
     # if model_id == 3
     #     PyPlot.view_init(20,30)
     # end
-    #PyPlot.view_init(30,-60)
+    #PyPlot.view_init(30,-60) #default
+    if model_id == 13
+        PyPlot.view_init(30,30)
+    end
     o = scatter3D(grid[1,:],grid[2,:], f, c=σ,  s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
@@ -500,14 +537,17 @@ function test_2D(model_id::Int,
     # PyPlot.clf()
     #
     # pygui(false)
-    # # if model_id == 3
-    # #     PyPlot.view_init(20,30)
-    # # end
+    # if model_id == 3
+    #     PyPlot.view_init(20,30)
+    # end
+    # if model_id == 13
+    #     PyPlot.view_init(30,30)
+    # end
     # #o = surf(gx, gy, σ, cmap=ColorMap("viridis"), alpha=0.75)
     # o = surf(gx, gy, f, cmap=ColorMap("viridis"), linewidth=0, antialiased=false, alpha=1.0)
     # tick_params(axis="both", which="major", labelsize=6)
     # tick_params(axis="both", which="minor", labelsize=6)
-    # colorbar(o)
+    # # colorbar(o)
     # savefig("c:/0/m_s_$model_id.png")
     #
 
@@ -517,6 +557,9 @@ function test_2D(model_id::Int,
     #     PyPlot.view_init(20,30)
     # end
     #PyPlot.view_init(30,-60)
+    if model_id == 13
+        PyPlot.view_init(30,30)
+    end
     o = scatter3D(grid[1,:],grid[2,:], σ, c=σ, s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
@@ -569,6 +612,9 @@ function test_2D(model_id::Int,
     #     PyPlot.view_init(20,30)
     # end
     #o = surf(gx, gy, σ, cmap=ColorMap("viridis"), alpha=0.75)
+    if model_id == 13
+        PyPlot.view_init(30,30)
+    end
     o = surf(gx, gy, delta, cmap=ColorMap("jet"), linewidth=0, antialiased=false, alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
