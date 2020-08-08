@@ -1,6 +1,6 @@
 name = "NormalHermiteSplines"
 uuid = "67f7b941-d455-546b-99f0-07b665bf0aaf"
-keywords = ["interpolation", "splines", "hermite-splines", "normal-splines", "rkhs"]
+keywords = ["interpolation", "splines", "hermite-splines", "normal-splines", "approximation" "rkhs"]
 authors = ["Igor Kohanovsky <nettvor@gmail.com>"]
 version = "0.2.0"
 

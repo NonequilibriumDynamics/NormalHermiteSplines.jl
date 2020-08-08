@@ -225,6 +225,7 @@ end
 function get_2D_model13(p::Vector{Float64})
 # Franke #1
 # R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS) 25 (1),1999
+# https://dl.acm.org/doi/10.1145/305658.305745
 #  (x,y) \in [0;1][0;1]
     x = p[1]
     y = p[2]
