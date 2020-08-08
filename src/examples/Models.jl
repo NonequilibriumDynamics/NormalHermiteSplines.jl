@@ -223,6 +223,8 @@ function get_2D_model12_grad(p::Vector{Float64})
 end
 
 function get_2D_model13(p::Vector{Float64})
+# Franke #1
+# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS) 25 (1),1999
 #  (x,y) \in [0;1][0;1]
     x = p[1]
     y = p[2]
@@ -238,4 +240,12 @@ function get_2D_model13_grad(p::Vector{Float64})
     grad = [0.0; 0.0]
     x = p[1]
     y = p[2]
+    grad[1] = -0.27551*(9.*x + 1.)*exp(0.1*(-9.*y - 1.) - (1./49.)*(9.*x + 1.)^2) -
+               2.25*(9.*x - 7.)*exp(0.25*(-(9.*x - 7.)^2 - (9.*y - 3.)^2)) +
+               3.6*(9.*x - 4.)*exp(-(9.*x - 4.)^2 - (9.*y - 7.)^2) -
+               3.375*(9.*x - 2.)*exp(0.25*(-(9.*x - 2.)^2 - (9.*y - 2.)^2))
+    grad[2] = -0.675*exp(0.1*(-9.*y - 1.) - (1./49.)*(9.*x + 1.)^2) +
+               3.6*(9.*y - 7.)*exp(-(9.*x - 4.)^2 - (9.*y - 7.)^2) -
+               2.25*(9.*y - 3.)*exp(0.25*(-(9.*x - 7.)^2 - (9.*y - 3.)^2)) -
+               3.375*(9.*y - 2.)*exp(0.25*(-(9.*x - 2.)^2 - (9.*y - 2.)^2))
 end
