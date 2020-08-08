@@ -40,11 +40,11 @@ and  norm
 ```
 It is easy to see that all these norms are equivalent. It means that space ``H^s_\varepsilon (R^n)`` is equivalent to ``H^s (R^n) =  H^s_1 (R^n)`` ([3], [5]).
 
- Hilbert space ``H^s_\varepsilon (R^n)`` (``s = n/2 + 1/2 + r, \, r \ge 1``) is continuously embedded in Hölder space ``C_b^r(R^n)`` ([3],[17],[20]) of functions continuous and bounded with their first ``r`` derivatives, it means function ``f`` can be treated as an element of function class ``C^r(R^n)`` of functions continuous with their first ``r`` derivatives. Therefore functionals ``F_i`` and ``F'_j``
+ Hilbert space ``H^s_\varepsilon (R^n)`` is continuously embedded in Hölder space ``C_b^r(R^n)`` ([3],[17],[20]) of functions continuous and bounded with their first ``r`` derivatives, it means function ``f`` can be treated as an element of function class ``C^r(R^n)`` of functions continuous with their first ``r`` derivatives. Therefore functionals ``F_i`` and ``F'_j``
 
 ```math
 \begin{aligned}
-  & F_i(\varphi) = \varphi (p_i) \, , \ \ F'_j(\varphi) = \frac{ \partial{\varphi} }{ \partial{e_j} }(s_j) \, , \ \ \forall \varphi \in H^s_\varepsilon (R^n) \, , \ s = n/2 + 1/2 + r \, , \ r \ge 1 \, ,
+  & F_i(\varphi) = \varphi (p_i) \, , \ \ F'_j(\varphi) = \frac{ \partial{\varphi} }{ \partial{e_j} }(s_j) \, , \ \ \forall \varphi \in H^s_\varepsilon (R^n) \, , 
    \quad
    p_i, \, s_j \in R^n \, , 
    \\
@@ -170,7 +170,7 @@ Further
 \end{aligned}
 ```
 
-Normal hermite splines will be constructed in Bessel potential spaces ``H^{s_1}_\varepsilon (R^n) , \, s_1 = n/2 + 3/2`` and ``H^{s_2}_\varepsilon (R^n) , \, s_2 = n/2 + 5/2``. Elements of space ``H^{s_1}`` can be treated as  continuously differentiable functions and elements of space ``H^{s_2}`` can be treated as twice continuously differentiable functions. Note, the spline is infinitely differentiable everywhere in ``R^n`` exepting the knots ``p_i`` and ``s_j``.
+Here normal hermite splines will be constructed in Bessel potential spaces ``H^{s_1}_\varepsilon (R^n) , \, s_1 = n/2 + 3/2`` and ``H^{s_2}_\varepsilon (R^n) , \, s_2 = n/2 + 5/2``. Elements of space ``H^{s_1}`` can be treated as  continuously differentiable functions and elements of space ``H^{s_2}`` can be treated as twice continuously differentiable functions. Note, the spline is infinitely differentiable everywhere in ``R^n`` exepting the knots ``p_i`` and ``s_j``.
 
 Reproducing kernel of Bessel potential space was presented in [5] and its simplified form was given in [14], [18], [19], [20]. For space ``H^{s}_\varepsilon (R^n), \, s = n/2 + 1/2 + r, \, r \ge 0`` it can be written as:
 
