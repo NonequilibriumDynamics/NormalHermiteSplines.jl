@@ -79,7 +79,7 @@ Approximation error plots:
  <img src="/images/delta_s_6,2,3,1,_0.0,_.png" width="256"/>  <img src="/images/delta_cf_6,2,3,1,_0.0,_.png" width="256"/> 
 
 Spline was evaluated on a uniform Cartesian grid of size 101x101. Accuracy of the interpolation was measured by calculating the Root Mean Square Error (RMSE) and the Maximum Absolute Error (MAE). For this case
-```RMSE```: 1.5E-03, ```MAE```: 1.1E-01, estimated value of the scaling parameter ```ε``` is 5.7E+00, estimation of the Gram matrix condition number is 1.0E+12.
+```RMSE```: 1.7E-03, ```MAE```: 1.1E-01, estimated value of the scaling parameter ```ε``` is 1.1E+01, estimation of the Gram matrix condition number is 1.0E+11.
 
 The second example is the geometric composition ```Ψ``` of a circle and a square. The function ```ψ``` on ```Ω=[0,1]x[0,1]``` is given as ```Ψ = C + S```, where ```C``` and ```S``` denote the characteristic functions of these circle and square.
 

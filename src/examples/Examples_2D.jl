@@ -675,8 +675,8 @@ function readme_1()
     # the 'scaling parameter' ```ε``` here is estimated in the '''interpolate''' procedure
     rk = RK_H1()
     #
-    spline = interpolate(nodes, u, d_nodes, du, es, rk)
-    σ = evaluate(spline, grid)
+    spline = interpolate(nodes, u, d_nodes, es, du, rk)
+    #σ = evaluate(spline, grid)
 end
 
 function readme_2()
