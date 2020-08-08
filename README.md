@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="/images/logo.png" width="400" alt="Normal Splines">
+</div>
+
 # Normal Hermite Splines
 
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://IgorKohan.github.io/NormalHermiteSplines.jl/stable)
