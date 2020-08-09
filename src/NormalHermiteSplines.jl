@@ -294,7 +294,7 @@ end
 """
 `estimate_epsilon(nodes::Matrix{T}) where T <: AbstractFloat`
 
-Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
+Get the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
 It should have the same order as result returned by `get_epsilon` function if all `nodes` are located in a unit hypercube,
 othewise the estimated value of `ε` can be significantly higher then necessary.
 # Arguments
