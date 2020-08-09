@@ -676,7 +676,7 @@ function readme_1()
     rk = RK_H1()
     #
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
-    #σ = evaluate(spline, grid)
+    σ = evaluate(spline, grid)
 end
 
 function readme_2()
