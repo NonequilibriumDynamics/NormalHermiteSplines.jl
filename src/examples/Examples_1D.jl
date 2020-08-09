@@ -2,32 +2,25 @@ using Printf
 using PyPlot
 
 function test_1D(model_id::Int,
+                 use_grad::Bool = true,
                  type_of_samples::Int = 2,
                  n_of_samples::Int = 1,
                  type_of_kernel::Int = 0,
                  eps::Float64 = 0.0,
-                 regular_grid_size::Int = 40,
-                 use_grad::Bool = true
+                 regular_grid_size::Int = 1000
 #                 ,do_parallel::Bool = false
                 )
     if use_grad && type_of_kernel == 0
         error("Cannot use derivative data when type_of_kernel is `0` (`RK_H0` kernel)")
     end
+
+    samples_size = [50, 100, 200, 500, 1000]
     if type_of_samples == 1
-        samples_size = [1, 11, 24, 250, 1250]
-        nodes = get_2D_test1_nodes(samples_size[n_of_samples])
+        nodes = get_1D_halton_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 2
-        samples_size = [50, 100, 1000, 2500, 5000, 10000]
-        nodes = get_2D_halton_nodes(samples_size[n_of_samples])
+        nodes = get_1D_eps_grid(samples_size[n_of_samples])
     elseif type_of_samples == 3
-        sets = [4; 6; 21; 34; 49; 70]
-        nodes = get_2D_Lissajous_nodes(sets[n_of_samples])
-    elseif type_of_samples == 4
-        samples_size = [9, 15, 32, 49, 70, 99]
-        nodes = get_2D_eps_grid(samples_size[n_of_samples])
-    elseif type_of_samples == 5
-        samples_size = [9, 15, 30, 50, 75, 100]
-        nodes = get_2D_grid(samples_size[n_of_samples])
+        nodes = get_1D_grid(samples_size[n_of_samples])
     else
         error("Incorrect value of 'type_of_samples'")
     end
@@ -55,252 +48,25 @@ function test_1D(model_id::Int,
         return
     end
 
-    n_1 = size(nodes, 2)
+    n_1 = length(nodes)
     u = Vector{Float64}(undef, n_1)
-    grid = get_2D_grid(regular_grid_size)
-    m = size(grid, 2)
+    grid = get_1D_grid(regular_grid_size)
+    m = length(grid)
     f = Vector{Float64}(undef, m)
     if model_id == 1
-        # d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
-        # es = Matrix{Float64}(undef, 2, 2 * n_1)
-        # du = Vector{Float64}(undef, 2 * n_1)
-        # k = 0
-        # for i = 1:n_1
-        #     k += 1
-        #     d_nodes[1,k] = nodes[1,i]
-        #     d_nodes[2,k] = nodes[2,i]
-        #     du[k] = 0.0
-        #     es[1,k] = 1.0
-        #     es[2,k] = 0.0
-        #     k += 1
-        #     d_nodes[1,k] = nodes[1,i]
-        #     d_nodes[2,k] = nodes[2,i]
-        #     du[k] = 0.0
-        #     es[1,k] = 0.0
-        #     es[2,k] = 1.0
-        # end
-        # d_nodes = d_nodes[:,1:k]
-        # es = es[:,1:k]
-        # du = du[1:k]
-
-        d_nodes = get_2D_grid(100)
-        d_n_1 = size(d_nodes, 2)
-        d_nodes = [d_nodes d_nodes]
-        es = Matrix{Float64}(undef, 2, 2 * d_n_1)
-        du = Vector{Float64}(undef, 2 * d_n_1)
-        k = 0
-        for i = 1:d_n_1
-            k += 1
-            du[k] = 0.0
-            es[1,k] = 1.0
-            es[2,k] = 0.0
-            k += 1
-            du[k] = 0.0
-            es[1,k] = 0.0
-            es[2,k] = 1.0
-        end
-
-        for i = 1:n_1
-            u[i] = get_2D_model1(nodes[:, i])
-        end
-        for i = 1:m
-            f[i] = get_2D_model1(grid[:, i])
-        end
-    elseif model_id == 2
-        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
-        es = Matrix{Float64}(undef, 2, 2 * n_1)
-        du = Vector{Float64}(undef, 2 * n_1)
+        d_nodes = Vector{Float64}(undef, n_1)
+        du = Vector{Float64}(undef, n_1)
         k = 0
         for i = 1:n_1
-            k += 1
-            grad = get_2D_model2_grad(nodes[:, i])
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[1]
-            es[1,k] = 1.0
-            es[2,k] = 0.0
-            k += 1
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[2]
-            es[1,k] = 0.0
-            es[2,k] = 1.0
+            d_nodes[i] = nodes[i]
+            grad = get_1D_model1_grad(d_nodes[i])
+            du[i] = get_1D_model1_grad(nodes[i])
         end
-        d_nodes = d_nodes[:,1:k]
-        es = es[:,1:k]
-        du = du[1:k]
-
         for i = 1:n_1
-            u[i] = get_2D_model2(nodes[:, i])
+            u[i] = get_1D_model(nodes[i])
         end
         for i = 1:m
-            f[i] = get_2D_model2(grid[:, i])
-        end
-    elseif model_id == 3
-        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
-        es = Matrix{Float64}(undef, 2, 2 * n_1)
-        du = Vector{Float64}(undef, 2 * n_1)
-        k = 0
-        for i = 1:n_1
-            k += 1
-            grad = get_2D_model3_grad(nodes[:, i])
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[1]
-            es[1,k] = 1.0
-            es[2,k] = 0.0
-            k += 1
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[2]
-            es[1,k] = 0.0
-            es[2,k] = 1.0
-        end
-        d_nodes = d_nodes[:,1:k]
-        es = es[:,1:k]
-        du = du[1:k]
-
-        for i = 1:n_1
-            u[i] = get_2D_model3(nodes[:, i])
-        end
-        for i = 1:m
-            f[i] = get_2D_model3(grid[:, i])
-        end
-    elseif model_id == 4
-        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
-        es = Matrix{Float64}(undef, 2, 2 * n_1)
-        du = Vector{Float64}(undef, 2 * n_1)
-        k = 0
-        for i = 1:n_1
-            k += 1
-            grad = get_2D_model4_grad(nodes[:, i])
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[1]
-            es[1,k] = 1.0
-            es[2,k] = 0.0
-            k += 1
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[2]
-            es[1,k] = 0.0
-            es[2,k] = 1.0
-        end
-        d_nodes = d_nodes[:,1:k]
-        es = es[:,1:k]
-        du = du[1:k]
-
-    for i = 1:n_1
-            u[i] = get_2D_model4(nodes[:, i])
-        end
-        for i = 1:m
-            f[i] = get_2D_model4(grid[:, i])
-        end
-    elseif model_id == 5
-        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
-        es = Matrix{Float64}(undef, 2, 2 * n_1)
-        du = Vector{Float64}(undef, 2 * n_1)
-        k = 0
-        for i = 1:n_1
-            k += 1
-            grad = get_2D_model5_grad(nodes[:, i])
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[1]
-            es[1,k] = 1.0
-            es[2,k] = 0.0
-            k += 1
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[2]
-            es[1,k] = 0.0
-            es[2,k] = 1.0
-        end
-        d_nodes = d_nodes[:,1:k]
-        es = es[:,1:k]
-        du = du[1:k]
-
-        for i = 1:n_1
-            u[i] = get_2D_model5(nodes[:, i])
-        end
-        for i = 1:m
-            f[i] = get_2D_model5(grid[:, i])
-        end
-    elseif model_id == 6
-        grid = get_2D_grid2(regular_grid_size)
-        m = size(grid, 2)
-        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
-        es = Matrix{Float64}(undef, 2, 2 * n_1)
-        du = Vector{Float64}(undef, 2 * n_1)
-        k = 0
-        for i = 1:n_1
-            nodes[1, i] = nodes[1, i] * 2.0 - 1.0
-            nodes[2, i] = nodes[2, i] * 2.0 - 1.0
-            u[i] = get_2D_model6(nodes[:, i])
-            k += 1
-            grad = get_2D_model6_grad(nodes[:, i])
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[1]
-            es[1,k] = 1.0
-            es[2,k] = 0.0
-            k += 1
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[2]
-            es[1,k] = 0.0
-            es[2,k] = 1.0
-        end
-        d_nodes = d_nodes[:,1:k]
-        es = es[:,1:k]
-        du = du[1:k]
-
-        for i = 1:m
-            f[i] = get_2D_model6(grid[:, i])
-        end
-    elseif model_id == 10
-        for i = 1:n_1
-            u[i] = get_2D_model10(nodes[:, i])
-        end
-        for i = 1:m
-            f[i] = get_2D_model10(grid[:, i])
-        end
-    elseif model_id == 11
-        for i = 1:n_1
-            u[i] = get_2D_model11(nodes[:, i])
-        end
-        for i = 1:m
-            f[i] = get_2D_model11(grid[:, i])
-        end
-    elseif model_id == 12
-        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
-        es = Matrix{Float64}(undef, 2, 2 * n_1)
-        du = Vector{Float64}(undef, 2 * n_1)
-        grid = get_2D_rect_grid(regular_grid_size)
-        m = size(grid, 2)
-        k = 0
-        for i = 1:n_1
-            nodes[1, i] = nodes[1, i] * 8.0 - 4.0
-            nodes[2, i] = nodes[2, i] * 4.0 - 2.0
-            u[i] = get_2D_model12(nodes[:, i])
-            k += 1
-            grad = get_2D_model12_grad(nodes[:, i])
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[1]
-            es[1,k] = 1.0
-            es[2,k] = 0.0
-            k += 1
-            d_nodes[1,k] = nodes[1,i]
-            d_nodes[2,k] = nodes[2,i]
-            du[k] = grad[2]
-            es[1,k] = 0.0
-            es[2,k] = 1.0
-        end
-
-        f = Vector{Float64}(undef, m)
-        for i = 1:m
-            f[i] = get_2D_model12(grid[:, i])
+            f[i] = get_1D_model1(grid[i])
         end
     else
         error("Incorrect value of 'model_id'")
@@ -323,7 +89,7 @@ function test_1D(model_id::Int,
              epsilon = estimate_epsilon(nodes, d_nodes)
              @printf "Estimated EPSILON:%0.1e\n" epsilon
         end
-        spline = interpolate(nodes, u, d_nodes, es, du, rk)
+        spline = interpolate(nodes, u, d_nodes, du, rk)
     else
         if rk.ε == 0
              epsilon = estimate_epsilon(nodes)

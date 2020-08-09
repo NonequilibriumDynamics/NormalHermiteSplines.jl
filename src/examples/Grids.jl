@@ -1,5 +1,41 @@
 using Random
 
+########### 1D grids
+
+function get_1D_grid(m::Int)
+    return collect(range(1.3, 1.4; step = 1.0/m))
+end
+
+function get_1D_eps_grid(m::Int)
+    x = collect(range(1.3, 1.4; step = 1.0/m))
+    m1 = m + 1
+    Random.seed!(123)
+    eps = 0.05/m
+    for i = 1:m1
+        x[i] = x[i] + eps * (rand() - 0.5)
+        x[i] = x[i] < 1.0 ? 1.0 : x[i]
+        x[i] = x[i] > 2.0 ? 2.0 : x[i]
+    end
+    return x
+end
+
+function get_1D_halton_nodes(m::Int)
+    x0 = [1.3; 1.4]
+    if m <= 2
+        return x0
+    end
+    m -= 2
+    x = Vector{Float64}(undef, m)
+    reset_halton()
+    init_halton(2)
+    for i = 1:m
+        x[i] = get_halton_node()
+    end
+    return [x0; x]
+end
+
+########### 2D grids
+
 function get_2D_grid(m::Int)
     x = collect(range(0.0, 1.0; step = 1.0/m))
     y = collect(range(0.0, 1.0; step = 1.0/m))
@@ -67,27 +103,6 @@ function get_2D_rect_grid(m::Int)
             r = (i - 1) * n1 + j
             mat[1, r] = x[i]
             mat[2, r] = y[j]
-        end
-    end
-    return mat
-end
-
-function get_3D_grid(m::Int)
-    x = collect(range(0.0, 1.0; step = 1.0/m))
-    y = collect(range(0.0, 1.0; step = 1.0/m))
-    z = collect(range(0.0, 1.0; step = 1.0/m))
-    m1 = m + 1
-    ms = m1^3
-    mat = Matrix{Float64}(undef, 3, ms)
-    for i = 1:m1
-        xv = x[i]
-        for j = 1:m1
-            for k = 1:m1
-                r = ((i - 1) * m1 + (j - 1)) * m1 + k
-                mat[1, r] = x[i]
-                mat[2, r] = y[j]
-                mat[3, r] = z[k]
-            end
         end
     end
     return mat
@@ -210,6 +225,29 @@ function get_2D_halton_nodes(m::Int)
     return hcat(mat0, mat)
 end
 
+########### 3D grids
+
+function get_3D_grid(m::Int)
+    x = collect(range(0.0, 1.0; step = 1.0/m))
+    y = collect(range(0.0, 1.0; step = 1.0/m))
+    z = collect(range(0.0, 1.0; step = 1.0/m))
+    m1 = m + 1
+    ms = m1^3
+    mat = Matrix{Float64}(undef, 3, ms)
+    for i = 1:m1
+        xv = x[i]
+        for j = 1:m1
+            for k = 1:m1
+                r = ((i - 1) * m1 + (j - 1)) * m1 + k
+                mat[1, r] = x[i]
+                mat[2, r] = y[j]
+                mat[3, r] = z[k]
+            end
+        end
+    end
+    return mat
+end
+
 function get_3D_halton_nodes(m::Int)
     mat0 = [0.0 0.0 0.0; 0.0 0.0 1.0; 0.0 1.0 0.0; 0.0 1.0 1.0; 1.0 0.0 0.0; 1.0 0.0 1.0; 1.0 1.0 0.0; 1.0 1.0 1.0]'
     if m <= 8
@@ -217,6 +255,7 @@ function get_3D_halton_nodes(m::Int)
     end
     m -= 8
     x = Vector{Float64}(undef, m)
+    reset_halton()
     init_halton(2)
     for i = 1:m
         x[i] = get_halton_node()

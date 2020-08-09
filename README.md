@@ -31,13 +31,14 @@ We'll construct an interpolating normal spline using this function and its gradi
 using NormalHermiteSplines
 
 nodes = get_2D_halton_nodes(1000)             # generates Halton data set in [0,1]x[0,1] 
-n_1 = size(nodes, 2)
 u = Vector{Float64}(undef, n_1)               # function values
-grid = get_2D_grid2(100)                      # uniform Cartesian grid of size 101x101 
 d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)  # directional derivative nodes 
-es = Matrix{Float64}(undef, 2, 2 * n_1)       # derivative direction 
+es = Matrix{Float64}(undef, 2, 2 * n_1)       # derivative directions 
 du = Vector{Float64}(undef, 2 * n_1)          # directional derivative values 
 
+grid = get_2D_grid2(100)                      # uniform Cartesian grid of size 101x101 
+
+n_1 = size(nodes, 2)
 k = 0
 for i = 1:n_1
     nodes[1, i] = nodes[1, i] * 2.0 - 1.0     # transforming Halton nodes to [-1,1]x[-1,1] 

@@ -7,7 +7,7 @@ function get_1D_model1(p::Float64)
     return val
 end
 
-function get_1D_model1_grad(p::Float64, tol::Float64)
+function get_1D_model1_grad(p::Float64, tol::Float64=1.e-15)
     val = 0.0
     if abs(p - 4.0/3.0) > tol
         val = 2*p + 1.0/(3.3 * (p - 4.0/3.0))
