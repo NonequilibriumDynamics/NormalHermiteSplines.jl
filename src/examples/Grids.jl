@@ -7,10 +7,10 @@ function get_1D_grid(m::Int)
 end
 
 function get_1D_eps_grid(m::Int)
-    x = collect(range(1.3, 1.4; step = 1.0/m))
+    x = collect(range(1.3, 1.4; step = 0.1/m))
     m1 = m + 1
     Random.seed!(123)
-    eps = 0.05/m
+    eps = 0.1/m
     for i = 1:m1
         x[i] = x[i] + eps * (rand() - 0.5)
         x[i] = x[i] < 1.0 ? 1.0 : x[i]
@@ -29,7 +29,7 @@ function get_1D_halton_nodes(m::Int)
     reset_halton()
     init_halton(2)
     for i = 1:m
-        x[i] = get_halton_node()
+        x[i] = x0[1] + (x0[2] - x0[1]) * get_halton_node()
     end
     return [x0; x]
 end

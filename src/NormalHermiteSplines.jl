@@ -368,8 +368,7 @@ Assess interpolation results.
 Return: RMSE of interpolation at function value nodes.
 """
 function assess_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    σ = evaluate(spline, spline._nodes)
-    return get_RMSE(σ, spline._values)
+    return _assess_quality(spline)
 end
 
 ############################## One-dimensional case

@@ -14,7 +14,7 @@ function test_1D(model_id::Int,
         error("Cannot use derivative data when type_of_kernel is `0` (`RK_H0` kernel)")
     end
 
-    samples_size = [50, 100, 200, 500, 1000]
+    samples_size = [50, 100, 200, 400]
     if type_of_samples == 1
         nodes = get_1D_halton_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 2

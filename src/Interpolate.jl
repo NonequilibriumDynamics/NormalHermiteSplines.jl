@@ -39,7 +39,7 @@ function _prepare(nodes::Matrix{T},
     end
 
     if compression <= eps(T(1.0))
-        error("Cannot prepare the spline: `nodes` data is not correct.")
+        error("Cannot prepare the spline: `nodes` data are not correct.")
     end
 
     t_nodes = similar(nodes)
@@ -161,7 +161,7 @@ function _prepare(nodes::Matrix{T},
     end
 
     if compression <= eps(T(1.0))
-        error("Cannot prepare the spline: `nodes` data is not correct.")
+        error("Cannot prepare the spline: `nodes` data are not correct.")
     end
 
     t_nodes = similar(nodes)
@@ -246,6 +246,20 @@ function _construct(spline::NormalSpline{T, RK},
                           spline._cond
                          )
     return spline
+end
+
+function _assess_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+
+    n = size(spline._nodes, 1)
+    m = size(spline._nodes, 2)
+    nodes = similar(spline._nodes)
+    @inbounds for i = 1:n
+        for j = 1:m
+            nodes[i,j] = spline._min_bound[i] + spline._compression * spline._nodes[i,j]
+        end
+    end
+    σ = evaluate(spline, nodes)
+    return get_RMSE(σ, spline._values)
 end
 
 function _evaluate(spline::NormalSpline{T, RK},
