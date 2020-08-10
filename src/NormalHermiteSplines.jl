@@ -295,8 +295,7 @@ end
 `estimate_epsilon(nodes::Matrix{T}) where T <: AbstractFloat`
 
 Get the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function if all `nodes` are located in a unit hypercube,
-othewise the estimated value of `ε` can be significantly higher then necessary.
+It should have the same order as result returned by `get_epsilon` function if all `nodes` are located in a unit hypercube.
 # Arguments
 - `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
@@ -315,8 +314,7 @@ end
 `estimate_epsilon(nodes::Matrix{T}, d_nodes::Matrix{T}) where T <: AbstractFloat`
 
 Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function if all `nodes` and `d_nodes` are located in a unit hypercube,
-othewise the estimated value of `ε` can be significantly higher then necessary.
+It should have the same order as result returned by `get_epsilon` function if all `nodes` and `d_nodes` are located in a unit hypercube.
 # Arguments
 - `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
@@ -503,7 +501,7 @@ function prepare(nodes::Vector{T},
                  kernel::RK = RK_H1()
                 ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
 
-     es = ones(T, size(d_nodes, 2))
+     es = ones(T, length(d_nodes))
      spline = _prepare(Matrix(nodes'), Matrix(d_nodes'), Matrix(es'), kernel)
      return spline
 end
@@ -530,7 +528,7 @@ function interpolate(nodes::Vector{T},
                      d_values::Vector{T},
                      kernel::RK = RK_H1()
                     ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
-     es = ones(T, size(d_nodes, 2))
+     es = ones(T, length(d_nodes))
      spline = _prepare(Matrix(nodes'), Matrix(d_nodes'), Matrix(es'), kernel)
      spline = _construct(spline, values, d_values)
      return spline
@@ -540,8 +538,7 @@ end
 `estimate_epsilon(nodes::Vector{T}) where T <: AbstractFloat`
 
 Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function if all `nodes` are located in a unit hypercube,
-othewise the estimated value of `ε` can be significantly higher then necessary.
+It should have the same order as result returned by `get_epsilon` function if all `nodes` are located in a unit hypercube.
 # Arguments
 - `nodes`: The function value nodes.
 
@@ -557,8 +554,7 @@ end
 `estimate_epsilon(nodes::Vector{T}, d_nodes::Vector{T}) where T <: AbstractFloat`
 
 Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function if all `nodes` and `d_nodes` are located in a unit hypercube,
-othewise the estimated value of `ε` can be significantly higher then necessary.
+It should have the same order as result returned by `get_epsilon` function if all `nodes` and `d_nodes` are located in a unit hypercube.
 # Arguments
 - `nodes`: The function value nodes.
 - `d_nodes`: The function derivative nodes.

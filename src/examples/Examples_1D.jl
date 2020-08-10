@@ -3,7 +3,7 @@ using PyPlot
 
 function test_1D(model_id::Int,
                  use_grad::Bool = true,
-                 type_of_samples::Int = 2,
+                 type_of_samples::Int = 3,
                  n_of_samples::Int = 1,
                  type_of_kernel::Int = 0,
                  eps::Float64 = 0.0,
@@ -53,17 +53,16 @@ function test_1D(model_id::Int,
     grid = get_1D_grid(regular_grid_size)
     m = length(grid)
     f = Vector{Float64}(undef, m)
+    d_nodes = Vector{Float64}(undef, n_1)
+    du = Vector{Float64}(undef, n_1)
     if model_id == 1
-        d_nodes = Vector{Float64}(undef, n_1)
-        du = Vector{Float64}(undef, n_1)
         k = 0
         for i = 1:n_1
             d_nodes[i] = nodes[i]
-            grad = get_1D_model1_grad(d_nodes[i])
             du[i] = get_1D_model1_grad(nodes[i])
         end
         for i = 1:n_1
-            u[i] = get_1D_model(nodes[i])
+            u[i] = get_1D_model1(nodes[i])
         end
         for i = 1:m
             f[i] = get_1D_model1(grid[i])
@@ -74,14 +73,14 @@ function test_1D(model_id::Int,
     end
 
     if use_grad
-        @printf "nodes#: %d  d_nodes#: %d (total nodes: %d)\n" n_1 k (n_1+k)
+        @printf "nodes#: %d  d_nodes#: %d (total nodes: %d)\n" n_1 n_1 (n_1+n_1)
     else
         @printf "nodes#: %d\n" n_1
     end
 
     @printf "model_id type_of_samples  n_of_samples  type_of_kernel  regular_grid_size\n"
     @printf "%2d      %2d             %4d             %1d               %3d\n" model_id type_of_samples n_of_samples type_of_kernel regular_grid_size
-
+#
     @printf "Creating spline..\n"
     ts = time_ns()
     if use_grad
@@ -104,6 +103,9 @@ function test_1D(model_id::Int,
     ε = get_epsilon(spline)
     @printf "EPSILON:%0.1e   COND: %0.1e \n" ε cond
 
+    iq = assess_quality(spline)
+    @printf "interpolation quality: %0.1e\n" iq
+
     @printf "Evaluating spline..\n"
     ts = time_ns()
     σ = evaluate(spline, grid)
@@ -111,9 +113,9 @@ function test_1D(model_id::Int,
     te = time_ns()
     e_time = (te - ts) / 10^9
     @printf "Spline evaluated. time: %0.1e sec\n" e_time
-
+#
     rmse = get_RMSE(f, σ)
-    delta = f .- σ
+    delta = σ .- f
     mae = maximum(abs.(delta))
     spline_min = minimum(σ)
     spline_max = maximum(σ)
@@ -128,229 +130,38 @@ function test_1D(model_id::Int,
     end
 
     @printf "Creating pictures..\n"
-    gx = grid[1,:]
-    gy = grid[2,:]
-    x = unique(grid[1,:])
-    y = unique(grid[2,:])
-    gσ = reshape(σ, length(y), length(x))
-    gf = reshape(f, length(y), length(x))
-    ss = (6 - n_of_samples) > 1 ? (6 - n_of_samples)/n_of_samples : 2.0/n_of_samples
-
-    if model_id == 1
-        lvls = [0.0;0.05;0.1;0.3;0.5;0.7;0.8;0.9;0.95;1.0]
-        lvls2 = [-0.001;0.0;0.05;0.1;0.3;0.5;0.7;0.8;0.9;0.95;1.0;1.001;]
-    end
-    if model_id == 2
-        lvls = [-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1]
-        lvls2 = lvls
-    end
-    if model_id == 3
-        lvls=[-0.1;-0.05;0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0;1.05;1.1]
-        lvls2 = lvls
-    end
-    if model_id == 4
-        lvls=[-0.6;-0.55;-0.5;-0.4;-0.3;-0.2;-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.05;1.1]
-        lvls2 = lvls
-    end
-    if model_id == 5
-        lvls=[-1.2;-1.15;-1.05;-1.0;-0.95;-0.9;-0.7;-0.5;-0.3;-0.1;0.0;0.1;0.3;0.5;0.7;0.9;0.95;1.0;1.05;1.1;1.15;1.2]
-        lvls2 = lvls
-    end
-    if model_id == 6
-        lvls=[-1.0;-0.9;-0.7;-0.5;-0.3;-0.1;0.0;0.1;0.3;0.5;0.7;0.9;1.0]
-        lvls2 = lvls
-#        lvls=[-1.1;-1.0;-0.9;-0.7;-0.5;-0.3;-0.1;0.0;0.1;0.3;0.5;0.7;0.9;1.0;1.1]
-    end
-
-    if model_id == 10
-        lvls=[0.8; 0.85;0.90;0.95;1.0;1.05;1.1;1.15;1.2]
-        lvls2 = lvls
-    end
-    if model_id == 11
-        lvls=[0.0;0.1;0.2;0.3;0.39]
-        lvls2 = lvls
-    end
-    if model_id == 12
-        lvls=[-0.1;-0.05;0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0;1.05;1.1]
-        lvls2 = lvls
-    end
 
     PyPlot.clf()
     pygui(false)
-    o = contourf(x, y, gσ, levels=lvls2, cmap=ColorMap("gnuplot"))
-    axis("equal")
-    # if n_of_samples <= 2
-    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
-    # end
-    if model_id == 6
-        PyPlot.xlim(-1.0, 1.0)
-        PyPlot.ylim(-1.0, 1.0)
+    PyPlot.xlim(1.3, 1.4)
+    PyPlot.ylim(0.0, 2.5)
+    ss = 4
+    if n_of_samples >= 3
+        ss = 1
     end
-    if model_id == 12
-        PyPlot.xlim(-4.0, 4.0)
-        PyPlot.ylim(-2.0, 2.0)
-    end
-    colorbar(o)
-    savefig("c:/0/s_cf_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+    scatter(nodes, u, alpha=1.0, s=ss, c ="Red")
+    savefig("c:/0/sca_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
     PyPlot.clf()
     pygui(false)
-    scatter(nodes[1,:], nodes[2,:], s= ss)
-    gca().set_aspect("equal")
-    savefig("c:/0/m_grid_$model_id,$type_of_samples,$n_of_samples.png")
+    PyPlot.xlim(1.3, 1.4)
+    PyPlot.ylim(0.0, 2.5)
+    plot(grid, f, color="red")
+    savefig("c:/0/fun_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
     PyPlot.clf()
     pygui(false)
-    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
-#    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
-    axis("equal")
-    # if n_of_samples <= 2
-    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
-    # end
-    if model_id == 6
-        PyPlot.xlim(-1.0, 1.0)
-        PyPlot.ylim(-1.0, 1.0)
-    end
-    if model_id == 12
-        PyPlot.xlim(-4.0, 4.0)
-        PyPlot.ylim(-2.0, 2.0)
-    end
-    colorbar(o)
-    savefig("c:/0/m_cf_$model_id.png")
+    PyPlot.xlim(1.3, 1.4)
+    PyPlot.ylim(0.0, 2.5)
+    plot(grid, σ, color="blue")
+    savefig("c:/0/spl_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
     PyPlot.clf()
     pygui(false)
-    # if model_id == 3
-    #     PyPlot.view_init(20,30)
-    # end
-    #PyPlot.view_init(30,-60)
-    o = scatter3D(grid[1,:],grid[2,:], f, c=σ,  s=1, cmap=ColorMap("gnuplot"))
-    tick_params(axis="both", which="major", labelsize=6)
-    tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
-    savefig("c:/0/m_t_$model_id.png")
-
-#     PyPlot.clf()
-#     pygui(false)
-#     o = contour(x, y, gσ, levels=lvls)
-#     axis("equal")
-#     if n_of_samples <= 2
-#         scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
-#     end
-#     if model_id == 6
-#         PyPlot.xlim(-1.0, 1.0)
-#         PyPlot.ylim(-1.0, 1.0)
-#     end
-#     if model_id == 12
-# #        axis("equal")
-#         PyPlot.xlim(-4.0, 4.0)
-#         PyPlot.ylim(-2.0, 2.0)
-#     end
-#     colorbar(o)
-#     savefig("c:/0/s_c_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
-#     PyPlot.clf()
-
-    # pygui(false)
-    # # if model_id == 3
-    # #     PyPlot.view_init(20,30)
-    # # end
-    # #o = surf(gx, gy, σ, cmap=ColorMap("viridis"), alpha=0.75)
-    # o = surf(gx, gy, σ, cmap=ColorMap("viridis"), linewidth=0, antialiased=false, alpha=1.0)
-    # tick_params(axis="both", which="major", labelsize=6)
-    # tick_params(axis="both", which="minor", labelsize=6)
-    # colorbar(o)
-    #
-    # #scatter(nodes[1,:], nodes[2,:], c="red", s= ss, zdir="z")
-    # #colorbar(o)
-    # savefig("c:/0/s_s_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
-    # PyPlot.clf()
-    #
-    # pygui(false)
-    # # if model_id == 3
-    # #     PyPlot.view_init(20,30)
-    # # end
-    # #o = surf(gx, gy, σ, cmap=ColorMap("viridis"), alpha=0.75)
-    # o = surf(gx, gy, f, cmap=ColorMap("viridis"), linewidth=0, antialiased=false, alpha=1.0)
-    # tick_params(axis="both", which="major", labelsize=6)
-    # tick_params(axis="both", which="minor", labelsize=6)
-    # colorbar(o)
-    # savefig("c:/0/m_s_$model_id.png")
-    #
-
-    PyPlot.clf()
-    pygui(false)
-    # if model_id == 3
-    #     PyPlot.view_init(20,30)
-    # end
-    #PyPlot.view_init(30,-60)
-    o = scatter3D(grid[1,:],grid[2,:], σ, c=σ, s=1, cmap=ColorMap("gnuplot"))
-    tick_params(axis="both", which="major", labelsize=6)
-    tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
-    savefig("c:/0/s_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
-    PyPlot.clf()
-######
-    gd = reshape(delta, length(y), length(x))
-    PyPlot.clf()
-    pygui(false)
-    o = contourf(x, y, gd, cmap=ColorMap("jet"))
-    axis("equal")
-    # if n_of_samples <= 2
-    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
-    # end
-    if model_id == 6
-        PyPlot.xlim(-1.0, 1.0)
-        PyPlot.ylim(-1.0, 1.0)
-    end
-    if model_id == 12
-    #        axis("equal")
-        PyPlot.xlim(-4.0, 4.0)
-        PyPlot.ylim(-2.0, 2.0)
-    end
-    colorbar(o)
-    savefig("c:/0/delta_cf_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
-
-    #PyPlot.clf()
-    # pygui(false)
-    # o = contour(x, y, gd)
-    # axis("equal")
-    # if n_of_samples <= 2
-    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
-    # end
-    # if model_id == 6
-    #     PyPlot.xlim(-1.0, 1.0)
-    #     PyPlot.ylim(-1.0, 1.0)
-    # end
-    # if model_id == 12
-    # #        axis("equal")
-    #     PyPlot.xlim(-4.0, 4.0)
-    #     PyPlot.ylim(-2.0, 2.0)
-    # end
-    # colorbar(o)
-    # savefig("c:/0/delta_c_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
-
-    PyPlot.clf()
-    pygui(false)
-    # if model_id == 3
-    #     PyPlot.view_init(20,30)
-    # end
-    #o = surf(gx, gy, σ, cmap=ColorMap("viridis"), alpha=0.75)
-    o = surf(gx, gy, delta, cmap=ColorMap("jet"), linewidth=0, antialiased=false, alpha=1.0)
-    tick_params(axis="both", which="major", labelsize=6)
-    tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
-    savefig("c:/0/delta_s_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
-
-    #PyPlot.clf()
-    # pygui(false)
-    # # if model_id == 3
-    # #     PyPlot.view_init(20,30)
-    # # end
-    # o = scatter3D(grid[1,:],grid[2,:], delta, c=delta,  s=1)
-    # tick_params(axis="both", which="major", labelsize=6)
-    # tick_params(axis="both", which="minor", labelsize=6)
-    # colorbar(o)
-    # savefig("c:/0/delta_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+    PyPlot.xlim(1.3, 1.4)
+    PyPlot.ylim(0.0, 1.1*mae)
+    plot(grid, delta, color="green")
+    savefig("c:/0/dlt_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
     PyPlot.clf()
     @printf "Pictures created.\n"

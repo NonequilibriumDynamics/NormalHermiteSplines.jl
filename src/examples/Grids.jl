@@ -3,7 +3,7 @@ using Random
 ########### 1D grids
 
 function get_1D_grid(m::Int)
-    return collect(range(1.3, 1.4; step = 1.0/m))
+    return collect(range(1.3, 1.4; step = 0.1/m))
 end
 
 function get_1D_eps_grid(m::Int)
