@@ -4,7 +4,7 @@ module NormalHermiteSplines
 export prepare, construct, interpolate
 export evaluate, evaluate_one, evaluate_gradient
 export NormalSpline, RK_H0, RK_H1, RK_H2
-export get_epsilon, estimate_epsilon, get_cond, estimate_interpolation_quality
+export get_epsilon, estimate_epsilon, get_cond, assess_quality
 # -- 1D case --
 export evaluate_derivative
 # --
@@ -361,15 +361,15 @@ end
 end
 
 """
-`estimate_interpolation_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+`assess_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Estimate the interpolation quality.
+Assess interpolation results.
 # Arguments
 - `spline`: the `NormalSpline` object returned by `construct` or `interpolate` function.
 
 Return: RMSE of interpolation at function value nodes.
 """
-function estimate_interpolation_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+function assess_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     σ = evaluate(spline, spline._nodes)
     return get_RMSE(σ, spline._values)
 end
