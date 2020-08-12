@@ -132,7 +132,7 @@ Further examples are given in documentation.
 
 For more information and explanation see [Documentation](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Hermite-Splines/)
 
-The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [2]. Multivariate generalization of the normal splines method was developed for two-dimensional problem of low-range computerized tomography in [3] and applied for solving a mathematical economics problem in [4]. Further results were reported on seminars and conferences [5,6,7].
+The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [2]. Multivariate generalization of the normal splines method was developed for two-dimensional problem of low-range computerized tomography in [3] and applied for solving a mathematical economics problem in [4]. Further results were reported at the seminars and conferences [5,6,7].
 
 ## References:
 1. [Halton sequence](https://en.wikipedia.org/wiki/Halton_sequence)

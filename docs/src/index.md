@@ -50,7 +50,7 @@ Using these results it is possible to reduce the task (2) to solving a system of
 
 Detailed explanation is given in [Multivariate Normal Hermite Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Hermite-Splines/)
 
-The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [1]. Multivariate generalization of the normal splines method was developed for two-dimensional problem of low-range computerized tomography in [2] and applied for solving a mathematical economics problem in [3]. Further results were reported on seminars and conferences [4,5,6].
+The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [1]. Multivariate generalization of the normal splines method was developed for two-dimensional problem of low-range computerized tomography in [2] and applied for solving a mathematical economics problem in [3]. Further results were reported at the seminars and conferences [4,5,6].
 
 #### References:
 1. V. Gorbunov, The method of normal spline collocation. [USSR Computational Mathematics and Mathematical Physics, Vol. 29, No. 1, 1989](https://www.researchgate.net/publication/265357408_Method_of_normal_spline-collocation)
