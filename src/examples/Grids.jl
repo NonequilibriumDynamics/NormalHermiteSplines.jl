@@ -235,13 +235,64 @@ function get_3D_grid(m::Int)
     ms = m1^3
     mat = Matrix{Float64}(undef, 3, ms)
     for i = 1:m1
-        xv = x[i]
         for j = 1:m1
             for k = 1:m1
                 r = ((i - 1) * m1 + (j - 1)) * m1 + k
                 mat[1, r] = x[i]
                 mat[2, r] = y[j]
                 mat[3, r] = z[k]
+            end
+        end
+    end
+    return mat
+end
+
+function get_3D_plot_grid(m::Int)
+    x = collect(range(0.0, 1.0; step = 1.0/m))
+    y = collect(range(0.0, 1.0; step = 1.0/m))
+    z = [0.0; 0.25; 0.5; 0.75; 1.0]
+    mz = length(z)
+    m1 = m + 1
+    ms = mz * m1^2
+    mat = Matrix{Float64}(undef, 3, ms)
+    for i = 1:m1
+        for j = 1:m1
+            for k = 1:mz
+                r = ((i - 1) * m1 + (j - 1)) * mz + k
+                mat[1, r] = x[i]
+                mat[2, r] = y[j]
+                mat[3, r] = z[k]
+            end
+        end
+    end
+    return mat
+end
+
+function get_3D_eps_grid(m::Int)
+    x = collect(range(0.0, 1.0; step = 1.0/m))
+    y = collect(range(0.0, 1.0; step = 1.0/m))
+    z = collect(range(0.0, 1.0; step = 1.0/m))
+    m1 = m + 1
+    ms = m1^3
+    mat = Matrix{Float64}(undef, 2, ms)
+    Random.seed!(123)
+    eps = 0.4 / m
+    for i = 1:m1
+        for j = 1:m1
+            for k = 1:m1
+                r = ((i - 1) * m1 + (j - 1)) * m1 + k
+                tx = x[i] + eps * (rand() - 0.5)
+                tx = tx < 0.0 ? 0.0 : tx
+                tx = tx > 1.0 ? 1.0 : tx
+                ty = y[j] + eps * (rand() - 0.5)
+                ty = ty < 0.0 ? 0.0 : ty
+                ty = ty > 1.0 ? 1.0 : ty
+                tz = z[k] + eps * (rand() - 0.5)
+                tz = tz < 0.0 ? 0.0 : tz
+                tz = tz > 1.0 ? 1.0 : tz
+                mat[1, r] = tx
+                mat[2, r] = ty
+                mat[3, r] = tz
             end
         end
     end
