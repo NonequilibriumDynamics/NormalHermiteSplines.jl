@@ -253,9 +253,6 @@ function get_2D_model13_grad(p::Vector{Float64})
 end
 
 function get_3D_model1(p::Vector{Float64})
-#https://en.wikipedia.org/wiki/Barycentric_coordinate_system#Interpolation_on_a_triangular_unstructured_grid
-    x = [1.0 0.0 0.0 0.0; 0.0 1.0 0.0 0.0; 0.0 0.0 1.0 0.0]
-    u = [0.0; 0.0; 1.0; 0.0]
     r = p[1] + p[2] + p[3]
     val = -1.0
     if(p[1] < 0.0 || p[2] < 0.0 || p[3] < 0.0 || r > 1.0)
@@ -283,6 +280,11 @@ function get_3D_model2(p::Vector{Float64})
     return val
 end
 
+function get_3D_model2_grad()
+    return [0.0; 0.0; 0.0]
+end
+
+
 # Function F2 (Cliff function) from
 # R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS) 25 (1),1999
 function get_3D_model3(p::Vector{Float64})
@@ -292,4 +294,8 @@ function get_3D_model3(p::Vector{Float64})
     z = p[3]
     f = (tanh(9.0 * (y - x)) + 1.0) / (tanh(9.0)+ 1.0)
     return f
+end
+
+function get_3D_model3_grad()
+    return [0.0; 0.0; 0.0]
 end

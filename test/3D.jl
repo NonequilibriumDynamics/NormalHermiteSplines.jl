@@ -1,5 +1,21 @@
 @testset "Test 3D" begin
 
+    # function get_3D_model1(p::Vector{Float64})
+    #     r = p[1] + p[2] + p[3]
+    #     val = -1.0
+    #     if(p[1] < 0.0 || p[2] < 0.0 || p[3] < 0.0 || r > 1.0)
+    #         return val
+    #     end
+    #     return r
+    # end
+    #
+    # function get_3D_model1_grad()
+    #     return [1.0; 1.0; 1.0]
+    # end
+
+    p = [1.0 0.0 0.0 0.0; 0.0 1.0 0.0 0.0; 0.0 0.0 1.0 0.0]
+    u = [1.0; 1.0; 1.0; 0.0]
+    ####
     p = [0. 0. 1. 1. 0.5;  0. 1. 0. 1. 0.5] # nodes
     u = [0.0; 0.0; 0.0; 0.0; 1.0]   # function values in nodes
     u2 = [0.0; 0.0; 0.0; 0.0; 2.0]  # second function values in nodes

@@ -3,7 +3,7 @@ using PyPlot
 
 function test_2D(model_id::Int,
                  use_grad::Bool,
-                 type_of_samples::Int = 2,
+                 type_of_samples::Int = 1,
                  n_of_samples::Int = 1,
                  type_of_kernel::Int = 0,
                  eps::Float64 = 0.0,
@@ -13,10 +13,10 @@ function test_2D(model_id::Int,
     if use_grad && type_of_kernel == 0
         error("Cannot use derivative data when type_of_kernel is `0` (`RK_H0` kernel)")
     end
-    if type_of_samples == 1
+    if type_of_samples == 2
         samples_size = [1, 11, 24, 250, 1250]
         nodes = get_2D_test1_nodes(samples_size[n_of_samples])
-    elseif type_of_samples == 2
+    elseif type_of_samples == 1
         samples_size = [50, 100, 1000, 2500, 5000, 10000]
         nodes = get_2D_halton_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 3
@@ -391,7 +391,7 @@ function test_2D(model_id::Int,
         @printf io "c_time: %0.1e  e_time: %0.1e\n\n" c_time e_time
     end
 
-    @printf "Creating pictures..\n"
+    @printf "Creating plots..\n"
     gx = grid[1,:]
     gy = grid[2,:]
     x = unique(grid[1,:])
@@ -495,7 +495,7 @@ function test_2D(model_id::Int,
     if model_id == 13
         PyPlot.view_init(30,30)
     end
-    o = scatter3D(grid[1,:],grid[2,:], f, c=σ,  s=1, cmap=ColorMap("gnuplot"))
+    o = scatter3D(grid[1,:],grid[2,:], f, c=f,  s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o)
@@ -633,7 +633,7 @@ function test_2D(model_id::Int,
     # savefig("c:/0/delta_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
     PyPlot.clf()
-    @printf "Pictures created.\n"
+    @printf "Plots created.\n"
     return spline
 end
 
@@ -677,6 +677,7 @@ function readme_1()
     #
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
     σ = evaluate(spline, grid)
+    return Nothing
 end
 
 function readme_2()

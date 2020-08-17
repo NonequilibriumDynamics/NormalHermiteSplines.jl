@@ -10,7 +10,7 @@ export evaluate_derivative
 # --
 ####
 
-#include("./Examples/Main.jl")
+include("./Examples/Main.jl")
 
 using LinearAlgebra
 
