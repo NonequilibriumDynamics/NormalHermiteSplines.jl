@@ -7,9 +7,10 @@ function test_3D(model_id::Int,
                  n_of_samples::Int = 4,
                  type_of_kernel::Int = 0,
                  eps::Float64 = 0.0,
-                 plot_grid_size::Int = 50
-#                 plot_grid_size::Int = 25
-#                 ,do_parallel::Bool = false
+                 plot_grid_type::Int = 1,
+                 plot_grid_size = 25, # plot_grid_type = 1: 25, 20, 16, 40, 50
+                                      # plot_grid_type = 2: 50, 40, 75
+                 #,do_parallel::Bool = false
                 )
     if use_derivatives && type_of_kernel == 0
         error("Cannot use derivative data when type_of_kernel is `0` (`RK_H0` kernel)")
@@ -51,10 +52,13 @@ function test_3D(model_id::Int,
         return
     end
 
-    n_1 = size(nodes, 2)
-    #grid = get_3D_grid(plot_grid_size)
-    grid = get_3D_plot_grid(plot_grid_size)
+    if plot_grid_type == 1
+        grid = get_3D_grid(plot_grid_size)
+    else
+        grid = get_3D_plot_grid(plot_grid_size)
+    end
     m = size(grid, 2)
+    n_1 = size(nodes, 2)
     if model_id == 1
         wnodes = similar(nodes)
         k = 0
@@ -200,19 +204,58 @@ function test_3D(model_id::Int,
         for i = 1:m
             f[i] = get_3D_model3(grid[:, i])
         end
+    elseif model_id == 4
+        u = Vector{Float64}(undef, n_1)
+        f = Vector{Float64}(undef, m)
+        d_nodes = Matrix{Float64}(undef, 3, 3*n_1)
+        es = Matrix{Float64}(undef, 3, 3*n_1)
+        du = Vector{Float64}(undef, 3*n_1)
+        k = 0
+        for i = 1:n_1
+            u[i] = get_3D_model4(nodes[:, i])
+            k += 1
+            grad = get_3D_model4_grad()
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            d_nodes[3,k] = nodes[3,i]
+            du[k] = grad[1]
+            es[1,k] = 1.0
+            es[2,k] = 0.0
+            es[3,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            d_nodes[3,k] = nodes[3,i]
+            du[k] = grad[2]
+            es[1,k] = 0.0
+            es[2,k] = 1.0
+            es[3,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            d_nodes[3,k] = nodes[3,i]
+            du[k] = grad[3]
+            es[1,k] = 0.0
+            es[2,k] = 0.0
+            es[3,k] = 1.0
+        end
+
+        for i = 1:m
+            f[i] = get_3D_model4(grid[:, i])
+        end
     else
         error("Incorrect value of 'model_id'")
         return
     end
 
     if use_derivatives
-        @printf "nodes#: %d  d_nodes#: %d (total nodes: %d)\n" n_1 n_1 (n_1+n_1)
+        @printf "nodes#: %d  d_nodes#: %d (total nodes: %d)  grid %d\n" n_1 n_1 (n_1+n_1) m
     else
-        @printf "nodes#: %d\n" n_1
+        @printf "nodes#: %d  grid %d\n" n_1 m
     end
 
     @printf "model_id type_of_samples  n_of_samples  type_of_kernel   plot_grid_size  use_derivatives\n"
-    @printf "%2d      %2d             %4d             %1d               %3d               %s\n" model_id type_of_samples n_of_samples type_of_kernel  plot_grid_size use_derivatives
+    @printf "%2d      %2d             %4d             %1d                 %5d              %s\n" model_id type_of_samples n_of_samples type_of_kernel m use_derivatives
 #
     @printf "Creating spline..\n"
     ts = time_ns()
@@ -257,7 +300,7 @@ function test_3D(model_id::Int,
     @printf "RMSE: %0.1e  MAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e delta_min:%0.1e delta_max:%0.1e\n" rmse mae spline_min spline_max delta_min delta_max
     open("c:/0/$model_id.txt","a") do io
         @printf io "model_id type_of_samples  n_of_samples  type_of_kernel   plot_grid_size  use_derivatives\n"
-        @printf io "%2d      %2d             %4d             %1d               %3d               %s\n" model_id type_of_samples n_of_samples type_of_kernel  plot_grid_size use_derivatives
+        @printf io "%2d      %2d             %4d             %1d                 %5d              %s\n" model_id type_of_samples n_of_samples type_of_kernel m use_derivatives
         @printf io "RMSE: %0.1e  MAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e   EPS:%0.1e   COND: %0.1e\n" rmse mae spline_min spline_max ε cond
         @printf io "c_time: %0.1e  e_time: %0.1e\n\n" c_time e_time
     end
@@ -269,16 +312,24 @@ function test_3D(model_id::Int,
     #PyPlot.view_init(30,-60)
     if model_id == 1
         PyPlot.view_init(30,30)
+    else
+        PyPlot.view_init(20,30)
     end
+    
     o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=f, s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o)
-    savefig("c:/0/m_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+    savefig("c:/0/m_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png")
     PyPlot.clf()
 
 
     @printf "Plots created.\n"
-#    return spline
+
+    # ix = grid[3,:] .== 0.25
+    # gr = grid[:,ix]
+    # gf = f[ix]
+    # gσ = σ[ix]
+    # return gr
     return Nothing
 end
