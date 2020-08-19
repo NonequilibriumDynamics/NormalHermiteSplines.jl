@@ -2,28 +2,28 @@ using Printf
 using PyPlot
 
 function test_3D(model_id::Int,
-                 use_derivatives::Bool = false,
+                 use_grad::Bool = false,
                  type_of_samples::Int = 1,
                  n_of_samples::Int = 4,
                  type_of_kernel::Int = 0,
                  eps::Float64 = 0.0,
                  plot_grid_type::Int = 1,
-                 plot_grid_size = 25, # plot_grid_type = 1: 25, 20, 16, 40, 50
+                 plot_grid_size = 25, # plot_grid_type = 1: 25, 20, 16, 30, 50
                                       # plot_grid_type = 2: 50, 40, 75
                  #,do_parallel::Bool = false
                 )
-    if use_derivatives && type_of_kernel == 0
+    if use_grad && type_of_kernel == 0
         error("Cannot use derivative data when type_of_kernel is `0` (`RK_H0` kernel)")
     end
 
     if type_of_samples == 1
-        samples_size = [1, 100, 500, 1000, 4000, 8000, 16000]
+        samples_size = [1, 100, 500, 1000, 2000, 4000, 8000, 16000]
         nodes = get_3D_halton_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 2
-        samples_size = [1, 4, 7, 9, 15, 19, 25]
-        nodes = get_3D_grid(samples_size[n_of_samples]) #1(8), 4(125), 7(512), 9(1000), 15(4096)(d), 19(8000), 24(15625)
+        samples_size = [1, 4, 7, 9, 12, 15, 19, 24]
+        nodes = get_3D_grid(samples_size[n_of_samples]) #1(8), 4(125), 7(512), 9(1000), 12(2197), 15(4096)(d), 19(8000), 24(15625)
     elseif type_of_samples == 3
-        samples_size = [1, 4, 7, 9, 15, 19, 25]
+        samples_size = [1, 4, 7, 9, 12, 15, 19, 24]
         nodes = get_3D_eps_grid(samples_size[n_of_samples])
     else
         error("Incorrect value of 'type_of_samples'")
@@ -175,7 +175,7 @@ function test_3D(model_id::Int,
         for i = 1:n_1
             u[i] = get_3D_model3(nodes[:, i])
             k += 1
-            grad = get_3D_model3_grad()
+            grad = get_3D_model3_grad(nodes[:, i])
             d_nodes[1,k] = nodes[1,i]
             d_nodes[2,k] = nodes[2,i]
             d_nodes[3,k] = nodes[3,i]
@@ -214,7 +214,7 @@ function test_3D(model_id::Int,
         for i = 1:n_1
             u[i] = get_3D_model4(nodes[:, i])
             k += 1
-            grad = get_3D_model4_grad()
+            grad = get_3D_model4_grad(nodes[:, i])
             d_nodes[1,k] = nodes[1,i]
             d_nodes[2,k] = nodes[2,i]
             d_nodes[3,k] = nodes[3,i]
@@ -248,18 +248,18 @@ function test_3D(model_id::Int,
         return
     end
 
-    if use_derivatives
-        @printf "nodes#: %d  d_nodes#: %d (total nodes: %d)  grid %d\n" n_1 n_1 (n_1+n_1) m
+    if use_grad
+        @printf "nodes#: %d  d_nodes#: %d (total nodes: %d)  grid %d\n" n_1 k (n_1+k) m
     else
         @printf "nodes#: %d  grid %d\n" n_1 m
     end
 
-    @printf "model_id type_of_samples  n_of_samples  type_of_kernel   plot_grid_size  use_derivatives\n"
-    @printf "%2d      %2d             %4d             %1d                 %5d              %s\n" model_id type_of_samples n_of_samples type_of_kernel m use_derivatives
+    @printf "model_id type_of_samples  n_of_samples  type_of_kernel   plot_grid_size  use_grad\n"
+    @printf "%2d      %2d             %4d             %1d                 %5d            %s\n" model_id type_of_samples n_of_samples type_of_kernel m use_grad
 #
     @printf "Creating spline..\n"
     ts = time_ns()
-    if use_derivatives
+    if use_grad
         if rk.ε == 0
              epsilon = estimate_epsilon(nodes, d_nodes)
              @printf "Estimated EPSILON:%0.1e\n" epsilon
@@ -299,13 +299,27 @@ function test_3D(model_id::Int,
     delta_max = maximum(delta)
     @printf "RMSE: %0.1e  MAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e delta_min:%0.1e delta_max:%0.1e\n" rmse mae spline_min spline_max delta_min delta_max
     open("c:/0/$model_id.txt","a") do io
-        @printf io "model_id type_of_samples  n_of_samples  type_of_kernel   plot_grid_size  use_derivatives\n"
-        @printf io "%2d      %2d             %4d             %1d                 %5d              %s\n" model_id type_of_samples n_of_samples type_of_kernel m use_derivatives
+        @printf io "model_id type_of_samples  n_of_samples  type_of_kernel   plot_grid_size  use_grad\n"
+        @printf io "%2d      %2d             %4d             %1d                 %5d            %s\n" model_id type_of_samples n_of_samples type_of_kernel m use_grad
         @printf io "RMSE: %0.1e  MAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e   EPS:%0.1e   COND: %0.1e\n" rmse mae spline_min spline_max ε cond
         @printf io "c_time: %0.1e  e_time: %0.1e\n\n" c_time e_time
     end
 
     @printf "Creating plots..\n"
+
+    PyPlot.clf()
+    pygui(false)
+    if model_id == 1
+        PyPlot.view_init(30,30)
+    else
+        PyPlot.view_init(20,30)
+    end
+    o = scatter3D(nodes[1,:], nodes[2,:], nodes[3,:], c=u, s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
+#    o = scatter3D(nodes[1,:], nodes[2,:], nodes[3,:], c=(u./maximum(u)), s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
+    tick_params(axis="both", which="major", labelsize=6)
+    tick_params(axis="both", which="minor", labelsize=6)
+    colorbar(o)
+    savefig("c:/0/m_nodes_$model_id,$type_of_samples,$n_of_samples.png")
 
     PyPlot.clf()
     pygui(false)
@@ -315,12 +329,49 @@ function test_3D(model_id::Int,
     else
         PyPlot.view_init(20,30)
     end
-    
     o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=f, s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
+#    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=(f./maximum(f)), s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o)
-    savefig("c:/0/m_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png")
+    savefig("c:/0/m_grid_$model_id,$plot_grid_type,$plot_grid_size,_.png")
+
+    PyPlot.clf()
+    PyPlot.clf()
+    pygui(false)
+    #PyPlot.view_init(30,-60)
+    if model_id == 1
+        PyPlot.view_init(30,30)
+    else
+        PyPlot.view_init(20,30)
+    end
+    if model_id == 4
+        hmax = 2.0*maximum(σ)
+        o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=(σ./hmax) , s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
+    else
+        o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=σ, s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
+    end
+#    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=(σ./maximum(σ)), s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
+    tick_params(axis="both", which="major", labelsize=6)
+    tick_params(axis="both", which="minor", labelsize=6)
+    colorbar(o)
+    savefig("c:/0/s_grid_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png")
+    PyPlot.clf()
+
+    PyPlot.clf()
+    pygui(false)
+    #PyPlot.view_init(30,-60)
+    if model_id == 1
+        PyPlot.view_init(30,30)
+    else
+        PyPlot.view_init(20,30)
+    end
+    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=delta, s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
+#    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=(delta./maximum(delta)) , s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
+    tick_params(axis="both", which="major", labelsize=6)
+    tick_params(axis="both", which="minor", labelsize=6)
+    colorbar(o)
+    savefig("c:/0/delta_t_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png")
     PyPlot.clf()
 
 
@@ -332,4 +383,5 @@ function test_3D(model_id::Int,
     # gσ = σ[ix]
     # return gr
     return Nothing
+#    return spline
 end

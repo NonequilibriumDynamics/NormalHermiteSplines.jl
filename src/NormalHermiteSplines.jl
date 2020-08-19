@@ -163,7 +163,7 @@ Return: the spline value at the location defined in `point`.
 function evaluate_one(spline::NormalSpline{T, RK},
                       point::Vector{T}
                      ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    return _evaluate(spline, reshape(point, length(point), 1))[1]
+    return _evaluate(spline, reshape(point, :, 1))[1]
 end
 
 """
@@ -426,7 +426,7 @@ end
 """
 `evaluate(spline::NormalSpline{T, RK}, points::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Evaluate the 1D spline values at the `points` locations.
+Evaluate the spline values/value at the `points` locations.
 
 # Arguments
 - `spline`: the `NormalSpline` object returned by `interpolate` or `construct` function.
@@ -438,7 +438,7 @@ Return: spline value at the `point` location.
 function evaluate(spline::NormalSpline{T, RK},
                   points::Vector{T}
                  ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    return _evaluate(spline, Matrix(points'))
+    return _evaluate(spline, reshape(points, :, 1))
 end
 
 """

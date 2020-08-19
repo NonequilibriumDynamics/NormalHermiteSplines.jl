@@ -203,7 +203,7 @@ end
 function get_2D_halton_nodes(m::Int)
     mat0 = [0.0 0.0; 0.0 1.0; 1.0 0.0; 1.0 1.0]'
     if m <= 4
-        return mat0
+        return Matrix(mat0)
     end
     m -= 4
     x = Vector{Float64}(undef, m)
@@ -302,7 +302,7 @@ end
 function get_3D_halton_nodes(m::Int)
     mat0 = [0.0 0.0 0.0; 0.0 0.0 1.0; 0.0 1.0 0.0; 0.0 1.0 1.0; 1.0 0.0 0.0; 1.0 0.0 1.0; 1.0 1.0 0.0; 1.0 1.0 1.0]'
     if m <= 8
-        return mat0
+        return Matrix(mat0)
     end
     m -= 8
     x = Vector{Float64}(undef, m)

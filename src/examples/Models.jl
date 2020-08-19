@@ -79,7 +79,7 @@ function get_2D_model2_grad(p::Vector{Float64})
 end
 
 # Function F2 (Cliff function) from
-# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS) 25 (1),1999
+# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS), Vol.25, No.1,1999
 function get_2D_model3(p::Vector{Float64})
 #  (x,y) \in [0;1][0;1]
     x = p[1]
@@ -99,7 +99,7 @@ function get_2D_model3_grad(p::Vector{Float64})
 end
 
 # Function F10 from
-# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS) 25 (1),1999
+# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS), Vol.25, No.1,1999
 function get_2D_model4(p::Vector{Float64})
 #  (x,y) \in [0;1][0;1]
     x = p[1]
@@ -224,7 +224,7 @@ end
 
 function get_2D_model13(p::Vector{Float64})
 # Franke #1
-# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS) 25 (1),1999
+# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS), Vol.25, No.1,1999
 # https://dl.acm.org/doi/10.1145/305658.305745
 #  (x,y) \in [0;1][0;1]
     x = p[1]
@@ -266,44 +266,94 @@ function get_3D_model1_grad()
 end
 
 function get_3D_model2(p::Vector{Float64})
-# Franke #1
-# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS) 25 (1),1999
-# https://dl.acm.org/doi/10.1145/305658.305745
-#  (x,y) \in [0;1][0;1]
-    x = p[1]
-    y = p[2]
-    z = p[3]
-    val = 0.75*exp(-((9.0* x - 2.)^2 + (9.0*y - 2.)^2)/4.0) +
-          0.75*exp(-((9.0*x + 1.0)^2)/49. - (9.0*y + 1.0)/10.0) +
-          0.5*exp(-((9.0*x - 7.)^2 + (9.0*y - 3.)^2)/4.0) -
-          0.2*exp(-(9.0*x - 4.)^2 - (9.0*y - 7.)^2)
-    return val
-end
-
-function get_3D_model2_grad()
-    return [0.0; 0.0; 0.0]
-end
-
-
-# Function F2 (Cliff function) from
-# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS) 25 (1),1999
-function get_3D_model3(p::Vector{Float64})
-#  (x,y) \in [0;1][0;1]
-    x = p[1]
-    y = p[2]
-    z = p[3]
-    f = (tanh(9.0 * (y - x)) + 1.0) / (tanh(9.0)+ 1.0)
-    return f
-end
-
-function get_3D_model3_grad()
-    return [0.0; 0.0; 0.0]
-end
-
-function get_3D_model4(p::Vector{Float64})
     return p[3]
 end
 
-function get_3D_model4_grad()
+function get_3D_model2_grad()
     return [0.0; 0.0; 1.0]
 end
+
+
+function get_3D_model3(p::Vector{Float64})
+# T. Foley, Interpolation and approximation of 3-D and 4-D scattered data, Comput. Math. Appl., Vol.13, No.8, 1987.
+# https://www.sciencedirect.com/science/article/pii/0898122187900435
+# G_1(x,y,z), (x,y,z) \in [0;1][0;1][0;1]
+    x = p[1]
+    y = p[2]
+    z = p[3]
+
+    val = 0.75*exp(-16.0*((x - 0.25)^2 + (y - 0.25)^2 + (z - 0.25)^2)) +
+          0.50*exp(-10.0*((x - 0.25)^2 + (y - 0.25)^2)) +
+          0.50*exp(-10.0*((x - 0.75)^2 + (y - 0.125)^2 + (z - 0.5)^2)) -
+          0.25*exp(-20*((x - 0.75)^2 + (y - 0.75)^2))
+    return val
+end
+
+function get_3D_model3_grad(p::Vector{Float64})
+    grad = [0.0; 0.0; 0.0]
+    x = p[1]
+    y = p[2]
+    z = p[3]
+    grad[1] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + x) -
+              10.0*exp(-10.0*((-0.25 + x)^2 + (-0.25 + y)^2))*(-0.25 + x) -
+              10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.75 + x) +
+              10.0*exp(-20.0*((-0.75 + x)^2 + (-0.75 + y)^2))*(-0.75 + x)
+    grad[2] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + y) -
+              10.0*exp(-10.0*((-0.25 + x)^2 + (-0.25 + y)^2))*(-0.25 + y) -
+              10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.125 + y) +
+              10.0*exp(-20.0*((-0.75 + x)^2 + (-0.75 + y)^2))*(-0.75 + y)
+    grad[3] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + z) -
+              10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.5 + z)
+    return grad
+end
+
+function get_3D_model4(p::Vector{Float64})
+# T. Foley, Interpolation and approximation of 3-D and 4-D scattered data, Comput. Math. Appl., Vol.13, No.8, 1987.
+# https://www.sciencedirect.com/science/article/pii/0898122187900435
+# G_2(x,y,z), (x,y,z) \in [0;1][0;1][0;1]
+    val = get_3D_model3(p)
+    if val < 0.0
+        val = 0.0
+    end
+    if val > 0.5
+        val = 0.5
+    end
+    return val
+end
+
+function get_3D_model4_grad(p::Vector{Float64})
+    grad = get_3D_model3_grad(p)
+    val = get_3D_model3(p)
+    if val < 0.0
+        grad = [0.0; 0.0; 0.0]
+    end
+    if val > 0.5
+        grad = [0.0; 0.0; 0.0]
+    end
+    return grad
+end
+
+
+
+
+# Function F2 (Cliff function) from
+# R. Renka, Multivariate interpolation of large sets of scattered data. ACM Transactions on Mathematical Software, Vol.14, No.2, 1988.
+function get_3D_model5(p::Vector{Float64})
+#  (x,y,z) \in [0;1][0;1][0;1]
+    x = p[1]
+    y = p[2]
+    z = p[3]
+    f = (tanh(9.0*(z - x - y)) + 1.0) / (tanh(9.0)+ 1.0)
+#     f(x,y,z) = [1.25+cos(5.4y)] cos(6z) / [6+6(3x-1)2]
+    return f
+end
+
+function get_3D_model5_grad(p::Vector{Float64})
+    return [0.0; 0.0; 0.0]
+end
+
+
+
+# ROBERT E. BARNHILL and SARAH E. STEAD, Multistage trivariate surfaces, The Rocky Mountain Journal of Mathematics, Vol. 14, No. 1, 1984.
+# https://www.jstor.org/stable/44236789?seq=1
+# http://web.eecs.utk.edu/research/imp/tools/interp/

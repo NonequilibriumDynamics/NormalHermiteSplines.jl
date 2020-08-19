@@ -465,7 +465,7 @@ function test_2D(model_id::Int,
     pygui(false)
     scatter(nodes[1,:], nodes[2,:], s= ss)
     gca().set_aspect("equal")
-    savefig("c:/0/m_grid_$model_id,$type_of_samples,$n_of_samples.png")
+    savefig("c:/0/m_grid_$type_of_samples,$n_of_samples.png")
 
     PyPlot.clf()
     pygui(false)

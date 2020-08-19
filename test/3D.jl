@@ -13,11 +13,11 @@
     #     return [1.0; 1.0; 1.0]
     # end
 
-    # function get_3D_model4(p::Vector{Float64})
+    # function get_3D_model2(p::Vector{Float64})
     #     return p[3]
     # end
     #
-    # function get_3D_model4_grad()
+    # function get_3D_model2_grad()
     #     return [0.0; 0.0; 1.0]
     # end
 

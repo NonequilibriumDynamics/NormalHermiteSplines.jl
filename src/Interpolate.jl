@@ -8,7 +8,7 @@ function _estimate_ε(nodes::Matrix{T}) where T <: AbstractFloat
         end
     end
     if ε > T(0.0)
-        ε *= T(n) / T(n_1)^(5.0/3.0)
+        ε *= T(n)^(1.0/n) / T(n_1)^(5.0/3.0)
     else
         ε = T(1.0)
     end
