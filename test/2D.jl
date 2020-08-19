@@ -38,10 +38,10 @@
         @test cond ≈ 10.0
 
         eps = get_epsilon(s)
-        @test isapprox(eps, 1.32, atol = 1e-2)
+        @test isapprox(eps, 0.93, atol = 1e-2)
 
         est_eps = estimate_epsilon(p) # get estimation of the problem's Gram matrix condition number
-        @test isapprox(est_eps, 1.32, atol = 1e-2)
+        @test isapprox(est_eps, 0.93, atol = 1e-2)
     end
 
     @testset "Test 2D-RK_H1 kernel" begin
@@ -61,7 +61,7 @@
         rk = RK_H1()
         s = prepare(p, rk) # prepare spline
         cond = get_cond(s)
-        @test cond ≈ 10.0
+        @test cond ≈ 100.0
 
         s = construct(s, u) # construct spline
 
@@ -77,7 +77,7 @@
         @test isapprox(σ2[3], u2[5], atol = 1e-5)
 
         est_eps = estimate_epsilon(p, dp) # get estimation of the problem's Gram matrix condition number
-        @test est_eps ≈ 1.37 atol = 1e-2
+        @test est_eps ≈ 0.96 atol = 1e-2
 ###
         eps = 0.0001
         rk = RK_H1(eps)

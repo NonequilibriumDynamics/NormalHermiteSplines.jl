@@ -274,7 +274,11 @@ function _evaluate(spline::NormalSpline{T, RK},
     end
 
     if size(points, 1) != size(spline._nodes, 1)
-        error("Invalid `points` argument (Incorrect first dimension of the `points` matrix.)")
+        if size(points, 1) == 1 && size(points, 2) > 1
+            error("Incorrect first dimension of the `points` parameter (use 'evaluate_one' function for evaluating the spline at one point).")
+        else
+            error("Incorrect first dimension of the `points` parameter (the spline was built in the space of different dimension).")
+        end
     end
 
     n = size(spline._nodes, 1)

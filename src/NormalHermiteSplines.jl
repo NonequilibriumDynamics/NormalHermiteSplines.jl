@@ -10,7 +10,7 @@ export evaluate_derivative
 # --
 ####
 
-#include("./Examples/Main.jl")
+include("./Examples/Main.jl")
 
 using LinearAlgebra
 
@@ -438,7 +438,7 @@ Return: spline value at the `point` location.
 function evaluate(spline::NormalSpline{T, RK},
                   points::Vector{T}
                  ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    return _evaluate(spline, reshape(points, :, 1))
+    return _evaluate(spline, Matrix(points'))
 end
 
 """
