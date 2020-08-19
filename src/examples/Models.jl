@@ -78,7 +78,7 @@ function get_2D_model2_grad(p::Vector{Float64})
     return grad
 end
 
-# Function F2 (Cliff function) from
+# Franke's CLIFF Function F2 (Cliff function) from
 # R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS), Vol.25, No.1,1999
 function get_2D_model3(p::Vector{Float64})
 #  (x,y) \in [0;1][0;1]
@@ -223,7 +223,7 @@ function get_2D_model12_grad(p::Vector{Float64})
 end
 
 function get_2D_model13(p::Vector{Float64})
-# Franke #1
+# Franke's EXPONENTIAL f1
 # R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS), Vol.25, No.1,1999
 # https://dl.acm.org/doi/10.1145/305658.305745
 #  (x,y) \in [0;1][0;1]
@@ -333,23 +333,27 @@ function get_3D_model4_grad(p::Vector{Float64})
     return grad
 end
 
-
-
-
 # Function F2 (Cliff function) from
 # R. Renka, Multivariate interpolation of large sets of scattered data. ACM Transactions on Mathematical Software, Vol.14, No.2, 1988.
 function get_3D_model5(p::Vector{Float64})
+# Franke's SADDLE F3
 #  (x,y,z) \in [0;1][0;1][0;1]
     x = p[1]
     y = p[2]
     z = p[3]
-    f = (tanh(9.0*(z - x - y)) + 1.0) / (tanh(9.0)+ 1.0)
-#     f(x,y,z) = [1.25+cos(5.4y)] cos(6z) / [6+6(3x-1)2]
+    f = (1.25 + cos(5.4*y))*cos(6.0*z)/(6.0 + 6.0*(3.0*x - 1.0)^2)
     return f
 end
 
 function get_3D_model5_grad(p::Vector{Float64})
-    return [0.0; 0.0; 0.0]
+    grad = [0.0; 0.0; 0.0]
+    x = p[1]
+    y = p[2]
+    z = p[3]
+    grad[1] = -((108.0*x - 36.0)*(cos(5.4*y) + 1.25)*cos(6.0*z))/(6.0 + 6.0*(3.0*x - 1.0)^2)^2
+    grad[2] = -(5.4*sin(5.4*y)*cos(6.0*z))/(6.0 + 6.0*(3.0*x - 1.0)^2)
+    grad[3] = -(cos(5.4*y) + 1.25)*sin(6.0*z)/(1.0 + (3.0*x - 1.0)^2)
+    return grad
 end
 
 

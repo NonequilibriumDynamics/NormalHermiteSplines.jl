@@ -243,6 +243,45 @@ function test_3D(model_id::Int,
         for i = 1:m
             f[i] = get_3D_model4(grid[:, i])
         end
+    elseif model_id == 5
+        u = Vector{Float64}(undef, n_1)
+        f = Vector{Float64}(undef, m)
+        d_nodes = Matrix{Float64}(undef, 3, 3*n_1)
+        es = Matrix{Float64}(undef, 3, 3*n_1)
+        du = Vector{Float64}(undef, 3*n_1)
+        k = 0
+        for i = 1:n_1
+            u[i] = get_3D_model5(nodes[:, i])
+            k += 1
+            grad = get_3D_model5_grad(nodes[:, i])
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            d_nodes[3,k] = nodes[3,i]
+            du[k] = grad[1]
+            es[1,k] = 1.0
+            es[2,k] = 0.0
+            es[3,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            d_nodes[3,k] = nodes[3,i]
+            du[k] = grad[2]
+            es[1,k] = 0.0
+            es[2,k] = 1.0
+            es[3,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            d_nodes[3,k] = nodes[3,i]
+            du[k] = grad[3]
+            es[1,k] = 0.0
+            es[2,k] = 0.0
+            es[3,k] = 1.0
+        end
+
+        for i = 1:m
+            f[i] = get_3D_model5(grid[:, i])
+        end
     else
         error("Incorrect value of 'model_id'")
         return
@@ -366,7 +405,7 @@ function test_3D(model_id::Int,
     else
         PyPlot.view_init(20,30)
     end
-    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=delta, s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
+    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=delta, s=1, cmap=ColorMap("jet"), alpha=1.0)
 #    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=(delta./maximum(delta)) , s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
