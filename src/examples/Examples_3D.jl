@@ -285,6 +285,45 @@ function test_3D(model_id::Int,
         for i = 1:m
             f[i] = get_3D_model5(grid[:, i])
         end
+    elseif model_id == 6
+        u = Vector{Float64}(undef, n_1)
+        f = Vector{Float64}(undef, m)
+        d_nodes = Matrix{Float64}(undef, 3, 3*n_1)
+        es = Matrix{Float64}(undef, 3, 3*n_1)
+        du = Vector{Float64}(undef, 3*n_1)
+        k = 0
+        for i = 1:n_1
+            u[i] = get_3D_model6(nodes[:, i])
+            k += 1
+            grad = get_3D_model6_grad(nodes[:, i])
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            d_nodes[3,k] = nodes[3,i]
+            du[k] = grad[1]
+            es[1,k] = 1.0
+            es[2,k] = 0.0
+            es[3,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            d_nodes[3,k] = nodes[3,i]
+            du[k] = grad[2]
+            es[1,k] = 0.0
+            es[2,k] = 1.0
+            es[3,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            d_nodes[3,k] = nodes[3,i]
+            du[k] = grad[3]
+            es[1,k] = 0.0
+            es[2,k] = 0.0
+            es[3,k] = 1.0
+        end
+
+        for i = 1:m
+            f[i] = get_3D_model6(grid[:, i])
+        end
     else
         error("Incorrect value of 'model_id'")
         return

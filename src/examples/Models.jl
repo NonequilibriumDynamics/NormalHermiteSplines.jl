@@ -335,6 +335,7 @@ end
 
 # Function F2 (Cliff function) from
 # R. Renka, Multivariate interpolation of large sets of scattered data. ACM Transactions on Mathematical Software, Vol.14, No.2, 1988.
+# http://web.eecs.utk.edu/research/imp/tools/interp/
 function get_3D_model5(p::Vector{Float64})
 # Franke's SADDLE F3
 #  (x,y,z) \in [0;1][0;1][0;1]
@@ -358,4 +359,22 @@ end
 
 # ROBERT E. BARNHILL and SARAH E. STEAD, Multistage trivariate surfaces, The Rocky Mountain Journal of Mathematics, Vol. 14, No. 1, 1984.
 # https://www.jstor.org/stable/44236789?seq=1
-# http://web.eecs.utk.edu/research/imp/tools/interp/
+function get_3D_model6(p::Vector{Float64})
+#  (x,y,z) \in [0;1][0;1][0;1]
+    x = p[1]
+    y = p[2]
+    z = p[3]
+    f = cos(π*x)*cos(y - 0.5)*sin(π*(z - 0.5))
+    return f
+end
+
+function get_3D_model6_grad(p::Vector{Float64})
+    grad = [0.0; 0.0; 0.0]
+    x = p[1]
+    y = p[2]
+    z = p[3]
+    grad[1] = -π*sin(π*x)*cos(y - 0.5)*sin(π*(z - 0.5))
+    grad[2] = -cos(π*x)*sin(y - 0.5)*sin(π*(z - 0.5))
+    grad[3] = π*cos(π*x)*cos(y - 0.5)*cos(π*(z - 0.5))
+    return grad
+end
