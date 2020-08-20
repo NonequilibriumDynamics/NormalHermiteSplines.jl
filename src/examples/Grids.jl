@@ -1,5 +1,47 @@
 using Random
 
+# D. Lazzaro, L. Montefusco, Radial basis functions for the multivariate interpolation of large scattered data sets, J.Comput. Appl. Math., No.140, 2002
+# https://core.ac.uk/download/pdf/82502771.pdf
+# Return half the distance between the closest pair of nodes
+function get_separation_distance(nodes::Matrix{Float64})
+    n = size(nodes, 1)
+    n_1 = size(nodes, 2)
+    sd = sqrt(n) # main hypercube diagonal length
+    @inbounds for i = 1:n_1
+        i1 += 1
+        for j = i1:n_1
+            s = norm(nodes[:,i] .- nodes[:,j])
+            if s < sd
+               sd = s
+           end
+        end
+    end
+    return sd/2.0
+end
+
+# D. Lazzaro, L. Montefusco, Radial basis functions for the multivariate interpolation of large scattered data sets, J.Comput. Appl. Math., No.140, 2002
+# https://core.ac.uk/download/pdf/82502771.pdf
+# Return the radius of the largest inner empty sphere
+function get_fill_distance(nodes::Matrix{Float64}, grid::Matrix{Float64})
+    n = size(nodes, 1)
+    n_1 = size(nodes, 2)
+    ng = size(grid, 2)
+    fd = 0.0
+    @inbounds for i = 1:ng
+        sd = sqrt(T(n))
+        for j = 1:n_1
+            s = norm(grid[:,i] .- nodes[:,j])
+            if s < sd
+               sd = s
+           end
+        end
+        if fd < sd
+           fd = sd
+       end
+    end
+    return fd
+end
+
 ########### 1D grids
 
 function get_1D_grid(m::Int)
