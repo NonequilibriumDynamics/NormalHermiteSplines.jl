@@ -13,21 +13,24 @@ function test_2D(model_id::Int,
     if use_grad && type_of_kernel == 0
         error("Cannot use derivative data when type_of_kernel is `0` (`RK_H0` kernel)")
     end
-    if type_of_samples == 2
-        samples_size = [1, 11, 24, 250, 1250]
-        nodes = get_2D_test1_nodes(samples_size[n_of_samples])
-    elseif type_of_samples == 1
+    if type_of_samples == 1
         samples_size = [50, 100, 1000, 2500, 5000, 10000]
         nodes = get_2D_halton_nodes(samples_size[n_of_samples])
+    elseif type_of_samples == 2
+        samples_size = [9, 15, 30, 50, 75, 100]
+        nodes = get_2D_random_grid(samples_size[n_of_samples])
     elseif type_of_samples == 3
-        sets = [4; 6; 21; 34; 49; 70]
-        nodes = get_2D_Lissajous_nodes(sets[n_of_samples])
+        samples_size = [9, 15, 30, 50, 75, 100]
+        nodes = get_2D_grid(samples_size[n_of_samples])
     elseif type_of_samples == 4
         samples_size = [9, 15, 32, 49, 70, 99]
         nodes = get_2D_eps_grid(samples_size[n_of_samples])
     elseif type_of_samples == 5
-        samples_size = [9, 15, 30, 50, 75, 100]
-        nodes = get_2D_grid(samples_size[n_of_samples])
+        sets = [4; 6; 21; 34; 49; 70]
+        nodes = get_2D_Lissajous_nodes(sets[n_of_samples])
+    elseif type_of_samples == 6
+        samples_size = [1, 11, 24, 250, 1250]
+        nodes = get_2D_test1_nodes(samples_size[n_of_samples])
     else
         error("Incorrect value of 'type_of_samples'")
     end
@@ -368,6 +371,9 @@ function test_2D(model_id::Int,
     ε = get_epsilon(spline)
     @printf "EPSILON:%0.1e   COND: %0.1e \n" ε cond
 
+    iq = assess_quality(spline)
+    @printf "interpolation quality: %0.1e\n" iq
+
     @printf "Evaluating spline..\n"
     ts = time_ns()
     σ = evaluate(spline, grid)
@@ -634,7 +640,8 @@ function test_2D(model_id::Int,
 
     PyPlot.clf()
     @printf "Plots created.\n"
-    return spline
+    return Nothing
+#    return spline
 end
 
 function readme_1()

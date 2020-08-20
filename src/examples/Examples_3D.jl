@@ -21,8 +21,11 @@ function test_3D(model_id::Int,
         nodes = get_3D_halton_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 2
         samples_size = [1, 4, 7, 9, 12, 15, 19, 24]
-        nodes = get_3D_grid(samples_size[n_of_samples]) #1(8), 4(125), 7(512), 9(1000), 12(2197), 15(4096)(d), 19(8000), 24(15625)
+        nodes = get_3D_random_grid(samples_size[n_of_samples])
     elseif type_of_samples == 3
+        samples_size = [1, 4, 7, 9, 12, 15, 19, 24]
+        nodes = get_3D_grid(samples_size[n_of_samples]) #1(8), 4(125), 7(512), 9(1000), 12(2197), 15(4096)(d), 19(8000), 24(15625)
+    elseif type_of_samples == 4
         samples_size = [1, 4, 7, 9, 12, 15, 19, 24]
         nodes = get_3D_eps_grid(samples_size[n_of_samples])
     else

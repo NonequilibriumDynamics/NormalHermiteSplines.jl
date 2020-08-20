@@ -356,8 +356,6 @@ function get_3D_model5_grad(p::Vector{Float64})
     return grad
 end
 
-
-
 # ROBERT E. BARNHILL and SARAH E. STEAD, Multistage trivariate surfaces, The Rocky Mountain Journal of Mathematics, Vol. 14, No. 1, 1984.
 # https://www.jstor.org/stable/44236789?seq=1
 # http://web.eecs.utk.edu/research/imp/tools/interp/

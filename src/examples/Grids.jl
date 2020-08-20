@@ -92,6 +92,31 @@ function get_2D_eps_grid(m::Int)
     return mat
 end
 
+function get_2D_random_grid(m::Int)
+    m1 = m + 1
+    ms = m1^2
+    mat = Matrix{Float64}(undef, 2, ms)
+    rng = MersenneTwister(0);
+    rnd = rand(rng, Float64, (2, ms))
+    m3 = ms÷3
+    m3p1 = m3 + 1
+    m23 = 2*m3
+    m23p1 = m23 + 1
+    for i = 1:m3
+        mat[1, i] = rnd[1, i]
+        mat[2, i] = rnd[2, i]
+    end
+    for i = m3p1:m23
+        mat[1, i] = 0.7 + 0.4*(rnd[1, i] - 0.5)
+        mat[2, i] = 0.4 + 0.4*(rnd[2, i] - 0.5)
+    end
+    for i = m23p1:ms
+        mat[1, i] = 0.02 + 0.3*rnd[1, i]
+        mat[2, i] = 0.05 + 0.3*rnd[2, i]
+    end
+    return mat
+end
+
 function get_2D_rect_grid(m::Int)
     x = collect(range(-4.0, 4.0; step = 8.0/m))
     y = collect(range(-2.0, 2.0; step = 4.0/m))
@@ -295,6 +320,34 @@ function get_3D_eps_grid(m::Int)
                 mat[3, r] = tz
             end
         end
+    end
+    return mat
+end
+
+function get_3D_random_grid(m::Int)
+    m1 = m + 1
+    ms = m1^3
+    mat = Matrix{Float64}(undef, 3, ms)
+    rng = MersenneTwister(0);
+    rnd = rand(rng, Float64, (3, ms))
+    m3 = ms÷3
+    m3p1 = m3 + 1
+    m23 = 2*m3
+    m23p1 = m23 + 1
+    for i = 1:m3
+        mat[1, i] = rnd[1, i]
+        mat[2, i] = rnd[2, i]
+        mat[3, i] = rnd[3, i]
+    end
+    for i = m3p1:m23
+        mat[1, i] = 0.7 + 0.4*(rnd[1, i] - 0.5)
+        mat[2, i] = 0.8 + 0.3*(rnd[2, i] - 0.5)
+        mat[3, i] = 0.8 + 0.3*(rnd[3, i] - 0.5)
+    end
+    for i = m23p1:ms
+        mat[1, i] = 0.75 + 0.3*rnd[1, i]
+        mat[2, i] = 0.05 + 0.3*rnd[2, i]
+        mat[3, i] = 0.25 + 0.3*rnd[3, i]
     end
     return mat
 end
