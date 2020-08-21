@@ -22,7 +22,7 @@ To use this package, begin your code with
 ```
 using NormalHermiteSplines
 ```
-The first example is the function ```φ(x,y) = sin(4.0 * sqrt(x^2 + y^2))``` defined on ```Ω=[-1,1]x[-1,1]```.
+The first example is the function ```φ(x,y)=sin(4.0*sqrt(x^2+y^2))``` defined on ```Ω=[-1,1]x[-1,1]```.
 
  <img src="/images/m_t_6.png" width="256"/>  <img src="/images/m_cf_6.png" width="256"/>  <img src="/images/m_grid_6,2,3.png" width="256"/> 
 
@@ -44,12 +44,12 @@ We'll construct an interpolating normal spline using this function and its gradi
         nodes[1, i] = nodes[1, i] * 2.0 - 1.0     # transforming Halton nodes to [-1,1]x[-1,1] 
         nodes[2, i] = nodes[2, i] * 2.0 - 1.0
         d = sqrt(nodes[1, i]^2 + nodes[2, i]^2)
-        u[i] = sin(4.0 * d)
+        u[i] = sin(4.0*d)
         k += 1
         grad = [0.0; 0.0]
         if d > 0.0
-            grad[1] = 4.0 * nodes[1, i] * cos(4.0 * d) / d
-            grad[2] = 4.0 * nodes[2, i] * cos(4.0 * d) / d
+            grad[1] = 4.0*nodes[1, i]*cos(4.0*d)/d
+            grad[2] = 4.0*nodes[2, i]*cos(4.0*d)/d
         end
         d_nodes[1,k] = nodes[1,i]
         d_nodes[2,k] = nodes[2,i]
@@ -82,7 +82,7 @@ Approximation error plots:
 Spline was evaluated on a uniform Cartesian grid of size 101x101. Accuracy of the interpolation was measured by calculating the Root Mean Square Error (RMSE) and the Maximum Absolute Error (MAE). For this case
 ```RMSE```: 1.7E-03, ```MAE```: 1.1E-01, estimated value of the scaling parameter ```ε``` is 1.1E+01, estimation of the Gram matrix condition number is 1.0E+11.
 
-The second example is the function ```φ(x,y,z)=cos(π*x)*cos(y-0.5)*sin(π*(z-0.5))``` defined on ```Ω=[0,1]x[0,1]x[0,1]```.
+The second example is the function ```Ψ(x,y,z)=cos(π*x)*cos(y-0.5)*sin(π*(z-0.5))``` defined on ```Ω=[0,1]x[0,1]x[0,1]```.
 
 <img src="/images/m_grid_6,1,50,_.png" width="256"/>  <img src="/images/m_grid_6,2,50,_.png" width="256"/>  <img src="/images/m_nodes_6,2,4.png" width="256"/> 
 
@@ -90,8 +90,8 @@ We'll construct an interpolating normal spline using function ```Ψ``` values sa
 ```
     using NormalHermiteSplines
 
-    nodes = get_3D_random_grid(2)       # generates 1000 non-uniform random grid nodes
-    n_1 = size(nodes, 9)
+    nodes = get_3D_random_grid(9)       # generates 1000 non-uniform random grid nodes
+    n_1 = size(nodes, 2)
     u = Vector{Float64}(undef, n_1)     # function values
     grid = get_3D_grid(50)              # creates uniform Cartesian grid of size 51x51x51 in [0, 1] x [0, 1] x [0, 1]
     for i = 1:n_1
@@ -103,7 +103,7 @@ We'll construct an interpolating normal spline using function ```Ψ``` values sa
 
     # Here spline is being constructed with ```RK_H2``` kernel,
     # the 'scaling parameter' ```ε``` is defined explicitly.
-    rk = RK_H0(5.0)
+    rk = RK_H2(5.0)
     #
     spline = interpolate(nodes, u, rk)
     σ = evaluate(spline, grid)
