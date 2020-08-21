@@ -80,7 +80,7 @@ Approximation error plots:
  <img src="/images/delta_s_6,2,3,1,_0.0,_.png" width="256"/>  <img src="/images/delta_cf_6,2,3,1,_0.0,_.png" width="256"/> 
 
 Spline was evaluated on a uniform Cartesian grid of size 101x101. Accuracy of the interpolation was measured by calculating the Root Mean Square Error (RMSE) and the Maximum Absolute Error (MAE). For this case
-```RMSE```: 1.7E-03, ```MAE```: 1.1E-01, estimated value of the scaling parameter ```ε``` is 1.1E+01, estimation of the Gram matrix condition number is 1.0E+11.
+```RMSE```: 1.6E-03, ```MAE```: 1.1E-01, estimated value of the scaling parameter ```ε``` is 8, estimation of the Gram matrix condition number is 1.0E+11.
 
 The second example is the function ```Ψ(x,y,z)=cos(π*x)*cos(y-0.5)*sin(π*(z-0.5))``` defined on ```Ω=[0,1]x[0,1]x[0,1]```.
 
@@ -94,7 +94,7 @@ We'll construct an interpolating normal spline using function ```Ψ``` values sa
     n_1 = size(nodes, 2)
     u = Vector{Float64}(undef, n_1)     # function values
     grid = get_3D_grid(50)              # creates uniform Cartesian grid of size 51x51x51
-                                        # in [0, 1] x [0, 1] x [0, 1]
+                                        # in [0, 1]x[0, 1]x[0, 1]
     for i = 1:n_1
         x = nodes[1,i]
         y = nodes[2,i]

@@ -684,7 +684,7 @@ function readme_1()
     #
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
     σ = evaluate(spline, grid)
-    return Nothing
+    return σ
 end
 
 function readme_2()
@@ -713,7 +713,7 @@ function readme_2()
     #
     spline = interpolate(nodes, u, rk)
     σ = evaluate(spline, grid)
-    return spline
+    return σ
 end
 
 function big_sur()
