@@ -547,10 +547,7 @@ function test_3D(model_id::Int,
            savefig("c:/0/s_t_$model_id,_$k,_$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
         end
-
-
     end
-
 
     @printf "Plots created.\n"
 
@@ -559,7 +556,23 @@ function test_3D(model_id::Int,
 #    return spline
 end
 
-# ix = grid[3,:] .== 0.25
-# gr = grid[:,ix]
-# gf = f[ix]
-# gσ = σ[ix]
+function readme_3()
+    nodes = get_3D_random_grid(2)       # generates 1000 non-uniform random grid nodes
+    n_1 = size(nodes, 9)
+    u = Vector{Float64}(undef, n_1)     # function values
+    grid = get_3D_grid(50)              # uniform Cartesian grid of size 51x51x51 in [0, 1] x [0, 1] x [0, 1]
+    for i = 1:n_1
+        x = nodes[1,i]
+        y = nodes[2,i]
+        z = nodes[3,i]
+        u[i] = cos(π*x)*cos(y - 0.5)*sin(π*(z - 0.5))
+    end
+
+    # Here spline is being constructed with ```RK_H2``` kernel,
+    # the 'scaling parameter' ```ε``` is defined explicitly.
+    rk = RK_H0(5.0)
+    #
+    spline = interpolate(nodes, u, rk)
+    σ = evaluate(spline, grid)
+    return σ
+end

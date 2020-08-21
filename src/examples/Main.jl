@@ -16,9 +16,10 @@ export get_1D_grid, get_1D_eps_grid, get_1D_halton_nodes
 
 export get_3D_model1, get_3D_model2, get_3D_model3, get_3D_model4, get_3D_model5, get_3D_model6
 export get_3D_model1_grad, get_3D_model2_grad, get_3D_model3_grad, get_3D_model4_grad, get_3D_model5_grad, get_3D_model6_grad
-export get_3D_grid, get_3D_eps_grid, get_3D_halton_nodes, get_3D_plot_grid
+export get_3D_grid, get_3D_eps_grid, get_3D_halton_nodes, get_3D_plot_grid, get_3D_random_grid
 
 export get_separation_distance, get_fill_distance
+export readme_3
 
 #include("Demo.jl")
 include("Halton.jl")
