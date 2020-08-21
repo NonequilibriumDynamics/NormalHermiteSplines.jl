@@ -8,7 +8,7 @@ function test_3D(model_id::Int,
                  type_of_kernel::Int = 0,
                  eps::Float64 = 0.0,
                  plot_grid_type::Int = 1,
-                 plot_grid_size = 25, # plot_grid_type = 1: 25, 20, 16, 30, 50
+                 plot_grid_size = 25, # plot_grid_type = 1: 50, 25, 20, 16, 30
                                       # plot_grid_type = 2: 50, 40, 75
                  #,do_parallel::Bool = false
                 )
@@ -455,14 +455,111 @@ function test_3D(model_id::Int,
     savefig("c:/0/delta_t_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png")
     PyPlot.clf()
 
+    if plot_grid_type == 2
+       zk = [0.0; 0.25; 0.5; 0.75; 1.0]
+       for k = 1:5
+           ik = grid[3,:] .== zk[k]
+           gridk = grid[:,ik]
+           fk = f[ik]
+           σk = σ[ik]
+
+           gx = gridk[1,:]
+           gy = gridk[2,:]
+           x = unique(gridk[1,:])
+           y = unique(gridk[2,:])
+           gf = reshape(fk, length(y), length(x))
+           gσ = reshape(σk, length(y), length(x))
+
+       #     if model_id == 4
+       #         lvls=[-0.6;-0.55;-0.5;-0.4;-0.3;-0.2;-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.05;1.1]
+       #         lvls2 = lvls
+       #     end
+       #     if model_id == 5
+       #         lvls=[-1.2;-1.15;-1.05;-1.0;-0.95;-0.9;-0.7;-0.5;-0.3;-0.1;0.0;0.1;0.3;0.5;0.7;0.9;0.95;1.0;1.05;1.1;1.15;1.2]
+       #         lvls2 = lvls
+       #     end
+       #     if model_id == 6
+       #         lvls=[-1.0;-0.9;-0.7;-0.5;-0.3;-0.1;0.0;0.1;0.3;0.5;0.7;0.9;1.0]
+       #         lvls2 = lvls
+       # #        lvls=[-1.1;-1.0;-0.9;-0.7;-0.5;-0.3;-0.1;0.0;0.1;0.3;0.5;0.7;0.9;1.0;1.1]
+       #     end
+           PyPlot.clf()
+           pygui(false)
+           o = contourf(x, y, gσ, cmap=ColorMap("gnuplot"))
+#           o = contourf(x, y, gσ, levels=lvls2, cmap=ColorMap("gnuplot"))
+           axis("equal")
+
+           # if model_id == 6
+           #     PyPlot.xlim(-1.0, 1.0)
+           #     PyPlot.ylim(-1.0, 1.0)
+           # end
+           # if model_id == 12
+           #     PyPlot.xlim(-4.0, 4.0)
+           #     PyPlot.ylim(-2.0, 2.0)
+           # end
+           colorbar(o)
+           savefig("c:/0/sc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+
+           PyPlot.clf()
+           pygui(false)
+           o = contourf(x, y, gf, cmap=ColorMap("gnuplot"))
+#           o = contourf(x, y, gf, levels=lvls2, cmap=ColorMap("gnuplot"))
+           axis("equal")
+           # if model_id == 6
+           #     PyPlot.xlim(-1.0, 1.0)
+           #     PyPlot.ylim(-1.0, 1.0)
+           # end
+           # if model_id == 12
+           #     PyPlot.xlim(-4.0, 4.0)
+           #     PyPlot.ylim(-2.0, 2.0)
+           # end
+           colorbar(o)
+           savefig("c:/0/fc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+
+           PyPlot.clf()
+           pygui(false)
+           # if model_id == 3
+           #     PyPlot.view_init(20,30)
+           # end
+           #PyPlot.view_init(30,-60) #default
+           # if model_id == 13
+           #     PyPlot.view_init(30,30)
+           # end
+           o = scatter3D(gridk[1,:],gridk[2,:], fk, c=fk,  s=1, cmap=ColorMap("gnuplot"))
+           tick_params(axis="both", which="major", labelsize=6)
+           tick_params(axis="both", which="minor", labelsize=6)
+           colorbar(o)
+           savefig("c:/0/m_t_$model_id,_$k.png")
+
+           PyPlot.clf()
+           pygui(false)
+           # if model_id == 3
+           #     PyPlot.view_init(20,30)
+           # end
+           #PyPlot.view_init(30,-60) #default
+           # if model_id == 13
+           #     PyPlot.view_init(30,30)
+           # end
+           o = scatter3D(gridk[1,:],gridk[2,:], σk, c=σk,  s=1, cmap=ColorMap("gnuplot"))
+           tick_params(axis="both", which="major", labelsize=6)
+           tick_params(axis="both", which="minor", labelsize=6)
+           colorbar(o)
+           savefig("c:/0/s_t_$model_id,_$k,_$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+
+        end
+
+
+    end
+
 
     @printf "Plots created.\n"
 
-    # ix = grid[3,:] .== 0.25
-    # gr = grid[:,ix]
-    # gf = f[ix]
-    # gσ = σ[ix]
     # return gr
     return Nothing
 #    return spline
 end
+
+# ix = grid[3,:] .== 0.25
+# gr = grid[:,ix]
+# gf = f[ix]
+# gσ = σ[ix]

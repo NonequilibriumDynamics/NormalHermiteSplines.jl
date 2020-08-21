@@ -274,38 +274,40 @@ function get_3D_model2_grad()
 end
 
 
-function get_3D_model3(p::Vector{Float64})
-# T. Foley, Interpolation and approximation of 3-D and 4-D scattered data, Comput. Math. Appl., Vol.13, No.8, 1987.
-# https://www.sciencedirect.com/science/article/pii/0898122187900435
-# G_1(x,y,z), (x,y,z) \in [0;1][0;1][0;1]
-    x = p[1]
-    y = p[2]
-    z = p[3]
-
-    val = 0.75*exp(-16.0*((x - 0.25)^2 + (y - 0.25)^2 + (z - 0.25)^2)) +
-          0.50*exp(-10.0*((x - 0.25)^2 + (y - 0.25)^2)) +
-          0.50*exp(-10.0*((x - 0.75)^2 + (y - 0.125)^2 + (z - 0.5)^2)) -
-          0.25*exp(-20*((x - 0.75)^2 + (y - 0.75)^2))
-    return val
-end
-
-function get_3D_model3_grad(p::Vector{Float64})
-    grad = [0.0; 0.0; 0.0]
-    x = p[1]
-    y = p[2]
-    z = p[3]
-    grad[1] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + x) -
-              10.0*exp(-10.0*((-0.25 + x)^2 + (-0.25 + y)^2))*(-0.25 + x) -
-              10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.75 + x) +
-              10.0*exp(-20.0*((-0.75 + x)^2 + (-0.75 + y)^2))*(-0.75 + x)
-    grad[2] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + y) -
-              10.0*exp(-10.0*((-0.25 + x)^2 + (-0.25 + y)^2))*(-0.25 + y) -
-              10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.125 + y) +
-              10.0*exp(-20.0*((-0.75 + x)^2 + (-0.75 + y)^2))*(-0.75 + y)
-    grad[3] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + z) -
-              10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.5 + z)
-    return grad
-end
+# function get_3D_model3(p::Vector{Float64})
+# # There is a misprint in the paper
+# # T. Foley, Interpolation and approximation of 3-D and 4-D scattered data, Comput. Math. Appl., Vol.13, No.8, 1987.
+# # https://www.sciencedirect.com/science/article/pii/0898122187900435
+# # G_1(x,y,z), (x,y,z) \in [0;1][0;1][0;1]
+#     x = p[1]
+#     y = p[2]
+#     z = p[3]
+#
+#     val = 0.75*exp(-16.0*((x - 0.25)^2 + (y - 0.25)^2 + (z - 0.25)^2)) +
+#           0.50*exp(-10.0*((x - 0.25)^2 + (y - 0.25)^2)) +
+#           0.50*exp(-10.0*((x - 0.75)^2 + (y - 0.125)^2 + (z - 0.5)^2)) -
+#           0.25*exp(-20*((x - 0.75)^2 + (y - 0.75)^2))
+#     return val
+# end
+#
+# function get_3D_model3_grad(p::Vector{Float64})
+#     # There is a misprint in the paper
+#     grad = [0.0; 0.0; 0.0]
+#     x = p[1]
+#     y = p[2]
+#     z = p[3]
+#     grad[1] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + x) -
+#               10.0*exp(-10.0*((-0.25 + x)^2 + (-0.25 + y)^2))*(-0.25 + x) -
+#               10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.75 + x) +
+#               10.0*exp(-20.0*((-0.75 + x)^2 + (-0.75 + y)^2))*(-0.75 + x)
+#     grad[2] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + y) -
+#               10.0*exp(-10.0*((-0.25 + x)^2 + (-0.25 + y)^2))*(-0.25 + y) -
+#               10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.125 + y) +
+#               10.0*exp(-20.0*((-0.75 + x)^2 + (-0.75 + y)^2))*(-0.75 + y)
+#     grad[3] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + z) -
+#               10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.5 + z)
+#     return grad
+# end
 
 function get_3D_model4(p::Vector{Float64})
 # T. Foley, Interpolation and approximation of 3-D and 4-D scattered data, Comput. Math. Appl., Vol.13, No.8, 1987.
@@ -376,5 +378,40 @@ function get_3D_model6_grad(p::Vector{Float64})
     grad[1] = -π*sin(π*x)*cos(y - 0.5)*sin(π*(z - 0.5))
     grad[2] = -cos(π*x)*sin(y - 0.5)*sin(π*(z - 0.5))
     grad[3] = π*cos(π*x)*cos(y - 0.5)*cos(π*(z - 0.5))
+    return grad
+end
+
+function get_3D_model3(p::Vector{Float64})
+# This is model3 with misprint corrected
+# T. Foley, Interpolation and approximation of 3-D and 4-D scattered data, Comput. Math. Appl., Vol.13, No.8, 1987.
+# https://www.sciencedirect.com/science/article/pii/0898122187900435
+# G_1(x,y,z), (x,y,z) \in [0;1][0;1][0;1]
+    x = p[1]
+    y = p[2]
+    z = p[3]
+
+    val = 0.75*exp(-16.0*((x - 0.25)^2 + (y - 0.25)^2 + (z - 0.5)^2)) +
+          0.50*exp(-10.0*((x - 0.25)^2 + (y - 0.25)^2)) +
+          0.50*exp(-10.0*((x - 0.75)^2 + (y - 0.125)^2 + (z - 0.5)^2)) -
+          0.25*exp(-20*((x - 0.75)^2 + (y - 0.75)^2))
+    return val
+end
+
+function get_3D_model3_grad(p::Vector{Float64})
+# This is model3 with misprint corrected
+    grad = [0.0; 0.0; 0.0]
+    x = p[1]
+    y = p[2]
+    z = p[3]
+    grad[1] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + x) -
+              10.0*exp(-10.0*((-0.25 + x)^2 + (-0.25 + y)^2))*(-0.25 + x) -
+              10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.75 + x) +
+              10.0*exp(-20.0*((-0.75 + x)^2 + (-0.75 + y)^2))*(-0.75 + x)
+    grad[2] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.25 + y) -
+              10.0*exp(-10.0*((-0.25 + x)^2 + (-0.25 + y)^2))*(-0.25 + y) -
+              10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.125 + y) +
+              10.0*exp(-20.0*((-0.75 + x)^2 + (-0.75 + y)^2))*(-0.75 + y)
+    grad[3] = -24.0*exp(-16.0*((-0.25 + x)^2 + (-0.25 + y)^2 + (-0.25 + z)^2))*(-0.5 + z) -
+              10.0*exp(-10.0*((-0.75 + x)^2 + (-0.125 + y)^2 + (-0.5 + z)^2))*(-0.5 + z)
     return grad
 end
