@@ -110,6 +110,24 @@ function get_2D_grid2(m::Int)
     return mat
 end
 
+function get_2D_grid3(m::Int)
+    # Rosenbrock function grid
+    #  (x,y) \in [-2;2]x[-1;3]
+    x = collect(range(-2.0, 2.0; step = 4.0/m))
+    y = collect(range(-1.0, 3.0; step = 4.0/m))
+    m1 = m + 1
+    ms = m1^2
+    mat = Matrix{Float64}(undef, 2, ms)
+    for i = 1:m1
+        for j = 1:m1
+            r = (i - 1) * m1 + j
+            mat[1, r] = x[i]
+            mat[2, r] = y[j]
+        end
+    end
+    return mat
+end
+
 function get_2D_eps_grid(m::Int)
     x = collect(range(0.0, 1.0; step = 1.0/m))
     y = collect(range(0.0, 1.0; step = 1.0/m))

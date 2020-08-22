@@ -335,6 +335,39 @@ function test_2D(model_id::Int,
         for i = 1:m
             f[i] = get_2D_model13(grid[:, i])
         end
+    elseif model_id == 14
+        #  (x,y) \in [-2;2]x[-1;3]
+        grid = get_2D_grid3(regular_grid_size)
+        m = size(grid, 2)
+        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
+        es = Matrix{Float64}(undef, 2, 2 * n_1)
+        du = Vector{Float64}(undef, 2 * n_1)
+        k = 0
+        for i = 1:n_1
+            nodes[1, i] = nodes[1, i] * 4.0 - 2.0
+            nodes[2, i] = nodes[2, i] * 4.0 - 1.0
+            u[i] = get_2D_model14(nodes[:, i])
+            k += 1
+            grad = get_2D_model14_grad(nodes[:, i])
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            du[k] = grad[1]
+            es[1,k] = 1.0
+            es[2,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            du[k] = grad[2]
+            es[1,k] = 0.0
+            es[2,k] = 1.0
+        end
+        d_nodes = d_nodes[:,1:k]
+        es = es[:,1:k]
+        du = du[1:k]
+
+        for i = 1:m
+            f[i] = get_2D_model14(grid[:, i])
+        end
     else
         error("Incorrect value of 'model_id'")
         return
@@ -448,6 +481,10 @@ function test_2D(model_id::Int,
         lvls=[-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1;1.2;1.3]
         lvls2 = lvls
     end
+    if model_id == 14
+        lvls = [-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1]
+        lvls2 = lvls
+    end
 
     PyPlot.clf()
     pygui(false)
@@ -464,6 +501,11 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-4.0, 4.0)
         PyPlot.ylim(-2.0, 2.0)
     end
+    if model_id == 14
+        PyPlot.xlim(-2.0, 2.0)
+        PyPlot.ylim(-1.0, 3.0)
+    end
+
     colorbar(o)
     savefig("c:/0/s_cf_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
@@ -489,6 +531,10 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-4.0, 4.0)
         PyPlot.ylim(-2.0, 2.0)
     end
+    if model_id == 14
+        PyPlot.xlim(-2.0, 2.0)
+        PyPlot.ylim(-1.0, 3.0)
+    end
     colorbar(o)
     savefig("c:/0/m_cf_$model_id.png")
 
@@ -500,6 +546,9 @@ function test_2D(model_id::Int,
     #PyPlot.view_init(30,-60) #default
     if model_id == 13
         PyPlot.view_init(30,30)
+    end
+    if model_id == 14
+        PyPlot.view_init(30,-120)
     end
     o = scatter3D(grid[1,:],grid[2,:], f, c=f,  s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
@@ -566,6 +615,9 @@ function test_2D(model_id::Int,
     if model_id == 13
         PyPlot.view_init(30,30)
     end
+    if model_id == 14
+        PyPlot.view_init(30,-120)
+    end
     o = scatter3D(grid[1,:],grid[2,:], σ, c=σ, s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
@@ -589,6 +641,10 @@ function test_2D(model_id::Int,
     #        axis("equal")
         PyPlot.xlim(-4.0, 4.0)
         PyPlot.ylim(-2.0, 2.0)
+    end
+    if model_id == 14
+        PyPlot.xlim(-2.0, 2.0)
+        PyPlot.ylim(-1.0, 3.0)
     end
     colorbar(o)
     savefig("c:/0/delta_cf_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
@@ -620,6 +676,9 @@ function test_2D(model_id::Int,
     #o = surf(gx, gy, σ, cmap=ColorMap("viridis"), alpha=0.75)
     if model_id == 13
         PyPlot.view_init(30,30)
+    end
+    if model_id == 14
+        PyPlot.view_init(30,-120)
     end
     o = surf(gx, gy, delta, cmap=ColorMap("jet"), linewidth=0, antialiased=false, alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)

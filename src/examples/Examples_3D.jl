@@ -1,5 +1,6 @@
 using Printf
 using PyPlot
+using PyCall
 
 function test_3D(model_id::Int,
                  use_grad::Bool = false,
@@ -545,11 +546,15 @@ function test_3D(model_id::Int,
            tick_params(axis="both", which="minor", labelsize=6)
            colorbar(o)
            savefig("c:/0/s_t_$model_id,_$k,_$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+       end # for k = 1:5
 
-        end
-    end
+   end # if plot_grid_type == 2
 
     @printf "Plots created.\n"
+
+
+    anim = pyimport("matplotlib.animation")
+
 
     # return gr
     return Nothing
