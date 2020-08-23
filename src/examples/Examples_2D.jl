@@ -722,8 +722,8 @@ function test_2D(model_id::Int,
 
     PyPlot.clf()
     @printf "Plots created.\n"
-    return Nothing
-#    return spline
+    # return Nothing
+    return spline
 end
 
 function readme_1()

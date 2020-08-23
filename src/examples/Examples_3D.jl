@@ -557,8 +557,8 @@ function test_3D(model_id::Int,
 
 
     # return gr
-    return Nothing
-#    return spline
+#    return Nothing
+    return spline
 end
 
 function readme_3()

@@ -30,7 +30,7 @@ We'll construct an interpolating normal spline using this function and its gradi
 ```
     using NormalHermiteSplines
 
-    nodes = get_2D_halton_nodes(1000)           # generates Halton data set in [0,1]x[0,1] 
+    nodes = get_2D_halton_nodes(1000)           # generates 1000 Halton nodes in [0,1]x[0,1] 
     u = Vector{Float64}(undef, n_1)             # function values
     d_nodes = Matrix{Float64}(undef, 2, 2*n_1)  # directional derivative nodes 
     es = Matrix{Float64}(undef, 2, 2*n_1)       # derivative directions 
@@ -70,6 +70,13 @@ We'll construct an interpolating normal spline using this function and its gradi
     #
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
     σ = evaluate(spline, grid)
+
+    σ1 = evaluate_one(spline, [0.5; 0.5])
+    #  ≈ 0.308071
+
+    g1 = evaluate_gradient(spline, [0.5;0.5])
+    #  ≈ -2.690
+    #  ≈ -2.690
 ```
 The spline surface and filled 2-D contour plots:
 
@@ -108,6 +115,14 @@ We'll construct an interpolating normal spline using function ```Ψ``` values sa
     #
     spline = interpolate(nodes, u, rk)
     σ = evaluate(spline, grid)
+
+    σ1 = evaluate_one(spline, [0.8; 0.6; 0.8])
+    #  ≈ -0.6512
+    
+    g1 = evaluate_gradient(spline, [0.8; 0.6; 0.8])
+    #  ≈ -1.486
+    #  ≈  0.065
+    #  ≈ -1.486
 ```
 The spline 3-D plots:
 
