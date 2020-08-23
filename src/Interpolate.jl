@@ -388,9 +388,6 @@ function _evaluate_gradient(spline::NormalSpline{T, RK},
     if isnothing(spline._mu)
         error("Spline coefficients were not calculated.")
     end
-    if !isnothing(spline._d_nodes)
-        error("Not yet implemented.")
-    end
 
     n = size(spline._nodes, 1)
     n_1 = size(spline._nodes, 2)
@@ -402,11 +399,30 @@ function _evaluate_gradient(spline::NormalSpline{T, RK},
 
     d_h_values = Vector{T}(undef, n_1)
     grad = Vector{T}(undef, n)
+    mu = spline._mu[1:n_1]
     @inbounds for k = 1:n
         for i = 1:n_1
             d_h_values[i] = _∂rk_∂η_k(spline._kernel, pt, spline._nodes[:,i], k)
         end
-        grad[k] = sum(spline._mu .* d_h_values) / spline._compression
+        grad[k] = sum(mu .* d_h_values)
+    end
+
+    if !isnothing(spline._d_nodes)
+        n_2 = size(spline._d_nodes, 2)
+        d_h_values = Vector{T}(undef, n_2)
+        d_mu = spline._mu[n_1+1:end]
+        @inbounds for k = 1:n
+            for i = 1:n_2
+                d_h_values[i] = T(0.0)
+                for l = 1:n
+                    d_h_values[i] += (_∂²rk_∂η_r_∂ξ_k(spline._kernel, pt, spline._d_nodes[:,i], k, l) * spline._es[l,i])
+                end
+            end
+            grad[k] += sum(d_mu .* d_h_values)
+        end
+    end
+    @inbounds for k = 1:n
+        grad[k] /= spline._compression
     end
     return grad
 end
