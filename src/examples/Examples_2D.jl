@@ -482,7 +482,7 @@ function test_2D(model_id::Int,
         lvls2 = lvls
     end
     if model_id == 14
-        lvls = [-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1]
+        lvls=[-0.1;0.0;0.01;0.02;0.03;0.04;0.05;0.06;0.07;0.08;0.09;0.1;0.12;0.14;0.16;0.18;0.2;0.22;0.24;0.26;0.28;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.05;1.1]
         lvls2 = lvls
     end
 
@@ -537,6 +537,29 @@ function test_2D(model_id::Int,
     end
     colorbar(o)
     savefig("c:/0/m_cf_$model_id.png")
+
+    PyPlot.clf()
+    pygui(false)
+    o = contour(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
+    #    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
+    axis("equal")
+    # if n_of_samples <= 2
+    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
+    # end
+    if model_id == 6
+        PyPlot.xlim(-1.0, 1.0)
+        PyPlot.ylim(-1.0, 1.0)
+    end
+    if model_id == 12
+        PyPlot.xlim(-4.0, 4.0)
+        PyPlot.ylim(-2.0, 2.0)
+    end
+    if model_id == 14
+        PyPlot.xlim(-2.0, 2.0)
+        PyPlot.ylim(-1.0, 3.0)
+    end
+    colorbar(o)
+    savefig("c:/0/m_c_$model_id.png")
 
     PyPlot.clf()
     pygui(false)
