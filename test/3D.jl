@@ -1,314 +1,142 @@
 @testset "Test 3D" begin
 
-    # function get_3D_model1(p::Vector{Float64})
+    # function get_3D_model(p::Vector{Float64})
     #     r = p[1] + p[2] + p[3]
-    #     val = -1.0
-    #     if(p[1] < 0.0 || p[2] < 0.0 || p[3] < 0.0 || r > 1.0)
-    #         return val
-    #     end
     #     return r
     # end
     #
-    # function get_3D_model1_grad()
+    # function get_3D_model_grad()
     #     return [1.0; 1.0; 1.0]
     # end
 
-    # function get_3D_model2(p::Vector{Float64})
-    #     return p[3]
-    # end
-    #
-    # function get_3D_model2_grad()
-    #     return [0.0; 0.0; 1.0]
-    # end
+    p = [1.0 0.0 0.0 0.0; 0.0 1.0 0.0 0.0; 0.0 0.0 1.0 0.0] # function nodes
+    u = [1.0; 1.0; 1.0; 0.0]                                # function values in nodes
+    n_1 = size(p, 2)
+    dp = Matrix{Float64}(undef, 3, 3*n_1)
+    es = Matrix{Float64}(undef, 3, 3*n_1)
+    du = Vector{Float64}(undef, 3*n_1)
+    grad = [1.0; 1.0; 1.0]
 
-    p = [1.0 0.0 0.0 0.0; 0.0 1.0 0.0 0.0; 0.0 0.0 1.0 0.0]
-    u = [1.0; 1.0; 1.0; 0.0]
+    k = 0
+    for i = 1:n_1
+        k += 1
+        dp[1,k] = p[1,i]
+        dp[2,k] = p[2,i]
+        dp[3,k] = p[3,i]
+        du[k] = grad[1]
+        es[1,k] = 1.0
+        es[2,k] = 0.0
+        es[3,k] = 0.0
+        k += 1
+        dp[1,k] = p[1,i]
+        dp[2,k] = p[2,i]
+        dp[3,k] = p[3,i]
+        du[k] = grad[2]
+        es[1,k] = 0.0
+        es[2,k] = 1.0
+        es[3,k] = 0.0
+        k += 1
+        dp[1,k] = p[1,i]
+        dp[2,k] = p[2,i]
+        dp[3,k] = p[3,i]
+        du[k] = grad[3]
+        es[1,k] = 0.0
+        es[2,k] = 0.0
+        es[3,k] = 1.0
+    end
     ####
-    p = [0. 0. 1. 1. 0.5;  0. 1. 0. 1. 0.5] # nodes
-    u = [0.0; 0.0; 0.0; 0.0; 1.0]   # function values in nodes
-    u2 = [0.0; 0.0; 0.0; 0.0; 2.0]  # second function values in nodes
-    t = [0.5 0.5 0.499999; 0.5 0.499999 0.5]  # evaluation points
-
-    dp = [0.5 0.5; 0.5 0.5]
-    es = [1.0 0.0; 0.0 1.0]
-    du = [0.; 100000.0]
 
     @testset "Test 3D-RK_H0 kernel" begin
-        rk = RK_H0(0.001)
-        s = interpolate(p, u, rk)
-        σ = evaluate(s, t)
-        @test σ[1] ≈ u[5]
-        @test isapprox(σ[2], u[5], atol = 1e-5)
-        @test isapprox(σ[3], u[5], atol = 1e-5)
+        s = interpolate(p, u, RK_H0(0.00001))
+        σ1 = evaluate_one(s, [1.0; 0.0; 0.01])
+        @test isapprox(σ1, u[1], atol = 1e-3)
+        σ = evaluate(s, [1.0 0.5; 0.0 0.5; 0.01 0.5])
+        @test isapprox(σ[1], u[1], atol = 1e-3)
 
-        σ1 = evaluate_one(s, t[:,1])
-        @test σ1[1] ≈ u[5]
-
-        rk = RK_H0()
-        s = prepare(p, rk) # prepare spline
+        s = prepare(p, RK_H0(0.00001)) # prepare spline
         s = construct(s, u) # construct spline
-        σ1 = evaluate(s, t) # evaluate spline in points
-        @test σ[1] ≈ u[5]
-        @test isapprox(σ[2], u[5], atol = 1e-5)
-        @test isapprox(σ[3], u[5], atol = 1e-5)
-
-        s = construct(s, u2)
-        σ2 = evaluate(s, t)
-        @test σ2[1] ≈ u2[5]
-        @test isapprox(σ2[2], u2[5], atol = 1e-5)
-        @test isapprox(σ2[3], u2[5], atol = 1e-5)
+        σ1 = evaluate_one(s, [1.0; 0.0; 0.01])
+        @test isapprox(σ1, u[1], atol = 1e-3)
+        σ = evaluate(s, [1.0 0.5; 0.0 0.5; 0.01 0.5])
+        @test isapprox(σ[1], u[1], atol = 1e-3)
 
         cond = get_cond(s)
-        @test cond ≈ 10.0
+        @test cond ≈ 1.0e6
+
+        iq = assess_quality(s) + 1.0
+        @test iq ≈ 1.0 atol = 1e-9
 
         eps = get_epsilon(s)
-        @test isapprox(eps, 0.93, atol = 1e-2)
+        @test eps ≈ 1.0e-5
 
-        est_eps = estimate_epsilon(p) # get estimation of the problem's Gram matrix condition number
-        @test isapprox(est_eps, 0.93, atol = 1e-2)
+        est_eps = estimate_epsilon(p)
+        @test isapprox(est_eps, 1.036, atol = 1e-3)
     end
 
     @testset "Test 3D-RK_H1 kernel" begin
-        rk = RK_H1(0.001)
-        s = interpolate(p, u, rk)
+        s = interpolate(p, u, dp, es, du, RK_H1(0.1))
+        σ1 = evaluate_one(s, [1.0; 0.0; 0.01])
+        @test isapprox(σ1, u[1], atol = 1e-2)
+        σ = evaluate(s, [1.0 0.5; 0.0 0.5; 0.01 0.5])
+        @test isapprox(σ[1], u[1], atol = 1e-2)
+
+        s = prepare(p, dp, es, RK_H1(0.1)) # prepare spline
+        s = construct(s, u, du) # construct spline
+        σ1 = evaluate_one(s, [1.0; 0.0; 0.01])
+        @test isapprox(σ1, u[1], atol = 1e-2)
+        σ = evaluate(s, [1.0 0.5; 0.0 0.5; 0.01 0.5])
+        @test isapprox(σ[1], u[1], atol = 1e-2)
+
+        g = evaluate_gradient(s, [0.01; 0.2; 0.3])
+        @test all(isapprox.(g, grad, atol = 0.01))
+
         cond = get_cond(s)
-        @test cond ≈ 1.e11
+        @test cond ≈ 1.0e5
 
-        σ = evaluate(s, t)
-        @test isapprox(σ[1], u[5], atol = 1e-5)
-        @test isapprox(σ[2], u[5], atol = 1e-5)
-        @test isapprox(σ[3], u[5], atol = 1e-5)
+        iq = assess_quality(s) + 1.0
+        @test iq ≈ 1.0 atol = 1e-9
 
-        grad = evaluate_gradient(s, p[:,5])
-        @test abs(grad[1]) < 1.0e-5 && abs(grad[2]) < 1.0e-5
+        eps = get_epsilon(s)
+        @test eps ≈ 0.1
 
-        rk = RK_H1()
-        s = prepare(p, rk) # prepare spline
-        cond = get_cond(s)
-        @test cond ≈ 100.0
+        est_eps = estimate_epsilon(p)
+        @test isapprox(est_eps, 1.036, atol = 1e-3)
 
-        s = construct(s, u) # construct spline
-
-        σ1 = evaluate(s, t) # evaluate spline in points
-        @test isapprox(σ[1], u[5], atol = 1e-5)
-        @test isapprox(σ[2], u[5], atol = 1e-5)
-        @test isapprox(σ[3], u[5], atol = 1e-5)
-
-        s = construct(s, u2)
-        σ2 = evaluate(s, t)
-        @test isapprox(σ[1], u[5], atol = 1e-5)
-        @test isapprox(σ2[2], u2[5], atol = 1e-5)
-        @test isapprox(σ2[3], u2[5], atol = 1e-5)
-
-        est_eps = estimate_epsilon(p, dp) # get estimation of the problem's Gram matrix condition number
-        @test est_eps ≈ 0.96 atol = 1e-2
-###
-        eps = 0.0001
-        rk = RK_H1(eps)
-        s = interpolate(p, u, dp, es, du, rk)
-        cond = get_cond(s)
-        @test cond == 1.0e14
-
-        σ1 = evaluate_one(s, p[:,5])
-        @test !isapprox(σ1[1], u[5], atol = 0.1)
-
-        q = assess_quality(s)
-        @test q > 1.0
-
-# Same test with extended precision
-        rk = RK_H1(Double64(eps))
-        p = Double64.(p)
-        dp = Double64.(dp)
-        es = Double64.(es)
-        u = Double64.(u)
-        du = Double64.(du)
-        t = Double64.(t)
-        s = prepare(p, dp, es, rk)
-        s = construct(s, u, du)
-        σ = evaluate(s, p)
-        @test all(isapprox.(σ, u, atol = 1e-5))
-
-        q = assess_quality(s)
-        @test q < 1e-5
+        est_eps = estimate_epsilon(p, dp)
+        @test isapprox(est_eps, 0.707, atol = 1e-3)
     end
 
     @testset "Test 3D-RK_H2 kernel" begin
-        p = [0. 0. 1. 1. 0.5;  0. 1. 0. 1. 0.5] # nodes
-        u = [0.0; 0.0; 0.0; 0.0; 1.0]   # function values in nodes
-        u2 = [0.0; 0.0; 0.0; 0.0; 2.0]  # second function values in nodes
-        t = [0.5 0.5 0.499999; 0.5 0.499999 0.5]  # evaluation points
+        s = interpolate(p, u, dp, es, du, RK_H2(0.1))
+        σ1 = evaluate_one(s, [1.0; 0.0; 0.01])
+        @test isapprox(σ1, u[1], atol = 2e-2)
+        σ = evaluate(s, [1.0 0.5; 0.0 0.5; 0.01 0.5])
+        @test isapprox(σ[1], u[1], atol = 2e-2)
 
-        dp = [0.5 0.5; 0.5 0.5]
-        es = [1.0 0.0; 0.0 1.0]
-        du = [0.; 100000.0]
+        s = prepare(p, dp, es, RK_H2(0.1)) # prepare spline
+        s = construct(s, u, du) # construct spline
+        σ1 = evaluate_one(s, [1.0; 0.0; 0.01])
+        @test isapprox(σ1, u[1], atol = 2e-2)
+        σ = evaluate(s, [1.0 0.5; 0.0 0.5; 0.01 0.5])
+        @test isapprox(σ[1], u[1], atol =2e-2)
 
-        rk = RK_H2(0.01)
-        s = interpolate(p, u, rk)
+        g = evaluate_gradient(s, [0.01; 0.2; 0.3])
+        @test all(isapprox.(g, grad, atol = 0.01))
+
         cond = get_cond(s)
-        @test cond ≈ 1e11
+        @test cond ≈ 1.0e8
 
-        σ = evaluate(s, t)
-        @test isapprox(σ[1], u[5], atol = 1e-5)
-        @test isapprox(σ[2], u[5], atol = 1e-5)
-        @test isapprox(σ[3], u[5], atol = 1e-5)
+        iq = assess_quality(s) + 1.0
+        @test iq ≈ 1.0 atol = 1e-9
 
-        grad = evaluate_gradient(s, p[:,5])
-        @test abs(grad[1]) < 1.0e-5 && abs(grad[2]) < 1.0e-5
+        eps = get_epsilon(s)
+        @test eps ≈ 0.1
 
-        rk = RK_H2()
-        s = prepare(p, rk) # prepare spline
-        cond = get_cond(s)
-        @test cond ≈ 100.0
+        est_eps = estimate_epsilon(p)
+        @test isapprox(est_eps, 1.036, atol = 1e-3)
 
-        s = construct(s, u) # construct spline
-
-        σ1 = evaluate(s, t) # evaluate spline in points
-        @test isapprox(σ[1], u[5], atol = 1e-5)
-        @test isapprox(σ[2], u[5], atol = 1e-5)
-        @test isapprox(σ[3], u[5], atol = 1e-5)
-
-        s = construct(s, u2)
-        σ2 = evaluate(s, t)
-        @test isapprox(σ[1], u[5], atol = 1e-5)
-        @test isapprox(σ2[2], u2[5], atol = 1e-5)
-        @test isapprox(σ2[3], u2[5], atol = 1e-5)
-###
-        eps = 0.01
-        rk = RK_H2(eps)
-        s = interpolate(p, u, dp, es, du, rk)
-        cond = get_cond(s)
-        @test cond == 1.0e13
-
-        σ1 = evaluate_one(s, p[:,5])
-        @test !isapprox(σ1[1], u[5], atol = 0.1)
-
-        q = assess_quality(s)
-        @test q > 1.0
-
-# Same tests with extended precision
-        rk = RK_H2(Double64(eps))
-        p = Double64.(p)
-        dp = Double64.(dp)
-        es = Double64.(es)
-        u = Double64.(u)
-        du = Double64.(du)
-        t = Double64.(t)
-        s = prepare(p, dp, es, rk)
-        s = construct(s, u, du)
-
-        σ = evaluate(s, p)
-        @test all(isapprox.(σ, u, atol = 1e-5))
-
-        q = assess_quality(s)
-        @test q < 1e-5
-    end
-end
-
-@testset "Test 3D-Bis" begin
-
-    p = collect([-1.0 2.0; -1.0 4.0; 3.0 2.0; 3.0 4.0; 1.0 3.0]') # function nodes
-    u = [0.0; 0.0; 0.0; 0.0; 1.0]                        # function values in nodes
-
-    t = collect([-1.0 3.0; 0.0 3.0; 1.0 3.0; 2.0 3.0; 3.0 3.0]')  # evaluation points
-
-    @testset "Test 3D-Bis-RK_H0 kernel" begin
-        spl = prepare(p, RK_H0(0.001))                   # prepare spline
-        c = get_cond(spl)                                # get estimation of the problem's Gram matrix condition number
-        @test c ≈ 100000.0
-
-        spl = construct(spl, u)                          # construct spline
-        vt = [1.0, 3.0]
-        σ = evaluate_one(spl, vt)                            # evaluate spline in the node
-        @test σ ≈ 1.0
-
-        wt = [0.0, 3.0]
-        σ1 = evaluate_one(spl, wt)
-
-        u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
-        spl = construct(spl, u2)
-        σ2 = evaluate_one(spl, wt)
-        @test σ2 ≈ 2.0 * σ1
-
-        spl = interpolate(p, u, RK_H0(0.001))            # prepare and construct spline
-        σ = evaluate_one(spl, vt)
-        @test σ ≈ 1.0
+        est_eps = estimate_epsilon(p, dp)
+        @test isapprox(est_eps, 0.707, atol = 1e-3)
     end
 
-    @testset "Test 3D-Bis-RK_H1 kernel" begin
-        spl = prepare(p, RK_H1(0.001))
-        c = get_cond(spl)
-        @test c ≈ 1.0e11
-
-        spl = construct(spl, u)
-        vt = [1.0, 3.0]
-        σ = evaluate_one(spl, vt)
-        @test σ ≈ 1.0
-
-        wt = [0.0, 3.0]
-        σ1 = evaluate_one(spl, wt)
-
-        u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
-        spl = construct(spl, u2)
-        σ2 = evaluate_one(spl, wt)
-        @test σ2 ≈ 2.0 * σ1
-
-        spl = interpolate(p, u, RK_H1(0.001))
-        σ = evaluate_one(spl, vt)
-        @test σ ≈ 1.0
-    end
-
-    @testset "Test 3D-Bis-RK_H2 kernel" begin
-        spl = prepare(p, RK_H2(0.001))
-        c = get_cond(spl)
-        @test c ≈ 1.0e15
-
-        spl = construct(spl, u)
-
-        vt = [1.0, 3.0]
-        σ = evaluate_one(spl, vt)
-        @test σ ≈ 1.0
-
-        wt = [0.0, 3.0]
-        σ1 = evaluate_one(spl, wt)
-        u2 = [0.0; 0.0; 0.0; 0.0; 2.0]
-        spl = construct(spl, u2)
-        σ2 = evaluate_one(spl, wt)
-        @test σ2 ≈ 2.0 * σ1
-
-        spl = interpolate(p, u, RK_H2(0.001))
-        σ = evaluate_one(spl, vt)
-        @test σ ≈ 1.0
-    end
-end
-
-@testset "Test 3D-Grad" begin
-        p = collect([0.0 0.0; 1.0 0.0; 0.0 1.0]') # function nodes
-        u = [0.0; 0.0; 1.0]                       # function values in nodes
-        t = [0.5; 0.5]                            # evaluation points
-        p2 = collect([0.0 0.0; 2.0 0.0; 0.0 2.0]') # function nodes
-        u2 = [0.0; 0.0; 2.0]                       # function values in nodes
-        t2 = [1.0; 1.0]                            # evaluation points
-        @testset "Test 3D-Grad-RK_H1 kernel" begin
-            spl = interpolate(p, u, RK_H1(0.001))
-            grad = evaluate_gradient(spl, t)
-            @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-2
-            @test abs(grad[2]) ≈ 1.0 atol = 1e-2
-
-            spl = interpolate(p2, u2, RK_H1(0.001))
-            grad = evaluate_gradient(spl, t2)
-            @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-2
-            @test abs(grad[2]) ≈ 1.0 atol = 1e-2
-        end
-
-        @testset "Test 3D-Grad-RK_H2 kernel" begin
-            spl = interpolate(p, u, RK_H2(0.001))
-            grad = evaluate_gradient(spl, t)
-            @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-4
-            @test abs(grad[2]) ≈ 1.0 atol = 1e-4
-
-            spl = interpolate(p2, u2, RK_H2(0.001))
-            grad = evaluate_gradient(spl, t2)
-            @test abs(grad[1] + 1.0) ≈ 1.0 atol = 1e-4
-            @test abs(grad[2]) ≈ 1.0 atol = 1e-4
-        end
 end

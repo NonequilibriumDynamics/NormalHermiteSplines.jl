@@ -40,7 +40,7 @@
         eps = get_epsilon(s)
         @test isapprox(eps, 0.93, atol = 1e-2)
 
-        est_eps = estimate_epsilon(p) # get estimation of the problem's Gram matrix condition number
+        est_eps = estimate_epsilon(p)
         @test isapprox(est_eps, 0.93, atol = 1e-2)
     end
 
@@ -76,7 +76,7 @@
         @test isapprox(σ2[2], u2[5], atol = 1e-5)
         @test isapprox(σ2[3], u2[5], atol = 1e-5)
 
-        est_eps = estimate_epsilon(p, dp) # get estimation of the problem's Gram matrix condition number
+        est_eps = estimate_epsilon(p, dp)
         @test est_eps ≈ 0.96 atol = 1e-2
 ###
         eps = 0.0001

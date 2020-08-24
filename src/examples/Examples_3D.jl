@@ -456,7 +456,7 @@ function test_3D(model_id::Int,
     savefig("c:/0/delta_t_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png")
     PyPlot.clf()
 
-    if plot_grid_type == 2
+    if plot_grid_type == 2 && model_id != 1
        zk = [0.0; 0.25; 0.5; 0.75; 1.0]
        for k = 1:5
            ik = grid[3,:] .== zk[k]

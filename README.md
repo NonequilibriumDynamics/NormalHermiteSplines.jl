@@ -74,7 +74,7 @@ We'll construct an interpolating normal spline using this function and its gradi
     σ1 = evaluate_one(spline, [0.5; 0.5])
     #  ≈ 0.308071
 
-    g1 = evaluate_gradient(spline, [0.5;0.5])
+    g1 = evaluate_gradient(spline, [0.5; 0.5])
     #  ≈ -2.690
     #  ≈ -2.690
 ```
