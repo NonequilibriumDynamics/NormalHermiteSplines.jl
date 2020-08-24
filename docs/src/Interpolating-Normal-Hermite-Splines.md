@@ -126,7 +126,7 @@ also in the considered case (``s = n/2 + 1/2 + r, \, r \ge 1``) it is a continuo
 \tag{8}
 \frac {\partial \varphi(\xi)}{\partial \xi_k} = {\left \langle \frac{\partial V(\cdot, \xi)} {\partial \xi_k}, \varphi \right \rangle}
 ``` 
-which holds for any ``\varphi \in H^s_\varepsilon`` and ``\xi \in R^n``, it means that function ``\frac{\partial {V(\cdot , \xi)} }{\partial{\xi_k}}`` represents a point-wise functional defined as value of function ``\frac{ \partial {\varphi (\cdot)} }{\partial{\xi_k}}`` at a point ``\xi``.
+which holds for any ``\varphi \in H^s_\varepsilon`` and ``\xi \in R^n``, it means that function ``\frac{\partial {V(\cdot , \xi)} }{\partial{\xi_k}}`` represents a point-wise functional defined as value of function ``\frac{ \partial {\varphi (\cdot)} }{\partial{\xi_k}}`` at the point ``\xi``.
 
 Now it is possible to express functions ``h_i`` and ``h'_j`` via the reproducing kernel ``V``. Comparing (2) with (7) and (8) we receive:
 
@@ -170,7 +170,7 @@ Further
 \end{aligned}
 ```
 
-Here normal hermite splines will be constructed in Bessel potential spaces ``H^{s_1}_\varepsilon (R^n) , \, s_1 = n/2 + 3/2`` and ``H^{s_2}_\varepsilon (R^n) , \, s_2 = n/2 + 5/2``. Elements of space ``H^{s_1}`` can be treated as  continuously differentiable functions and elements of space ``H^{s_2}`` can be treated as twice continuously differentiable functions. Note, the spline is infinitely differentiable everywhere in ``R^n`` exepting the knots ``p_i`` and ``s_j``.
+Here normal hermite splines will be constructed in Bessel potential spaces ``H^{s_1}_\varepsilon (R^n) , \, s_1 = n/2 + 3/2`` and ``H^{s_2}_\varepsilon (R^n) , \, s_2 = n/2 + 5/2``. Elements of space ``H^{s_1}`` can be treated as  continuously differentiable functions and elements of space ``H^{s_2}`` can be treated as twice continuously differentiable functions. Note, the spline is infinitely differentiable everywhere in ``R^n`` excepting the knots ``p_i`` and ``s_j``.
 
 Reproducing kernel of Bessel potential space was presented in [5] and its simplified form was given in [14], [18], [19], [20]. For space ``H^{s}_\varepsilon (R^n), \, s = n/2 + 1/2 + r, \, r \ge 0`` it can be written as:
 
