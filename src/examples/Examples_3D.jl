@@ -400,8 +400,8 @@ function test_3D(model_id::Int,
 #    o = scatter3D(nodes[1,:], nodes[2,:], nodes[3,:], c=(u./maximum(u)), s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
-    savefig("c:/0/m_nodes_$model_id,$type_of_samples,$n_of_samples.png")
+    colorbar(o, shrink=0.75)
+    savefig("c:/0/m_nodes_$model_id,$type_of_samples,$n_of_samples.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -415,8 +415,8 @@ function test_3D(model_id::Int,
 #    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=(f./maximum(f)), s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
-    savefig("c:/0/m_grid_$model_id,$plot_grid_type,$plot_grid_size,_.png")
+    colorbar(o, shrink=0.75)
+    savefig("c:/0/m_grid_$model_id,$plot_grid_type,$plot_grid_size,_.png", dpi=150, bbox_inches="tight") # dpi=300 for bettr quality
 
     PyPlot.clf()
     PyPlot.clf()
@@ -436,8 +436,8 @@ function test_3D(model_id::Int,
 #    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=(σ./maximum(σ)), s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
-    savefig("c:/0/s_grid_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png")
+    colorbar(o, shrink=0.75)
+    savefig("c:/0/s_grid_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png", dpi=150, bbox_inches="tight")
     PyPlot.clf()
 
     PyPlot.clf()
@@ -452,10 +452,10 @@ function test_3D(model_id::Int,
 #    o = scatter3D(grid[1,:],grid[2,:], grid[3,:], c=(delta./maximum(delta)) , s=1, cmap=ColorMap("gnuplot"), alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
+    colorbar(o, shrink=0.75)
 #    gca().set_axis_off() # hide grid
 
-    savefig("c:/0/delta_t_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png")
+    savefig("c:/0/delta_t_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png", dpi=150, bbox_inches="tight")
     PyPlot.clf()
 
     if plot_grid_type == 2 && model_id != 1
@@ -501,7 +501,7 @@ function test_3D(model_id::Int,
            #     PyPlot.ylim(-2.0, 2.0)
            # end
            colorbar(o)
-           savefig("c:/0/sc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+           savefig("c:/0/sc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
 
            PyPlot.clf()
            pygui(false)
@@ -517,7 +517,7 @@ function test_3D(model_id::Int,
            #     PyPlot.ylim(-2.0, 2.0)
            # end
            colorbar(o)
-           savefig("c:/0/fc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+           savefig("c:/0/fc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
 
            # PyPlot.clf()
            # pygui(false)
@@ -532,7 +532,7 @@ function test_3D(model_id::Int,
            # tick_params(axis="both", which="major", labelsize=6)
            # tick_params(axis="both", which="minor", labelsize=6)
            # colorbar(o)
-           # savefig("c:/0/m_t_$model_id,_$k.png")
+           # savefig("c:/0/m_t_$model_id,_$k.png", dpi=150, bbox_inches="tight")
 
            # PyPlot.clf()
            # pygui(false)

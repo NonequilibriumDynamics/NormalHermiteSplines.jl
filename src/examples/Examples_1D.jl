@@ -150,7 +150,7 @@ function test_1D(model_id::Int,
     elseif type_of_samples == 3
         PyPlot.title("Samples: $(samples_size[n_of_samples]) regular nodes")
     end
-    savefig("c:/0/sca_$model_id,$type_of_samples,$n_of_samples,_.png")
+    savefig("c:/0/sca_$model_id,$type_of_samples,$n_of_samples,_.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -160,7 +160,7 @@ function test_1D(model_id::Int,
     PyPlot.xlabel("x")
     PyPlot.ylabel("f")
     PyPlot.title("Function f(x)=1.0+x^2+log(abs(3.0*(1.0-x)+1.0))/3.3")
-    savefig("c:/0/fun_$model_id,_.png")
+    savefig("c:/0/fun_$model_id,_.png"), dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -176,7 +176,7 @@ function test_1D(model_id::Int,
     end
     scatter(nodes, u, alpha=1.0, s=ss, c ="Red", label="Nodes")
     legend()
-    savefig("c:/0/spl_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$use_derivatives,_.png")
+    savefig("c:/0/spl_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$use_derivatives,_.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -192,7 +192,7 @@ function test_1D(model_id::Int,
         PyPlot.title("Error (σ-f): $(samples_size[n_of_samples]) regular nodes")
     end
     legend()
-    savefig("c:/0/err_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$use_derivatives,_.png")
+    savefig("c:/0/err_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$use_derivatives,_.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     @printf "Plots created.\n"
