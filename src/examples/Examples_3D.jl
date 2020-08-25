@@ -584,10 +584,10 @@ function test_3D(model_id::Int,
        pygui(false)
        PyPlot.rc("figure", max_open_warning = 0)
        anim = pyimport("matplotlib.animation")
-       fig = figure()
+       fig = figure(figsize=(2.75,2.75))
 #       fig = figure(figsize=(3,3))
        withfig(fig) do
-           anim = anim.FuncAnimation(fig, make_frame_gf, init_func=init_gf, frames=22, interval=800)
+           anim = anim.FuncAnimation(fig, make_frame_gf, init_func=init_gf, frames=22, interval=500)
            anim.save("c:/0/model.mp4", bitrate=-1, extra_args=["-vcodec", "libx264", "-pix_fmt", "yuv420p"])
        end
 
@@ -595,10 +595,10 @@ function test_3D(model_id::Int,
        pygui(false)
        PyPlot.rc("figure", max_open_warning = 0)
        anim = pyimport("matplotlib.animation")
-       fig = figure()
+       fig = figure(figsize=(2.75,2.75))
 #       fig = figure(figsize=(3,3))
        withfig(fig) do
-           anim = anim.FuncAnimation(fig, make_frame_gs, init_func=init_gs, frames=22, interval=800)
+           anim = anim.FuncAnimation(fig, make_frame_gs, init_func=init_gs, frames=22, interval=500, repeat=true)
            anim.save("c:/0/spline.mp4", bitrate=-1, extra_args=["-vcodec", "libx264", "-pix_fmt", "yuv420p"])
        end
        PyPlot.clf()
@@ -611,7 +611,7 @@ function test_3D(model_id::Int,
 end
 
 function make_frame_gf(k)
-    if k >= 17 && k <= 22
+    if k >= 17 && k <= 20
         imshow(gf5, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
     elseif k >= 13 && k <= 16
         imshow(gf4, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
@@ -620,6 +620,8 @@ function make_frame_gf(k)
     elseif k >= 5 && k <= 8
         imshow(gf2, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
     elseif k >= 1 && k <=4
+        imshow(gf1, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
+    elseif k >= 21 && k <=22
         imshow(gf1, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
     end
 end
@@ -633,7 +635,7 @@ function init_gs()
 end
 
 function make_frame_gs(k)
-    if k >= 17 && k <= 22
+    if k >= 17 && k <= 20
         imshow(gσ5, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
     elseif k >= 13 && k <= 16
         imshow(gσ4, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
@@ -642,6 +644,8 @@ function make_frame_gs(k)
     elseif k >= 5 && k <= 8
         imshow(gσ2, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
     elseif k >= 1 && k <=4
+        imshow(gσ1, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
+    elseif k >= 21 && k <=22
         imshow(gσ1, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
     end
 end

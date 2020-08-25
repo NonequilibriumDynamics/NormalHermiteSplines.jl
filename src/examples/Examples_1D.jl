@@ -160,7 +160,7 @@ function test_1D(model_id::Int,
     PyPlot.xlabel("x")
     PyPlot.ylabel("f")
     PyPlot.title("Function f(x)=1.0+x^2+log(abs(3.0*(1.0-x)+1.0))/3.3")
-    savefig("c:/0/fun_$model_id,_.png"), dpi=150, bbox_inches="tight")
+    savefig("c:/0/fun_$model_id,_.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)

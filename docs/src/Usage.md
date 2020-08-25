@@ -1,5 +1,7 @@
 # Example Usage
 
+![Example 1](images/spline.mp4)
+
 ## 1D
 aa
 
