@@ -69,8 +69,9 @@ Pages = [
       "Numerical-Tests.md",
       "Public-API.md",
       "Interpolating-Normal-Hermite-Splines.md",
+      "Reproducing-Kernel-of-Bessel-Potential-space.md",
       "Relation-to-Polyharmonic-Splines.md",
-      "Reproducing-Kernel-of-Bessel-Potential-space.md"
+      "Updating-Cholesky-Factorization.md"
 ]
 Depth = 3
 ```
