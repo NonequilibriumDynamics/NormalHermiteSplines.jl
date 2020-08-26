@@ -35,7 +35,7 @@ A)
         u[i] = -0.2 * i + 3.0
     end
 
-    # Build a differentiable spline by values of function in nodes
+    # Build a differentiable spline by values of function in nodes.
     # Here the value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = prepare(x, RK_H1())
     cond = get_cond(spline)
@@ -62,11 +62,11 @@ A)
 Evaluate the spline at some points:
 
 ```@example A
-    p = [3.1, 8.1, 18.1]
+    p = [3.1, 8.1, 12.1, 18.1]
     σ = evaluate(spline, p)
 ```
 
-Evaluate the spline  derivative at the same points:
+Evaluate the spline derivatives at the same points:
 
 ```@example A
     dσ = similar(p)
@@ -76,19 +76,13 @@ Evaluate the spline  derivative at the same points:
     dσ
 ```
 
-Construct spline by different function values in nodes
+Construct spline by different function values in nodes and evaluate new spline at the same evaluation points:
+
 ```@example A
     u2 = 2.0 .* u
     spline = construct(spline, u2)
-```
-
-Evaluate new spline at the same points:
-
-```@example A
     σ = evaluate(spline, p)
 ```
-
-
 
 B)
 
@@ -110,8 +104,8 @@ B)
         v[i] = -0.2
     end
 
-    # build a differentiable spline by values of function,
-    # and values of its first derivatives in nodes
+    # Build a differentiable spline by values of function,
+    # and values of its first derivatives in nodes.
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, s, v, RK_H1())
 
@@ -130,26 +124,22 @@ B)
 ```
 ![Example 2B](images/1d-usage/example-1b-der.svg)
 
-
-
-
-
-
-
 Evaluate the spline at some points:
 
 ```@example B
-    p = [3.1, 8.1, 18.1]
+    p = [3.1, 8.1, 12.1, 18.1]
     σ = evaluate(spline, p)
 ```
 
-Evaluate the spline  derivative at some points:
+Evaluate the spline derivatives at the same points:
 
 ```@example B
-    σ = evaluate(spline, [3.1, 8.1, 18.1])
+    dσ = similar(p)
+    for i=1:length(p)
+        dσ[i] = evaluate_derivative(spline, p[i])
+    end
+    dσ
 ```
-
-aa
 
 ## 2D interpolation case
 ![Example 1](images/spline.mp4)
