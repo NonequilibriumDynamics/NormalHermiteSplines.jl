@@ -38,9 +38,16 @@ A)
     # Build a differentiable spline by values of function in nodes.
     # Here the value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = prepare(x, RK_H1())
+    
+    # An estimation of the Gram matrix condition number
     cond = get_cond(spline)
+```
+```@example A
+    # A value of the 'scaling parameter' of Bessel Potential space
+    # the normal spline was built in.
     ε = get_epsilon(spline)
-
+```
+```@example A
     spline = construct(spline, u)
 
     p = collect(1.0:0.2:20)        # evaluation points
