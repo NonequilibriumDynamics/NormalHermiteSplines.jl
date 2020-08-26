@@ -10,9 +10,9 @@ makedocs(
 				"Numerical Tests" => "Numerical-Tests.md",
 				"Public API" => "Public-API.md",
 				"Interpolating Normal Hermite Splines" => "Interpolating-Normal-Hermite-Splines.md",
-				"Updating Cholesky Factorization" => "Updating-Cholesky-Factorization.md",
-				"Relation to Polyharmonic Splines"  => "Relation-to-Polyharmonic-Splines.md",
 				"Reproducing Kernel of Bessel Potential space" => "Reproducing-Kernel-of-Bessel-Potential-space.md",
+				"Relation to Polyharmonic Splines"  => "Relation-to-Polyharmonic-Splines.md",
+				"Updating Cholesky Factorization" => "Updating-Cholesky-Factorization.md",
 			]
 )
 
