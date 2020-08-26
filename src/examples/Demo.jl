@@ -8,8 +8,6 @@ function demo()
     u = x.*0.0
     s = x
     v = x.*0.0
-    t = x
-    w = x.*0.0
 
     for i in 6:10
         u[i] = 1.0
@@ -23,7 +21,7 @@ function demo()
 
     p = collect(1.0:0.2:20)
     r = p.*0.0
-    tol = 1e-7
+    tol = 1e-15
     i = 0
     for pi in p
         i += 1
@@ -35,85 +33,80 @@ function demo()
         end
     end
 ####
-    interpolate(x, u, RK_W3())
-
-    cond = get_cond()
-    ε = get_epsilon()
+    spline = prepare(x, RK_H1())
+    cond = get_cond(spline)
+    ε = get_epsilon(spline)
     println("cond = $cond, ε = $ε")
 
-    σ = evaluate(p)
+    spline = construct(spline, u)
+    σ = evaluate(spline, p)
 
-    δ = σ - r
-    rms = round(norm(δ)/sqrt(length(δ)); digits=2)
-    println("rms = $rms")
+    δ = σ .- r
+    rmse = round(norm(δ)/sqrt(length(δ)); digits=2)
+    println("rmse = $rmse")
 
     set_default_plot_size(13cm, 13cm)
-    plt = plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
+    plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
           layer(x = p, y = r, Geom.line, Theme(default_color=colorant"red")),
           layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
           Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
           Guide.manual_color_key("Legend", ["Points", "True", "Spline"], ["orange", "red", "blue"]),
-          Guide.xlabel("knots, points"), Guide.ylabel("f, σ"),
+          Guide.xlabel("nodes, points"), Guide.ylabel("f, σ"),
           Guide.title("Fig.1a"))
-    draw(SVG("plot_W3.svg", 13cm, 13cm), plt)
+    Gadfly.draw(SVG("c:/0/example-1a.svg", 13cm, 13cm), plt)
 
-    σ = evaluate(p, 1)
-    plt = plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
-          layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
+    dσ = similar(σ)
+    for i=1:length(p)
+        dσ[i] = evaluate_derivative(spline, p[i])
+    end
+    plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
+          layer(x = p, y = dσ, Geom.line, Theme(default_color=colorant"green")),
           Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-          Guide.manual_color_key("Legend", ["Points", "Spline 1st derivative"], ["orange", "blue"]),
-          Guide.xlabel("knots, points"), Guide.ylabel(raw"σ'"),
+          Guide.manual_color_key("Legend", ["Points", "Spline 1st derivative"], ["orange", "green"]),
+          Guide.xlabel("nodes, points"), Guide.ylabel(raw"σ'"),
           Guide.title("Fig.2a"))
-    draw(SVG("plot_W3_d1.svg", 13cm, 13cm), plt)
+    Gadfly.draw(SVG("c:/0/example-1a-der.svg", 13cm, 13cm), plt)
 
-    σ = evaluate(p, 2)
-    plt = plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
-          layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
-          Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-          Guide.manual_color_key("Legend", ["Points", "Spline 2nd derivative"], ["orange", "blue"]),
-          Guide.xlabel("knots, points"), Guide.ylabel(raw"σ''"),
-          Guide.title("Fig.3a"))
-    draw(SVG("plot_W3_d2.svg", 13cm, 13cm), plt)
+    σ = evaluate(spline, [3.1, 8.1, 18.1])
+
+    u2 = 2.0 .* u
+    spline = construct(spline, u2)
+    σ = evaluate(spline, p)
+    σ = evaluate(spline, [3.1, 8.1, 18.1])
+
 
 ###
-      interpolate(x, u, s, v, t, w, RK_W3())
+      spline = interpolate(x, u, s, v, RK_H1())
 
-      cond = get_cond()
-      ε = get_epsilon()
+      cond = get_cond(spline)
+      ε = get_epsilon(spline)
       println("cond = $cond, ε = $ε")
 
-      σ = evaluate(p)
-
-      δ = σ - r
-      rms = round(norm(δ)/sqrt(length(δ)); digits=2)
-      println("rms = $rms")
+      σ = evaluate(spline, p)
+      δ = σ .- r
+      rmse = round(norm(δ)/sqrt(length(δ)); digits=2)
+      println("rmse = $rmse")
 
       set_default_plot_size(13cm, 13cm)
-      plt = plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
+      plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
             layer(x = p, y = r, Geom.line, Theme(default_color=colorant"red")),
             layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
             Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
             Guide.manual_color_key("Legend", ["Points", "True", "Spline"], ["orange", "red", "blue"]),
-            Guide.xlabel("knots, points"), Guide.ylabel("f, σ"),
+            Guide.xlabel("nodes, points"), Guide.ylabel("f, σ"),
             Guide.title("Fig.1b"))
-      draw(SVG("plot_d12_W3.svg", 13cm, 13cm), plt)
+      Gadfly.draw(SVG("c:/0/example-1b.svg", 13cm, 13cm), plt)
 
-      σ = evaluate(p, 1)
-      plt = plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
-            layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
+      dσ = similar(σ)
+      for i=1:length(p)
+          dσ[i] = evaluate_derivative(spline, p[i])
+      end
+      plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
+            layer(x = p, y = dσ, Geom.line, Theme(default_color=colorant"green")),
             Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-            Guide.manual_color_key("Legend", ["Points", "Spline 1st derivative"], ["orange", "blue"]),
-            Guide.xlabel("knots, points"), Guide.ylabel(raw"σ'"),
+            Guide.manual_color_key("Legend", ["Points", "Spline 1st derivative"], ["orange", "green"]),
+            Guide.xlabel("nodes, points"), Guide.ylabel(raw"σ'"),
             Guide.title("Fig.2b"))
-      draw(SVG("plot_d12_W3_d1.svg", 13cm, 13cm), plt)
-
-      σ = evaluate(p, 2)
-      plt = plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
-            layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
-            Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-            Guide.manual_color_key("Legend", ["Points", "Spline 2nd derivative"], ["orange", "blue"]),
-            Guide.xlabel("knots, points"), Guide.ylabel(raw"σ''"),
-            Guide.title("Fig.3b"))
-      draw(SVG("plot_d12_W3_d2.svg", 13cm, 13cm), plt)
+      Gadfly.draw(SVG("c:/0/example-1b-der.svg", 13cm, 13cm), plt)
 
 end

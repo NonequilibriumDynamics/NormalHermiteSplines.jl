@@ -21,6 +21,8 @@ export get_3D_grid, get_3D_eps_grid, get_3D_halton_nodes, get_3D_plot_grid, get_
 export get_separation_distance, get_fill_distance
 export readme_3
 
+export demo
+
 #include("Demo.jl")
 include("Halton.jl")
 include("Grids.jl")
@@ -28,3 +30,4 @@ include("Models.jl")
 include("Examples_1D.jl")
 include("Examples_2D.jl")
 include("Examples_3D.jl")
+include("Demo.jl")

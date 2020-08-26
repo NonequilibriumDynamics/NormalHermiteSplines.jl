@@ -14,7 +14,7 @@
 |```assess_quality```                 |Assess interpolation results.                                                                       |
 |```get_cond```                       |Get an estimation of the Gram matrix condition number.                                              |
 |```get_epsilon```                    |Get the 'scaling parameter' of Bessel Potential space the normal spline was built in.               |
-|```estimate_epsilon```               |Get an estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.    |
+|```estimate_epsilon```               |Get an estimation of the 'scaling parameter' of Bessel Potential space the spline being built in.   |
 
 ## Functions
 ```@docs
