@@ -4,6 +4,7 @@
 
 # Normal Hermite Splines
 
+[![](https://img.shields.io/badge/docs-latest-blue.svg)](https://IgorKohan.github.io/NormalHermiteSplines.jl/v0.3.0)
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://IgorKohan.github.io/NormalHermiteSplines.jl/stable)
 [![Build Status](https://travis-ci.com/IgorKohan/NormalHermiteSplines.jl.svg?branch=master)](https://travis-ci.com/github/IgorKohan/NormalHermiteSplines.jl)
 [![codecov.io](https://codecov.io/github/IgorKohan/NormalHermiteSplines.jl/coverage.svg?branch=master)](https://codecov.io/github/IgorKohan/NormalHermiteSplines.jl?branch=master)
