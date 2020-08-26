@@ -23,7 +23,6 @@ export readme_3
 
 export demo
 
-#include("Demo.jl")
 include("Halton.jl")
 include("Grids.jl")
 include("Models.jl")
