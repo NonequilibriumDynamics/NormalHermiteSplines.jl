@@ -142,10 +142,14 @@ Evaluate the spline derivatives at the same points:
 ```
 
 ## 2D interpolation case
-![Example 1](images/spline.mp4)
+
+.....
+.....
 
 ## 3D interpolation case
-d
+
+![Example 1](images/spline.mp4)
+
 
 ## Choice of the scaling parameter
 aa
