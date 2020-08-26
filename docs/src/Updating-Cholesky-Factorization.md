@@ -1,4 +1,4 @@
-# Relation to Polyharmonic Splines
+# Algorithms for updating Cholesky factorization
 
 A problem of updating Cholesky factorization was treated in [1], [2] and [3]. Here algorithms taken from those works are described. These algorithms are for computing a factorization $\tilde A = \tilde L \tilde L^T$ where $\tilde A$ is a matrix received of the matrix $A = L L^T$ after a row and the symmetric column were added or deleted from $A$.
 Let $A \in R^{n \times n}$ is a symmetric positive definite matrix. Applying Cholesky method to $A$ yields the factorization $A = L L^T$ where $L$ is a lower triangular matrix with positive diagonal elements.
