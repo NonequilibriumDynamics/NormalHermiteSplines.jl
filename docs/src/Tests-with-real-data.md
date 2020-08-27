@@ -1,4 +1,4 @@
-# Tests-with-real-data
+# Tests with real data
 
 ## 1. Big Sur Bathymetric data
 .....

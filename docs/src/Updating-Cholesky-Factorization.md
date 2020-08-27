@@ -142,10 +142,12 @@ In order to avoid unnecessary overflow or underflow during computation of ``c`` 
 ```
 Applying the this technique to Cholesky factorization allows significally reduce the complexity of calculations. So, in case of adding a row and the symmetric column to the original matrix it will be necessary to carry out about ``n^2`` flops instead of about ``\frac {(n + 1) ^ 3} {3}`` flops for the direct calculation of the new Cholesky factor. In the case of deleting a row and the symmetric column from the original matrix, the new Cholesky factor can be obtained with about ``3(n - r)^2`` flops (the worst case requires about ``3 (n - 1) ^ 2`` operations) instead of about ``\frac {(n - 1) ^ 3} {3} `` flops required for its direct calculation.
 
-References
+## References
 
 [1] T. F. Coleman, L. A. Hulbert, A direct active set  algorithm for large sparse quadratic programs with simple bounds, Mathematical Programming, 45, 1989.
-[2] J. A. George and J. W-H. Liu, Computer Solution of Large Sparse Positive Definite Systems, Prentice-Hall, 1981.
+
+[2] J. A. George, J. W-H. Liu, Computer Solution of Large Sparse Positive Definite Systems, Prentice-Hall, 1981.
+
 [3] C. L. Lawson, R. J. Hanson, Solving least squares problems, SIAM, 1995.
 
 

@@ -69,7 +69,7 @@ Pages = [
       "Usage.md",
       "Numerical-Tests.md",
       "Tests-with-real-data.md",
-      "Interpolating-Normal-Hermite-Splines.md",
+      "Interpolating-Normal-Splines.md",
       "Reproducing-Kernel-of-Bessel-Potential-space.md",
       "Relation-to-Polyharmonic-Splines.md",
       "Updating-Cholesky-Factorization.md"

@@ -1,4 +1,4 @@
-# Interpolating Normal Hermite Splines
+# Interpolating Normal Splines
 
 Consider the following interpolation problem:
 
@@ -13,7 +13,7 @@ Consider the following interpolation problem:
 \\
 & n_1 \gt 0 \, ,  \ \  n_2 \ge 0 \, .
 \end{aligned}
-``` 
+```
 where ``\frac{ \partial{f} }{ \partial{e_j} }(s_j) = \nabla f(s_j) \cdot e_j = \sum _{k=1}^{n}  \frac{ \partial{f} }{ \partial{x_k} } (s_j) e_{jk}`` is a directional derivative of ``f`` at the point ``s_j`` in the direction of ``e_j``.
 
 We assume that function ``f`` is an element of the Bessel potential space ``H^s_\varepsilon (R^n)`` which is defined as:
@@ -44,15 +44,15 @@ It is easy to see that all these norms are equivalent. It means that space ``H^s
 
 ```math
 \begin{aligned}
-  & F_i(\varphi) = \varphi (p_i) \, , \ \ F'_j(\varphi) = \frac{ \partial{\varphi} }{ \partial{e_j} }(s_j) \, , \ \ \forall \varphi \in H^s_\varepsilon (R^n) \, , 
+  & F_i(\varphi) = \varphi (p_i) \, , \ \ F'_j(\varphi) = \frac{ \partial{\varphi} }{ \partial{e_j} }(s_j) \, , \ \ \forall \varphi \in H^s_\varepsilon (R^n) \, ,
    \quad
-   p_i, \, s_j \in R^n \, , 
+   p_i, \, s_j \in R^n \, ,
    \\
   & i = 1, 2, \dots, n_1 \, , \ \   j = 1, 2, \dots, n_2 \, ,
 \end{aligned}
 ```
 are linear continuous functionals in ``H^s_\varepsilon``.
- 
+
 We also assume that all points ``\{p_i\}`` are different and in a case when among points ``\{s_j\}`` there are coincident ones, we stipulate that the corresponding unit vectors defining the directions of the directional derivatives at such points are linearly independent. Note that some points ``\{p_i\}`` may coincide with some ``\{s_j\}``. Under these restrictions all functionals $F_i, \, F'_j$ are linearly independent.
 
  In accordance with Riesz representation theorem [1] these linear continuous functionals can be represented in the form of inner product of some elements ``h_i, h'_j \in H^s_\varepsilon`` and ``\varphi \in H^s_\varepsilon``, for any ``\varphi \in H^s_\varepsilon``:
@@ -125,7 +125,7 @@ also in the considered case (``s = n/2 + 1/2 + r, \, r \ge 1``) it is a continuo
 ```math
 \tag{8}
 \frac {\partial \varphi(\xi)}{\partial \xi_k} = {\left \langle \frac{\partial V(\cdot, \xi)} {\partial \xi_k}, \varphi \right \rangle}
-``` 
+```
 which holds for any ``\varphi \in H^s_\varepsilon`` and ``\xi \in R^n``, it means that function ``\frac{\partial {V(\cdot , \xi)} }{\partial{\xi_k}}`` represents a point-wise functional defined as value of function ``\frac{ \partial {\varphi (\cdot)} }{\partial{\xi_k}}`` at the point ``\xi``.
 
 Now it is possible to express functions ``h_i`` and ``h'_j`` via the reproducing kernel ``V``. Comparing (2) with (7) and (8) we receive:
@@ -136,7 +136,7 @@ Now it is possible to express functions ``h_i`` and ``h'_j`` via the reproducing
 &  h_i (\eta) =  V(\eta, p_i) \, ,  \qquad \qquad \qquad \qquad \qquad \ \ i = 1, 2, \dots, n_1 \, \\  
 &  h'_j (\eta) =  \frac{\partial V(\eta, s_j)}{\partial e_j} =  \sum_{k=1}^n  \frac{ \partial {V(\eta, s_j)} }{\partial{\xi_k}} e_{jk}  \, , \quad  j = 1, 2, \dots, n_2 \ .  
 \end{aligned}
-``` 
+```
 The coefficients (6) of the Gram matrix can be presented as ([7], [8], [10]):
 
 ```math
@@ -148,7 +148,7 @@ The coefficients (6) of the Gram matrix can be presented as ([7], [8], [10]):
     \\
     & \qquad \qquad \qquad =  \sum_{k=1}^n  \frac{ \partial {V(p_i, s_j)} }{\partial{\xi_k}} e_{jk}  \ .
 \end{aligned}
-``` 
+```
 With the help of (7) and (10), we can also calculate ``g''_{jm}`` ([8], [10]):
 
 ```math
@@ -158,7 +158,7 @@ With the help of (7) and (10), we can also calculate ``g''_{jm}`` ([8], [10]):
  \\
  &  =  \sum_{r=1}^n \sum_{k=1}^n  \frac{ \partial^2 {V(s_j, s_m)} }{\partial{\eta_r} \partial{\xi_k}} e_{jk} e_{mr} \ .
 \end{aligned}
-``` 
+```
 Further
 
 ```math
@@ -207,7 +207,7 @@ Let's write down expressions of ``h_i, h'_j, g_{il}, g'_{ij}, g''_{jm}`` for spa
 \\
 & g''_{jm} =  \sum_{r=1}^n \sum_{k=1}^n  \frac{ \partial^2 {V(s_j, s_m)} }{\partial{\eta_r} \partial{\xi_k}} e_{jk} e_{mr}
 \\
-& \quad \qquad j \ne m \, , \quad j = 1, 2, \dots, n_2 \, , \ \ m = 1, 2, \dots, n_2 \, , 
+& \quad \qquad j \ne m \, , \quad j = 1, 2, \dots, n_2 \, , \ \ m = 1, 2, \dots, n_2 \, ,
 \\
 & \text{where}
 \\
@@ -226,7 +226,7 @@ and for space ``H^{s_2}_\varepsilon (R^n)``:
 & h_i (\eta) =  \exp (-\varepsilon |\eta - p_i |) (3 + 3 \varepsilon |\eta - p_i | +  \varepsilon^2  |\eta - p_i |^2) )
  \, , \qquad \quad i = 1, 2, \dots, n_1 \, , \\
 & h'_j (\eta) =\varepsilon^2 \exp (-\varepsilon |\eta - s_j | ) (1 + \varepsilon |\eta - s_j |) \sum _{k=1}^n (\eta_k - s_{jk}) e_{jk} \, , \quad  j = 1, 2, \dots, n_2 \, , \\
-& g_{il}= \exp (-\varepsilon |p_i - p_l |) (3 + 3 \varepsilon |p_i - p_l | +  \varepsilon^2  |p_i - p_l |^2) ) \, , 
+& g_{il}= \exp (-\varepsilon |p_i - p_l |) (3 + 3 \varepsilon |p_i - p_l | +  \varepsilon^2  |p_i - p_l |^2) ) \, ,
 \\
 & \qquad \qquad \qquad \qquad \qquad \qquad \qquad i = 1, 2, \dots, n_1 \, , \ \ l = 1, 2, \dots, n_1 \, , \\
 & g'_{ij} = \varepsilon^2 \exp (-\varepsilon |p_i - s_j | ) (1 + \varepsilon |p_i - s_j |) \sum _{k=1}^n (p_{ik} - s_{jk}) e_{jk}  \, ,
@@ -242,7 +242,7 @@ and for space ``H^{s_2}_\varepsilon (R^n)``:
 &  \frac{ \partial^2 {V(s_j, s_m)} }{\partial{\eta_r} \partial{\xi_r}} = \varepsilon^2 \exp (-\varepsilon | s_j - s_m |) (1 + \varepsilon | s_j - s_m | - \varepsilon^2 (s_{jr} - s_{mr})^2) \, ,
 \\
 &  \frac{ \partial^2 {V(s_j, s_m)} }{\partial{\eta_r} \partial{\xi_k}} = -\varepsilon^4 \exp (-\varepsilon | s_j - s_m |) (s_{jr} - s_{mr})(s_{jk} - s_{mk}) \, ,  \quad r \ne k \, ,
-\\ 
+\\
 & g''_{jj} = \varepsilon^2 \sum _{r=1}^n\  (e_{jr})^2  = \varepsilon^2 \,  , \quad j = 1, 2, \dots, n_2 \, ,
 \end{aligned}
 ```
@@ -258,7 +258,7 @@ In a case when there is no information of function ``f`` derivatives the Problem
 \\
 & n_1 \gt 0 \, .
 \end{aligned}
-``` 
+```
 We assume that ``f`` is a continuous function. It can be treated as an element of Bessel potential space ``H_\varepsilon^{s_0} (R^n) \, , s_0 =  n/2 + 1/2``, this space is continuously embedded in Hölder space ``C_b(R^n)`` of continuous and bounded functions.
 
 Reproducing kernel of Bessel potential space ``H_\varepsilon^{s_0}(R^n)``
