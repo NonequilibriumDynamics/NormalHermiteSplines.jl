@@ -633,7 +633,7 @@ function test_2D(model_id::Int,
     o = scatter3D(grid[1,:],grid[2,:], f, c=f,  s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
+    colorbar(o, shrink=0.75)
     savefig("c:/0/m_t_$model_id.png", dpi=150, bbox_inches="tight")
 
 #     PyPlot.clf()
@@ -701,7 +701,7 @@ function test_2D(model_id::Int,
     o = scatter3D(grid[1,:],grid[2,:], σ, c=σ, s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
+    colorbar(o, shrink=0.75)
     savefig("c:/0/s_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
     PyPlot.clf()
 ######
@@ -763,7 +763,7 @@ function test_2D(model_id::Int,
     o = surf(gx, gy, delta, cmap=ColorMap("jet"), linewidth=0, antialiased=false, alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o)
+    colorbar(o, shrink=0.75)
     savefig("c:/0/delta_s_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
 
     #PyPlot.clf()
