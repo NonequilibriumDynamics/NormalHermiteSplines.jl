@@ -31,6 +31,13 @@ function test_2D(model_id::Int,
     elseif type_of_samples == 6
         samples_size = [1, 11, 24, 250, 1250]
         nodes = get_2D_test1_nodes(samples_size[n_of_samples])
+    elseif type_of_samples == 32
+        samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
+        nodes = get_2D_halton_nodes(samples_size[n_of_samples])
+    elseif type_of_samples == 33
+        samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
+        nodes = get_2D_halton_nodes(samples_size[n_of_samples])
+        bnodes = get_2D_border_nodes(19)
     else
         error("Incorrect value of 'type_of_samples'")
     end
@@ -162,6 +169,49 @@ function test_2D(model_id::Int,
         d_nodes = d_nodes[:,1:k]
         es = es[:,1:k]
         du = du[1:k]
+
+        for i = 1:n_1
+            u[i] = get_2D_model3(nodes[:, i])
+        end
+        for i = 1:m
+            f[i] = get_2D_model3(grid[:, i])
+        end
+    elseif model_id == 32
+        if type_of_samples != 32
+            error("Incorrect value of 'type_of_samples' for model #32.")
+        end
+        use_grad = false # never use the grad values for this test
+        for i = 1:n_1
+            u[i] = get_2D_model3(nodes[:, i])
+        end
+        for i = 1:m
+            f[i] = get_2D_model3(grid[:, i])
+        end
+    elseif model_id == 33
+        if type_of_samples != 33
+            error("Incorrect value of 'type_of_samples' for model #33.")
+        end
+        use_grad = true # always use the grad values for this test
+        bn_1 = size(bnodes, 2)
+        d_nodes = Matrix{Float64}(undef, 2, 2 * bn_1)
+        es = Matrix{Float64}(undef, 2, 2 * bn_1)
+        du = Vector{Float64}(undef, 2 * bn_1)
+        k = 0
+        for i = 1:bn_1
+            k += 1
+            grad = get_2D_model3_grad(bnodes[:, i])
+            d_nodes[1,k] = bnodes[1,i]
+            d_nodes[2,k] = bnodes[2,i]
+            du[k] = grad[1]
+            es[1,k] = 1.0
+            es[2,k] = 0.0
+            k += 1
+            d_nodes[1,k] = bnodes[1,i]
+            d_nodes[2,k] = bnodes[2,i]
+            du[k] = grad[2]
+            es[1,k] = 0.0
+            es[2,k] = 1.0
+        end
 
         for i = 1:n_1
             u[i] = get_2D_model3(nodes[:, i])
@@ -447,7 +497,7 @@ function test_2D(model_id::Int,
         lvls = [-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1]
         lvls2 = lvls
     end
-    if model_id == 3
+    if model_id == 3 || model_id == 32 || model_id == 33
         lvls=[-0.1;-0.05;0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0;1.05;1.1]
         lvls2 = lvls
     end
@@ -511,7 +561,10 @@ function test_2D(model_id::Int,
 
     PyPlot.clf()
     pygui(false)
-    scatter(nodes[1,:], nodes[2,:], s= ss)
+    scatter(nodes[1,:], nodes[2,:], s=ss)
+    if model_id == 33
+        scatter(bnodes[1,:], bnodes[2,:], s=(2*ss), c="red")
+    end
     gca().set_aspect("equal")
     savefig("c:/0/m_grid_$type_of_samples,$n_of_samples.png", dpi=150, bbox_inches="tight")
 
@@ -722,8 +775,8 @@ function test_2D(model_id::Int,
 
     PyPlot.clf()
     @printf "Plots created.\n"
-    # return Nothing
-    return spline
+    return nothing
+#    return spline
 end
 
 function readme_1()

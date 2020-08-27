@@ -252,9 +252,29 @@ function get_2D_model13_grad(p::Vector{Float64})
     return grad
 end
 
+# Franke's EXPONENTIAL f7
+# R. Renka, R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Transactions on Mathematical Software (TOMS), Vol.25, No.1,1999
+# https://dl.acm.org/doi/10.1145/305658.305745
+function get_2D_model14(p::Vector{Float64})
+    #  (x,y) \in [0;1][0;1]
+    x = p[1]
+    y = p[2]
+    f = 2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y)
+    return f
+end
+
+function get_2D_model14_grad(p::Vector{Float64})
+    grad = [0.0; 0.0]
+    x = p[1]
+    y = p[2]
+    grad[1] = 10.0*y*cos(10.0*x*y) - 20.0*sin(10.0*x)*sin(10.0*y)
+    grad[2] = 20.0*cos(10.0*x)*cos(10.0*y) + 10.0*x*cos(10.0*x*y)
+    return grad
+end
+
 # Rosenbrock function
 # https://en.wikipedia.org/wiki/Rosenbrock_function
-function get_2D_model14(p::Vector{Float64})
+function get_2D_model15(p::Vector{Float64})
 #  (x,y) \in [-2;2]x[-1;3]
 # max f_orig = 2500
     x = p[1]
@@ -263,7 +283,7 @@ function get_2D_model14(p::Vector{Float64})
     return f
 end
 
-function get_2D_model14_grad(p::Vector{Float64})
+function get_2D_model15_grad(p::Vector{Float64})
     grad = [0.0; 0.0]
     x = p[1]
     y = p[2]
@@ -271,6 +291,7 @@ function get_2D_model14_grad(p::Vector{Float64})
     grad[2] = 200.0*(y - x^2) / 2500.0
     return grad
 end
+
 
 ########### 3D #########
 
