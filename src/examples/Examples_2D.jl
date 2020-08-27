@@ -32,11 +32,15 @@ function test_2D(model_id::Int,
         samples_size = [1, 11, 24, 250, 1250]
         nodes = get_2D_test1_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 32
-        samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
-        nodes = get_2D_halton_nodes(samples_size[n_of_samples])
+        samples_size = [6, 9, 13, 19, 31, 49, 70, 99] # 49, 100, 196, 400, 1024, 2500, 5041, 10000
+        # samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
+        nodes = get_2D_uniformrandom_grid(samples_size[n_of_samples])
+        # nodes = get_2D_halton_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 33
-        samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
-        nodes = get_2D_halton_nodes(samples_size[n_of_samples])
+        samples_size = [6, 9, 13, 19, 31, 49, 70, 99] # 49, 100, 196, 400, 1024, 2500, 5041, 10000
+        # samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
+        nodes = get_2D_uniformrandom_grid(samples_size[n_of_samples])
+        # nodes = get_2D_halton_nodes(samples_size[n_of_samples])
         bnodes = get_2D_border_nodes(19)
     else
         error("Incorrect value of 'type_of_samples'")

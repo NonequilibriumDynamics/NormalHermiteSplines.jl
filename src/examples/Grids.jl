@@ -152,6 +152,19 @@ function get_2D_eps_grid(m::Int)
     return mat
 end
 
+function get_2D_uniformrandom_grid(m::Int)
+    m1 = m + 1
+    ms = m1^2
+    mat = Matrix{Float64}(undef, 2, ms)
+    rng = MersenneTwister(0);
+    rnd = rand(rng, Float64, (2, ms))
+    for i = 1:ms
+        mat[1, i] = rnd[1, i]
+        mat[2, i] = rnd[2, i]
+    end
+    return mat
+end
+
 function get_2D_random_grid(m::Int)
     m1 = m + 1
     ms = m1^2

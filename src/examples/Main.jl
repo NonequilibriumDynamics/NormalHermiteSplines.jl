@@ -3,7 +3,7 @@ export init_halton, get_halton_node, get_Lissajous_nodes
 
 export big_sur
 
-export get_2D_grid, get_2D_grid2, get_2D_test1_nodes, get_2D_Lissajous_nodes, get_2D_halton_nodes
+export get_2D_grid, get_2D_grid2, get_2D_test1_nodes, get_2D_Lissajous_nodes, get_2D_halton_nodes, get_2D_uniformrandom_grid
 export get_2D_rect_grid, get_2D_eps_grid, get_2D_border_nodes
 export get_2D_model1, get_2D_model2, get_2D_model3, get_2D_model4, get_2D_model5, get_2D_model6, get_2D_model6_grad
 export get_2D_model10, get_2D_model11, get_2D_model12, get_2D_model12_Grad
