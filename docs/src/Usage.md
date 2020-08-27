@@ -35,7 +35,10 @@ A)
         u[i] = -0.2 * i + 3.0
     end
 
-    # Build a differentiable spline by values of function in nodes.
+    # Build a differentiable spline by values of function in nodes
+    # (a spline built with kernel H0 is a continuous function,
+    #  a spline built with kernel H1 is a continuously differentiable function,
+    #  a spline built with kernel H2 is a twice continuously differentiable function).
     # Here the value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = prepare(x, RK_H1())
     
@@ -114,7 +117,10 @@ B)
     end
 
     # Build a differentiable spline by values of function,
-    # and values of its first derivatives in nodes.
+    # and values of its first derivatives in nodes
+    # (a spline built with kernel H0 is a continuous function,
+    #  a spline built with kernel H1 is a continuously differentiable function,
+    #  a spline built with kernel H2 is a twice continuously differentiable function).
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, s, v, RK_H1())
 
