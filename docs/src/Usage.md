@@ -42,11 +42,13 @@ A)
     # An estimation of the Gram matrix condition number
     cond = get_cond(spline)
 ```
+
 ```@example A
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
 ```
+
 ```@example A
     spline = construct(spline, u)
 

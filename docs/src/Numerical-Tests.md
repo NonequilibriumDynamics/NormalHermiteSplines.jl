@@ -1,20 +1,18 @@
 # Numerical Tests
 
-## 1D
+## 2D
+
+### Grids
 
 ### Models
 bb
 ### Tests
 c
 
-## 2D
-
-### Models
-b
-### Tests
-c
 
 ## 3D
+
+### Grids
 
 ### Models
 h
