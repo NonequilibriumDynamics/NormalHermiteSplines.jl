@@ -65,9 +65,10 @@ The normal splines method for one-dimensional function interpolation and linear 
 ```@contents
 Pages = [
       "index.md",
+      "Public-API.md",
       "Usage.md",
       "Numerical-Tests.md",
-      "Public-API.md",
+      "Tests-with-real-data.md",
       "Interpolating-Normal-Hermite-Splines.md",
       "Reproducing-Kernel-of-Bessel-Potential-space.md",
       "Relation-to-Polyharmonic-Splines.md",

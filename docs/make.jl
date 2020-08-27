@@ -6,9 +6,10 @@ makedocs(
 	authors = "Igor Kohanovsky",
     pages = [
 				"Home" => "index.md",
+				"Public API" => "Public-API.md",
 				"Example Usage" => "Usage.md",
 				"Numerical Tests" => "Numerical-Tests.md",
-				"Public API" => "Public-API.md",
+				"Tests with real data" => "Tests-with-real-data.md",
 				"Interpolating Normal Hermite Splines" => "Interpolating-Normal-Hermite-Splines.md",
 				"Reproducing Kernel of Bessel Potential space" => "Reproducing-Kernel-of-Bessel-Potential-space.md",
 				"Relation to Polyharmonic Splines"  => "Relation-to-Polyharmonic-Splines.md",
