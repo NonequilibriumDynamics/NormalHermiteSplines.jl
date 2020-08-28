@@ -390,17 +390,11 @@ function test_2D(model_id::Int,
             f[i] = get_2D_model13(grid[:, i])
         end
     elseif model_id == 14
-        #  (x,y) \in [-2;2]x[-1;3]
-        grid = get_2D_grid3(regular_grid_size)
-        m = size(grid, 2)
         d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
         es = Matrix{Float64}(undef, 2, 2 * n_1)
         du = Vector{Float64}(undef, 2 * n_1)
         k = 0
         for i = 1:n_1
-            nodes[1, i] = nodes[1, i] * 4.0 - 2.0
-            nodes[2, i] = nodes[2, i] * 4.0 - 1.0
-            u[i] = get_2D_model14(nodes[:, i])
             k += 1
             grad = get_2D_model14_grad(nodes[:, i])
             d_nodes[1,k] = nodes[1,i]
@@ -419,8 +413,44 @@ function test_2D(model_id::Int,
         es = es[:,1:k]
         du = du[1:k]
 
+        for i = 1:n_1
+            u[i] = get_2D_model14(nodes[:, i])
+        end
         for i = 1:m
             f[i] = get_2D_model14(grid[:, i])
+        end
+    elseif model_id == 15
+        #  (x,y) \in [-2;2]x[-1;3]
+        grid = get_2D_grid3(regular_grid_size)
+        m = size(grid, 2)
+        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
+        es = Matrix{Float64}(undef, 2, 2 * n_1)
+        du = Vector{Float64}(undef, 2 * n_1)
+        k = 0
+        for i = 1:n_1
+            nodes[1, i] = nodes[1, i] * 4.0 - 2.0
+            nodes[2, i] = nodes[2, i] * 4.0 - 1.0
+            u[i] = get_2D_model15(nodes[:, i])
+            k += 1
+            grad = get_2D_model15_grad(nodes[:, i])
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            du[k] = grad[1]
+            es[1,k] = 1.0
+            es[2,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            du[k] = grad[2]
+            es[1,k] = 0.0
+            es[2,k] = 1.0
+        end
+        d_nodes = d_nodes[:,1:k]
+        es = es[:,1:k]
+        du = du[1:k]
+
+        for i = 1:m
+            f[i] = get_2D_model15(grid[:, i])
         end
     else
         error("Incorrect value of 'model_id'")
@@ -536,6 +566,10 @@ function test_2D(model_id::Int,
         lvls2 = lvls
     end
     if model_id == 14
+        lvls=[-0.7; -0.6; -0.5; -0.4; -0.3; -0.2; -0.1; 0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0]
+        lvls2 = lvls
+    end
+    if model_id == 15
         lvls=[-0.1;0.0;0.01;0.02;0.03;0.04;0.05;0.06;0.07;0.08;0.09;0.1;0.12;0.14;0.16;0.18;0.2;0.22;0.24;0.26;0.28;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.05;1.1]
         lvls2 = lvls
     end
@@ -555,7 +589,7 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-4.0, 4.0)
         PyPlot.ylim(-2.0, 2.0)
     end
-    if model_id == 14
+    if model_id == 15
         PyPlot.xlim(-2.0, 2.0)
         PyPlot.ylim(-1.0, 3.0)
     end
@@ -588,7 +622,7 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-4.0, 4.0)
         PyPlot.ylim(-2.0, 2.0)
     end
-    if model_id == 14
+    if model_id == 15
         PyPlot.xlim(-2.0, 2.0)
         PyPlot.ylim(-1.0, 3.0)
     end
@@ -611,7 +645,7 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-4.0, 4.0)
         PyPlot.ylim(-2.0, 2.0)
     end
-    if model_id == 14
+    if model_id == 15
         PyPlot.xlim(-2.0, 2.0)
         PyPlot.ylim(-1.0, 3.0)
     end
@@ -627,7 +661,7 @@ function test_2D(model_id::Int,
     if model_id == 13
         PyPlot.view_init(30,30)
     end
-    if model_id == 14
+    if model_id == 15
         PyPlot.view_init(30,-120)
     end
     o = scatter3D(grid[1,:],grid[2,:], f, c=f,  s=1, cmap=ColorMap("gnuplot"))
@@ -695,7 +729,7 @@ function test_2D(model_id::Int,
     if model_id == 13
         PyPlot.view_init(30,30)
     end
-    if model_id == 14
+    if model_id == 15
         PyPlot.view_init(30,-120)
     end
     o = scatter3D(grid[1,:],grid[2,:], σ, c=σ, s=1, cmap=ColorMap("gnuplot"))
@@ -722,7 +756,7 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-4.0, 4.0)
         PyPlot.ylim(-2.0, 2.0)
     end
-    if model_id == 14
+    if model_id == 15
         PyPlot.xlim(-2.0, 2.0)
         PyPlot.ylim(-1.0, 3.0)
     end
@@ -757,7 +791,7 @@ function test_2D(model_id::Int,
     if model_id == 13
         PyPlot.view_init(30,30)
     end
-    if model_id == 14
+    if model_id == 15
         PyPlot.view_init(30,-120)
     end
     o = surf(gx, gy, delta, cmap=ColorMap("jet"), linewidth=0, antialiased=false, alpha=1.0)

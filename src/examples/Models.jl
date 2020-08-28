@@ -259,7 +259,7 @@ function get_2D_model14(p::Vector{Float64})
     #  (x,y) \in [0;1][0;1]
     x = p[1]
     y = p[2]
-    f = 2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y)
+    f = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y)) / 3.0
     return f
 end
 
@@ -267,8 +267,8 @@ function get_2D_model14_grad(p::Vector{Float64})
     grad = [0.0; 0.0]
     x = p[1]
     y = p[2]
-    grad[1] = 10.0*y*cos(10.0*x*y) - 20.0*sin(10.0*x)*sin(10.0*y)
-    grad[2] = 20.0*cos(10.0*x)*cos(10.0*y) + 10.0*x*cos(10.0*x*y)
+    grad[1] = (10.0*y*cos(10.0*x*y) - 20.0*sin(10.0*x)*sin(10.0*y)) / 3.0
+    grad[2] = (20.0*cos(10.0*x)*cos(10.0*y) + 10.0*x*cos(10.0*x*y)) / 3.0
     return grad
 end
 

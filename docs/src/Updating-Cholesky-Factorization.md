@@ -33,7 +33,7 @@ and
 ```
 If ``\tau \le 0`` then ``\tilde A`` is not positive definite.
 
-Now assume ``\tilde A`` is obtained of ``A`` by deleting the ``r^{th}`` row and column from ``A``. Matrix ``\tilde A`` is the positive definite matrix (as any principal square submatrix of the positive definite matrix). It is shown in [1],[3] how to get ``\tilde L`` from ``L`` in such case. Let us partition ``A`` and ``L`` along the ``r^{th}`` row and column:
+Now assume ``\tilde A`` is obtained by deleting the ``r^{th}`` row and column from ``A``. Matrix ``\tilde A`` is the positive definite matrix (as any principal square submatrix of the positive definite matrix). It is shown in [1],[3] how to get ``\tilde L`` from ``L`` in such case. Let us partition ``A`` and ``L`` along the ``r^{th}`` row and column:
 
 ```math
     A = \left( \begin{array}{ccc}
