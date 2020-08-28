@@ -116,17 +116,17 @@ where entries ``( r+t , r+t )`` and ``( r+t+1 , r+t+1 )`` equal ``c``,  ``( r+t 
 Then matrix ``H_k R_0 \dots R_t`` will differ from ``H_k R_0 \dots R_{t-1}`` with entries of ``( r+t )`` и ``( r+t+1 )`` columns only, thereby
 ```math
 \begin{aligned}
-&  \tilde l_{i,r+t}^t = \tilde l_{i,r+t}^{t-1} = 0 \, , \
+&  \tilde l_{i,r+t}^t = \tilde l_{i,r+t}^{t-1} = 0 \, , \ \ 
      \tilde l_{i,r+t+1}^t = \tilde l_{i,r+t+1}^{t-1} = 0 \, ,
-     \quad   1 \le i \le r + t  - 1  \, ,
+     \qquad \qquad \qquad \ \   1 \le i \le r + t  - 1  \, ,
 \\
 &  \tilde l_{i,r+t}^t = c \tilde l_{i,r+t}^{t-1} +  s \tilde l_{i,r+t+1}^{t-1} \, ,
-\\
-&  \tilde l_{i,r+t+1}^t = -s \tilde l_{i,r+t}^{t-1} +  c \tilde l_{i,r+t+1}^{t-1} \,
-     \quad  r + t \le i \le n - 1 \, .
+ \  \ 
+\tilde l_{i,r+t+1}^t = -s \tilde l_{i,r+t}^{t-1} +  c \tilde l_{i,r+t+1}^{t-1} \,
+     \quad  r + t \le i \le n - 1 \, ,
 \end{aligned}
 ```
-Where
+where
 
 ```math
   \tilde l_{r+t,r+t}^t =
