@@ -361,7 +361,7 @@ function test_3D(model_id::Int,
     ε = get_epsilon(spline)
     @printf "EPSILON:%0.1e   COND: %0.1e \n" ε cond
 
-    iq = assess_quality(spline)
+    iq = assess_interpolation(spline)
     @printf "interpolation quality: %0.1e\n" iq
 
     @printf "Evaluating spline..\n"
@@ -375,15 +375,17 @@ function test_3D(model_id::Int,
     rmse = get_RMSE(f, σ)
     delta = σ .- f
     mae = maximum(abs.(delta))
+    rrmse = get_RRMSE(f, σ)
+    rmae = get_RMAE(f, σ)
     spline_min = minimum(σ)
     spline_max = maximum(σ)
     delta_min = minimum(delta)
     delta_max = maximum(delta)
-    @printf "RMSE: %0.1e  MAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e delta_min:%0.1e delta_max:%0.1e\n" rmse mae spline_min spline_max delta_min delta_max
+    @printf "RMSE: %0.1e  MAE:%0.1e RRMSE: %0.1e RMAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e delta_min:%0.1e delta_max:%0.1e\n" rmse mae rrmse rmae spline_min spline_max delta_min delta_max
     open("c:/0/$model_id.txt","a") do io
         @printf io "model_id type_of_samples  n_of_samples  type_of_kernel   plot_grid_size  use_grad\n"
         @printf io "%2d      %2d             %4d             %1d                 %5d            %s\n" model_id type_of_samples n_of_samples type_of_kernel m use_grad
-        @printf io "RMSE: %0.1e  MAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e   EPS:%0.1e   COND: %0.1e\n" rmse mae spline_min spline_max ε cond
+        @printf io "RMSE: %0.1e  MAE:%0.1e RRMSE: %0.1e RMAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e   EPS:%0.1e   COND: %0.1e\n" rmse mae rmse rmae spline_min spline_max ε cond
         @printf io "c_time: %0.1e  e_time: %0.1e\n\n" c_time e_time
     end
 

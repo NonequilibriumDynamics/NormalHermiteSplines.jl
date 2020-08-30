@@ -63,7 +63,7 @@
         cond = get_cond(s)
         @test cond ≈ 1.0e6
 
-        iq = assess_quality(s) + 1.0
+        iq = assess_interpolation(s) + 1.0
         @test iq ≈ 1.0 atol = 1e-9
 
         eps = get_epsilon(s)
@@ -93,7 +93,7 @@
         cond = get_cond(s)
         @test cond ≈ 1.0e5
 
-        iq = assess_quality(s) + 1.0
+        iq = assess_interpolation(s) + 1.0
         @test iq ≈ 1.0 atol = 1e-9
 
         eps = get_epsilon(s)
@@ -126,7 +126,7 @@
         cond = get_cond(s)
         @test cond ≈ 1.0e8
 
-        iq = assess_quality(s) + 1.0
+        iq = assess_interpolation(s) + 1.0
         @test iq ≈ 1.0 atol = 1e-9
 
         eps = get_epsilon(s)

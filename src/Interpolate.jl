@@ -248,8 +248,7 @@ function _construct(spline::NormalSpline{T, RK},
     return spline
 end
 
-function _assess_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-
+function _assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     n = size(spline._nodes, 1)
     m = size(spline._nodes, 2)
     nodes = similar(spline._nodes)
@@ -259,7 +258,7 @@ function _assess_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat,
         end
     end
     σ = evaluate(spline, nodes)
-    return get_RMSE(σ, spline._values)
+    return get_RMAE(σ, spline._values)
 end
 
 function _evaluate(spline::NormalSpline{T, RK},

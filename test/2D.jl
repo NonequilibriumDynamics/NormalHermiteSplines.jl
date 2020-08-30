@@ -88,9 +88,6 @@
         σ1 = evaluate_one(s, p[:,5])
         @test !isapprox(σ1[1], u[5], atol = 0.1)
 
-        q = assess_quality(s)
-        @test q > 1.0
-
 # Same test with extended precision
         rk = RK_H1(Double64(eps))
         p = Double64.(p)
@@ -104,7 +101,7 @@
         σ = evaluate(s, p)
         @test all(isapprox.(σ, u, atol = 1e-5))
 
-        q = assess_quality(s)
+        q = assess_interpolation(s)
         @test q < 1e-5
     end
 
@@ -158,7 +155,7 @@
         σ1 = evaluate_one(s, p[:,5])
         @test !isapprox(σ1[1], u[5], atol = 0.1)
 
-        q = assess_quality(s)
+        q = assess_interpolation(s)
         @test q > 1.0
 
 # Same tests with extended precision
@@ -175,7 +172,7 @@
         σ = evaluate(s, p)
         @test all(isapprox.(σ, u, atol = 1e-5))
 
-        q = assess_quality(s)
+        q = assess_interpolation(s)
         @test q < 1e-5
     end
 end

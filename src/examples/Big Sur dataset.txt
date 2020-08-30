@@ -1,3 +1,5 @@
+Foley, T. A. (1986). Scattered data interpolation and approximation with error bounds. Computer Aided Geometric Design, 3(3),
+
 The N = 64 points of the Monterey coast data set.
 The Big Sur data consists of water temperature measurements taken in a boat traveling nearly
 perpendicular to the shore off the coast of Big Sur, California. 

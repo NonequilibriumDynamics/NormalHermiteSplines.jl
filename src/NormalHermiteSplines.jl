@@ -4,11 +4,13 @@ module NormalHermiteSplines
 export prepare, construct, interpolate
 export evaluate, evaluate_one, evaluate_gradient
 export NormalSpline, RK_H0, RK_H1, RK_H2
-export get_epsilon, estimate_epsilon, get_cond, assess_quality
+export get_epsilon, estimate_epsilon, get_cond, assess_interpolation
 # -- 1D case --
 export evaluate_derivative
 # --
 ####
+
+#include("./examples/Main.jl")
 
 using LinearAlgebra
 
@@ -356,17 +358,46 @@ end
     return maximum(abs.(f .- σ))
 end
 
-"""
-`assess_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+# Return the Relative Root Mean Square Error (RRMSE) of interpolation
+@inline function get_RRMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    n = length(f)
+    del = similar(f)
+    @inbounds for i = 1:n
+        if f[i] <= T(1.0)
+            del[i] = f[i] - σ[i]
+        else
+            del[i] = (f[i] - σ[i]) / f[i]
+        end
+    end
+    return norm(del) / sqrt(n)
+end
 
-Assess interpolation results.
+# Return the Relative Maximum Absolute Error (RMAE) of interpolation
+@inline function get_RMAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    n = length(f)
+    del = similar(f)
+    @inbounds for i =1:n
+        if f[i] <= T(1.0)
+            del[i] = abs(f[i] - σ[i])
+        else
+            del[i] = abs(f[i] - σ[i]) / abs(f[i])
+        end
+    end
+    return maximum(del)
+end
+
+"""
+`assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+
+Assess the interpolation result by calculating value of the Relative Maximum Absolute Error (RMAE)
+at the function value interpolation nodes.
 # Arguments
 - `spline`: the `NormalSpline` object returned by `construct` or `interpolate` function.
 
 Return: RMSE of interpolation at function value nodes.
 """
-function assess_quality(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    return _assess_quality(spline)
+function assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    return _assess_interpolation(spline)
 end
 
 ############################## One-dimensional case
