@@ -390,7 +390,7 @@ end
 `assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
 Assess the interpolation result by calculating value of the Relative Maximum Absolute Error (RMAE)
-using the function value interpolation nodes.
+using data of the function value interpolation nodes.
 # Arguments
 - `spline`: the `NormalSpline` object returned by `construct` or `interpolate` function.
 

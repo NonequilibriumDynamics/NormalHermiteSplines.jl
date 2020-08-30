@@ -158,8 +158,48 @@ Evaluate the spline derivatives at the same points:
 
 ## 2D interpolation case
 
-....
-....
+Let's interpolate function ``f(x)``
+
+```math
+f(x,y) = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)
+```
+by values of the function in sampled on 1000 Halton nodes
+
+We'll construct an interpolating normal spline using this function and its gradient values sampled on 1000 Halton nodes ([1]) distributed in the [-1,1]x[-1,1] square.
+
+
+nodes ``\{1, 2, 3, ..., 20\}`` (case A) and by values of the function and values of its first derivatives in the same nodes (case B).
+
+```@meta
+DocTestSetup = quote
+    using NormalHermiteSplines
+end
+```
+
+A)
+
+```@example A
+    using NormalHermiteSplines
+
+    x = collect(1.0:1.0:20)       # function nodes
+    u = x.*0.0                    # function values in nodes
+    for i in 6:10
+        u[i] = 1.0
+    end
+    for i in 11:14
+        u[i] = -0.2 * i + 3.0
+    end
+
+    # Build a differentiable spline by values of function in nodes
+    # (a spline built with RK_H0 kernel is a continuous function,
+    #  a spline built with RK_H1 kernel is a continuously differentiable function,
+    #  a spline built with RK_H2 kernel is a twice continuously differentiable function).
+    # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
+    spline = prepare(x, RK_H1())
+    
+    # An estimation of the Gram matrix condition number
+    cond = get_cond(spline)
+```
 
 ## 3D interpolation case
 

@@ -153,12 +153,10 @@ function get_2D_eps_grid(m::Int)
 end
 
 function get_2D_uniformrandom_grid(m::Int)
-    m1 = m + 1
-    ms = m1^2
-    mat = Matrix{Float64}(undef, 2, ms)
+    mat = Matrix{Float64}(undef, 2, m)
     rng = MersenneTwister(0);
-    rnd = rand(rng, Float64, (2, ms))
-    for i = 1:ms
+    rnd = rand(rng, Float64, (2, m))
+    for i = 1:m
         mat[1, i] = rnd[1, i]
         mat[2, i] = rnd[2, i]
     end
@@ -166,12 +164,10 @@ function get_2D_uniformrandom_grid(m::Int)
 end
 
 function get_2D_random_grid(m::Int)
-    m1 = m + 1
-    ms = m1^2
-    mat = Matrix{Float64}(undef, 2, ms)
+    mat = Matrix{Float64}(undef, 2, m)
     rng = MersenneTwister(0);
-    rnd = rand(rng, Float64, (2, ms))
-    m3 = ms÷3
+    rnd = rand(rng, Float64, (2, m))
+    m3 = m÷3
     m3p1 = m3 + 1
     m23 = 2*m3
     m23p1 = m23 + 1
@@ -183,7 +179,7 @@ function get_2D_random_grid(m::Int)
         mat[1, i] = 0.7 + 0.4*(rnd[1, i] - 0.5)
         mat[2, i] = 0.4 + 0.4*(rnd[2, i] - 0.5)
     end
-    for i = m23p1:ms
+    for i = m23p1:m
         mat[1, i] = 0.02 + 0.3*rnd[1, i]
         mat[2, i] = 0.05 + 0.3*rnd[2, i]
     end

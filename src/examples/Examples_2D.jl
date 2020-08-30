@@ -14,10 +14,10 @@ function test_2D(model_id::Int,
         error("Cannot use derivative data when type_of_kernel is `0` (`RK_H0` kernel)")
     end
     if type_of_samples == 1
-        samples_size = [50, 100, 1000, 2500, 5000, 10000]
+        samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
         nodes = get_2D_halton_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 2
-        samples_size = [9, 15, 30, 50, 75, 100]
+        samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
         nodes = get_2D_random_grid(samples_size[n_of_samples])
     elseif type_of_samples == 3
         samples_size = [9, 15, 30, 50, 75, 100]
@@ -32,13 +32,11 @@ function test_2D(model_id::Int,
         samples_size = [1, 11, 24, 250, 1250]
         nodes = get_2D_test1_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 32
-        samples_size = [6, 9, 13, 19, 31, 49, 70, 99] # 49, 100, 196, 400, 1024, 2500, 5041, 10000
-        # samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
+        samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
         nodes = get_2D_uniformrandom_grid(samples_size[n_of_samples])
         # nodes = get_2D_halton_nodes(samples_size[n_of_samples])
     elseif type_of_samples == 33
-        samples_size = [6, 9, 13, 19, 31, 49, 70, 99] # 49, 100, 196, 400, 1024, 2500, 5041, 10000
-        # samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
+        samples_size = [50, 100, 200, 400, 1000, 2500, 5000, 10000]
         nodes = get_2D_uniformrandom_grid(samples_size[n_of_samples])
         # nodes = get_2D_halton_nodes(samples_size[n_of_samples])
         bnodes = get_2D_border_nodes(19)
@@ -186,10 +184,10 @@ function test_2D(model_id::Int,
         end
         use_grad = false # never use the grad values for this test
         for i = 1:n_1
-            u[i] = get_2D_model3(nodes[:, i])
+            u[i] = get_2D_model14(nodes[:, i])
         end
         for i = 1:m
-            f[i] = get_2D_model3(grid[:, i])
+            f[i] = get_2D_model14(grid[:, i])
         end
     elseif model_id == 33
         if type_of_samples != 33
@@ -203,7 +201,7 @@ function test_2D(model_id::Int,
         k = 0
         for i = 1:bn_1
             k += 1
-            grad = get_2D_model3_grad(bnodes[:, i])
+            grad = get_2D_model14_grad(bnodes[:, i])
             d_nodes[1,k] = bnodes[1,i]
             d_nodes[2,k] = bnodes[2,i]
             du[k] = grad[1]
@@ -218,10 +216,10 @@ function test_2D(model_id::Int,
         end
 
         for i = 1:n_1
-            u[i] = get_2D_model3(nodes[:, i])
+            u[i] = get_2D_model14(nodes[:, i])
         end
         for i = 1:m
-            f[i] = get_2D_model3(grid[:, i])
+            f[i] = get_2D_model14(grid[:, i])
         end
     elseif model_id == 4
         d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
@@ -533,7 +531,7 @@ function test_2D(model_id::Int,
         lvls = [-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1]
         lvls2 = lvls
     end
-    if model_id == 3 || model_id == 32 || model_id == 33
+    if model_id == 3
         lvls=[-0.1;-0.05;0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0;1.05;1.1]
         lvls2 = lvls
     end
@@ -575,10 +573,15 @@ function test_2D(model_id::Int,
         lvls=[-0.1;0.0;0.01;0.02;0.03;0.04;0.05;0.06;0.07;0.08;0.09;0.1;0.12;0.14;0.16;0.18;0.2;0.22;0.24;0.26;0.28;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.05;1.1]
         lvls2 = lvls
     end
+    if model_id == 32 || model_id == 33
+        lvls=[-0.7; -0.6; -0.5; -0.4; -0.3; -0.2; -0.1; 0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0] # 14
+        #lvls=[-0.1;-0.05;0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0;1.05;1.1] # 3
+        lvls2 = lvls
+    end
 
     PyPlot.clf()
     pygui(false)
-    o = contourf(x, y, gσ, levels=lvls2, cmap=ColorMap("gnuplot"))
+    o = contourf(x, y, gσ, levels=lvls, cmap=ColorMap("gnuplot"))
     axis("equal")
     # if n_of_samples <= 2
     #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
@@ -799,7 +802,7 @@ function test_2D(model_id::Int,
     o = surf(gx, gy, delta, cmap=ColorMap("jet"), linewidth=0, antialiased=false, alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
-    colorbar(o, shrink=0.75)
+    cb = colorbar(o, shrink=0.75)
     savefig("c:/0/delta_s_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
 
     #PyPlot.clf()
