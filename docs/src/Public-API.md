@@ -25,7 +25,7 @@ evaluate
 evaluate_one
 evaluate_gradient
 evaluate_derivative
-assess_quality
+assess_interpolation
 get_cond
 get_epsilon
 estimate_epsilon
