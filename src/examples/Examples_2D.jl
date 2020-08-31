@@ -600,7 +600,7 @@ function test_2D(model_id::Int,
     end
 
     colorbar(o)
-    savefig("c:/0/s_cf_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/0/s-cf-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -609,7 +609,7 @@ function test_2D(model_id::Int,
         scatter(bnodes[1,:], bnodes[2,:], s=(2*ss), c="red")
     end
     gca().set_aspect("equal")
-    savefig("c:/0/m_grid_$type_of_samples,$n_of_samples.png", dpi=150, bbox_inches="tight")
+    savefig("c:/0/m-grid-$type_of_samples,$n_of_samples.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -632,7 +632,7 @@ function test_2D(model_id::Int,
         PyPlot.ylim(-1.0, 3.0)
     end
     colorbar(o)
-    savefig("c:/0/m_cf_$model_id.png", dpi=150, bbox_inches="tight")
+    savefig("c:/0/m-cf-$model_id.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -655,7 +655,7 @@ function test_2D(model_id::Int,
         PyPlot.ylim(-1.0, 3.0)
     end
     colorbar(o)
-    savefig("c:/0/m_c_$model_id.png", dpi=150, bbox_inches="tight")
+    #savefig("c:/0/m_c_$model_id.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -673,7 +673,7 @@ function test_2D(model_id::Int,
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o, shrink=0.75)
-    savefig("c:/0/m_t_$model_id.png", dpi=150, bbox_inches="tight")
+    savefig("c:/0/m-t-$model_id.png", dpi=150, bbox_inches="tight")
 
 #     PyPlot.clf()
 #     pygui(false)
@@ -741,7 +741,7 @@ function test_2D(model_id::Int,
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o, shrink=0.75)
-    savefig("c:/0/s_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/0/s-t-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
     PyPlot.clf()
 ######
     gd = reshape(delta, length(y), length(x))
@@ -766,7 +766,7 @@ function test_2D(model_id::Int,
         PyPlot.ylim(-1.0, 3.0)
     end
     colorbar(o)
-    savefig("c:/0/delta_cf_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/0/delta-cf-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
 
     #PyPlot.clf()
     # pygui(false)
@@ -803,7 +803,7 @@ function test_2D(model_id::Int,
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     cb = colorbar(o, shrink=0.75)
-    savefig("c:/0/delta_s_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/0/delta-s-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
 
     #PyPlot.clf()
     # pygui(false)

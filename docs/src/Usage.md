@@ -158,13 +158,15 @@ Evaluate the spline derivatives at the same points:
 
 ## 2D interpolation case
 
-Let's interpolate function ``\phi (x,y) = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)``
+A)
 
-<img src="images/2d-usage/m_t_33.png" width="256"/> <img src="images/2d-usage/m_cf_33.png" width="256"/> 
+Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy) ``
+
+<img src="images/2d-usage/m-t-32.png" width="256"/> <img src="images/2d-usage/m-cf-32.png" width="256"/> 
 
 We'll construct an interpolating spline using this function values sampled on 200 pseudo-random points uniformly distributed on the square ``[0,1]^2``.
 
- <img src="images/2d-usage/m_grid_32,3.png" width="256"/> 
+ <img src="images/2d-usage/m-grid-32,3.png" width="256"/> 
 
 ```@example 2A
     using Random
@@ -225,7 +227,7 @@ We'll construct an interpolating spline using this function values sampled on 20
 
 The spline plots:
 
-<img src="images/2d-usage/s_t_32,32,3,1,_0.0,_.png" width="256"/> <img src="images/2d-usage/s_cf_32,32,3,1,_0.0,_.png" width="256"/> 
+<img src="images/2d-usage/s-t-32,32,3,1,0.0,-.png" width="256"/> <img src="images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/> 
 
 Value of function ``\phi`` in evaluation point ``p = [0.5; 0.5]``
 ```@example 2A
@@ -246,7 +248,7 @@ Value of spline in that evaluation point:
 ```
 Approximation error plots:
 
-<img src="images/2d-usage/delta_cf_32,32,3,1,_0.0,_.png" width="256"/> <img src="images/2d-usage/delta_s_32,32,3,1,_0.0,_.png" width="256"/> 
+<img src="images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/> <img src="images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/> 
 
 
 
