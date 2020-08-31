@@ -227,8 +227,12 @@ We'll construct an interpolating spline using this function values sampled on 20
 ```
 
 The spline plots:
-
-<img src="images/2d-usage/s-t-32,32,3,1,0.0,-.png" width="256"/> <img src="images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/> 
+```@raw html
+<img src="../images/2d-usage/s-t-32,32,3,1,0.0,-.png" width="256"/>
+```
+```@raw html
+ <img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/> 
+```
 
 Value of function ``\phi`` in evaluation point ``p = [0.5; 0.5]``
 ```@example 2A
