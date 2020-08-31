@@ -94,11 +94,11 @@ The second example is the function ```Ψ(x,y,z)=cos(π*x)*cos(y-0.5)*sin(π*(z-0
 
 <img src="/images/m_grid_6,1,50,_.png" width="256"/>  <img src="/images/m_grid_6,2,50,_.png" width="256"/>  <img src="/images/m_nodes_6,2,4.png" width="256"/> 
 
-We'll construct an interpolating normal spline using function ```Ψ``` values sampled on the 1000 non-uniform random grid nodes distributed in the [0,1]x[0,1]x[0,1] cube.
+We'll construct an interpolating normal spline using function ```Ψ``` values sampled on the 1000 non-uniform random nodes distributed in the [0,1]x[0,1]x[0,1] cube.
 ```
     using NormalHermiteSplines
 
-    nodes = get_3D_random_grid(9)       # generates 1000 non-uniform random grid nodes
+    nodes = get_3D_random_grid(9)       # generates 1000 non-uniform random nodes
     n_1 = size(nodes, 2)
     u = Vector{Float64}(undef, n_1)     # function values
     grid = get_3D_grid(50)              # creates uniform Cartesian grid of size 51x51x51
@@ -125,7 +125,7 @@ We'll construct an interpolating normal spline using function ```Ψ``` values sa
     #  ≈  0.065
     #  ≈ -1.486
 ```
-The spline 3-D plots:
+The spline plots:
 
  <img src="/images/s_grid_6,false,2,4,2,_5.0,1,50,_.png" width="256"/>  <img src="/images/s_grid_6,false,2,4,2,_5.0,2,50,_.png" width="256"/> 
 

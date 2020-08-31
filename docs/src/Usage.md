@@ -158,55 +158,102 @@ Evaluate the spline derivatives at the same points:
 
 ## 2D interpolation case
 
-we generated pseudo-random points uniformly distributed
-(see Figure 1) defined on the domain [0,1]^2
+Let's interpolate function ``\phi (x,y) = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)``
 
+<img src="images/2d-usage/m_t_33.png" width="256"/> <img src="images/2d-usage/m_cf_33.png" width="256"/> 
 
+We'll construct an interpolating spline using this function values sampled on 200 pseudo-random points uniformly distributed on the square ``[0,1]^2``.
 
-Let's interpolate function ``f(x)``
+ <img src="images/2d-usage/m_grid_32,3.png" width="256"/> 
 
-```math
-f(x,y) = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)
-```
-We'll construct an interpolating spline using this function values sampled on 1000 Halton nodes ([1]) distributed in the [-1,1]x[-1,1] square.
-
-
-nodes ``\{1, 2, 3, ..., 20\}`` (case A) and by values of the function and values of its first derivatives in the same nodes (case B).
-
-```@meta
-DocTestSetup = quote
-    using NormalHermiteSplines
-end
-```
-
-A)
-
-```@example A
+```@example 2A
+    using Random
     using NormalHermiteSplines
 
-    x = collect(1.0:1.0:20)       # function nodes
-    u = x.*0.0                    # function values in nodes
-    for i in 6:10
-        u[i] = 1.0
-    end
-    for i in 11:14
-        u[i] = -0.2 * i + 3.0
+    # generating 200 uniform random nodes
+    m = 200
+    nodes = Matrix{Float64}(undef, 2, m)
+    rng = MersenneTwister(0);
+    rnd = rand(rng, Float64, (2, m))
+    for i = 1:m
+        nodes[1, i] = rnd[1, i]
+        nodes[2, i] = rnd[2, i]
     end
 
-    # Build a differentiable spline by values of function in nodes
-    # (a spline built with RK_H0 kernel is a continuous function,
-    #  a spline built with RK_H1 kernel is a continuously differentiable function,
-    #  a spline built with RK_H2 kernel is a twice continuously differentiable function).
-    # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
-    spline = prepare(x, RK_H1())
-    
-    # An estimation of the Gram matrix condition number
+    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
+    t = 50
+    x = collect(range(0.0, 1.0; step = 1.0/t))
+    y = collect(range(0.0, 1.0; step = 1.0/t))
+    t1 +=  1
+    grid = Matrix{Float64}(undef, 2, t1^2)
+    for i = 1:t1
+        for j = 1:t1
+            r = (i - 1) * t1 + j
+            grid[1, r] = x[i]
+            grid[2, r] = y[j]
+        end
+    end
+
+    n_1 = size(nodes, 2)
+    u = Vector{Float64}(undef, n_1)     # function values
+    for i = 1:n_1
+        x = nodes[1,i]
+        y = nodes[2,i]
+        u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+    end
+
+    # Here spline is being constructed with RK_H1 kernel,
+    # the 'scaling parameter' ε is defined explicitly.
+    rk = RK_H1()
+    #
+    spline = interpolate(nodes, u, rk)
     cond = get_cond(spline)
 ```
 
-## 3D interpolation case
+```@example 2A
+    # A value of the 'scaling parameter' of Bessel Potential space
+    # the normal spline was built in.
+    ε = get_epsilon(spline)
+```
 
-![Example 1](images/spline.mp4)
+
+```@example 2A
+
+    σ = evaluate(spline, grid)
+    σ = nothing
+```
+
+The spline plots:
+
+<img src="images/2d-usage/s_t_32,32,3,1,_0.0,_.png" width="256"/> <img src="images/2d-usage/s_cf_32,32,3,1,_0.0,_.png" width="256"/> 
+
+Value of function ``\phi`` in evaluation point ``p = [0.5; 0.5]``
+```@example 2A
+    p = [0.5; 0.5]
+    f1 = (2.0*cos(10.0*p[1])*sin(10.0*p[2]) + sin(10.0*p[1]*p[2]))/3.0
+```
+
+Value of spline in that evaluation point:
+```@example 2A
+    σ1 = evaluate_one(spline, p)
+```
+
+```@example 2A
+    g1 = evaluate_gradient(spline, p)
+    #  ≈ -1.486
+    #  ≈  0.065
+    #  ≈ -1.486
+```
+Approximation error plots:
+
+<img src="images/2d-usage/delta_cf_32,32,3,1,_0.0,_.png" width="256"/> <img src="images/2d-usage/delta_s_32,32,3,1,_0.0,_.png" width="256"/> 
+
+
+
+
+
+
+
 
 
 ## Choice of the scaling parameter
