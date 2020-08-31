@@ -158,14 +158,17 @@ Evaluate the spline derivatives at the same points:
 
 ## 2D interpolation case
 
+we generated pseudo-random points uniformly distributed
+(see Figure 1) defined on the domain [0,1]^2
+
+
+
 Let's interpolate function ``f(x)``
 
 ```math
 f(x,y) = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)
 ```
-by values of the function in sampled on 1000 Halton nodes
-
-We'll construct an interpolating normal spline using this function and its gradient values sampled on 1000 Halton nodes ([1]) distributed in the [-1,1]x[-1,1] square.
+We'll construct an interpolating spline using this function values sampled on 1000 Halton nodes ([1]) distributed in the [-1,1]x[-1,1] square.
 
 
 nodes ``\{1, 2, 3, ..., 20\}`` (case A) and by values of the function and values of its first derivatives in the same nodes (case B).
