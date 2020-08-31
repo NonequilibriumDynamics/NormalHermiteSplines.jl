@@ -17,6 +17,7 @@ by values of the function in nodes ``\{1, 2, 3, ..., 20\}`` (case A) and by valu
 
 ```@meta
 DocTestSetup = quote
+    using Random
     using NormalHermiteSplines
 end
 ```
