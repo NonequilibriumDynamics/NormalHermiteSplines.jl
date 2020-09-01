@@ -174,14 +174,12 @@ The spline plot                                 �
 
 ```@raw html
 <img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/>
-```   ```@raw html
- <img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/>
- ```
- ```@raw html
- <img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/>
- ```
-
-aaaaa
+``` ```@raw html
+<img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/>
+```  ```@raw html
+<img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/>
+```
+bbbbbbb 
 
 
 
