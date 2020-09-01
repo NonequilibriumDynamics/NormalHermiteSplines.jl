@@ -161,23 +161,36 @@ Evaluate the spline derivatives at the same points:
 
 Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)`` defined on domain ``\Omega = [0,1]^2``.
 
-```@raw html <img src="../images/2d-usage/m-t-32.png" width="256"/>``` ```@raw html
-<img src="../images/2d-usage/m-cf-32.png" width="256"/>```  ```@raw html
-<img src="../images/2d-usage/m-grid-32,3.png" width="256"/>```
+```@raw html
+<img src="../images/2d-usage/m-t-32.png" width="256"/>
+``` ```@raw html
+<img src="../images/2d-usage/m-cf-32.png" width="256"/>
+```  ```@raw html
+<img src="../images/2d-usage/m-grid-32,3.png" width="256"/>
+```
 We built a spline using function ``\phi`` values sampled on 200 pseudo-random points uniformly distributed on ``\Omega`` (case A):
 ```@raw html
 <img src="../images/2d-usage/m-grid-32,3.png" width="256"/> 
 ```
 The spline plots:
-```@raw html <img src="../images/2d-usage/s-t-32,32,3,1,0.0,-.png" width="256"/>```
-```@raw html  <img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/>```
+```@raw html
+ <img src="../images/2d-usage/s-t-32,32,3,1,0.0,-.png" width="256"/>
+``` ```@raw html
+<img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/>
+```
 Approximation error plots:
-```@raw html <img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/>``` ```@raw html <img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/>``` 
+```@raw html
+ <img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/>
+ ``` ```@raw html
+  <img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/>
+ ``` 
 
 and 
 
 using function ``\phi`` values sampled on 200 pseudo-random points uniformly distributed on ``\Omega`` and 80 values of function ``\phi`` gradient given at the border of ``\Omega`` (case B):
+```@raw html
 <img src="../images/2d-usage/m-grid-33,3.png" width="256"/> 
+```
 - here function ``\phi`` gradient locations are marked with 'red'. 
  
 ```@example 2A
