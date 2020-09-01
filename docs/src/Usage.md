@@ -168,7 +168,7 @@ Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1
 ```  ```@raw html
 <img src="../images/2d-usage/m-grid-32,3.png" width="197"/>
 ```
-We built a spline using function ``\phi`` values sampled on set of 200 pseudo-random points uniformly distributed on ``\Omega`` (case A).
+We built a spline using function ``\phi`` values sampled on set of 200 pseudo-random nodes uniformly distributed on ``\Omega`` (case A).
 
 Spline plot                                                                        Approximation error plots
 
@@ -181,7 +181,7 @@ Spline plot                                   �
 ```
 and 
 
-using function ``\phi`` values sampled on set of 200 pseudo-random points uniformly distributed on ``\Omega`` and 80 values of function ``\phi`` gradient located at the border of ``\Omega`` domain (case B):
+using function ``\phi`` values sampled on set of 200 pseudo-random nodes uniformly distributed on ``\Omega`` and 80 function ``\phi`` gradient values defined at nodes located on the border of domain ``\Omega`` (case B):
 
 ```@raw html
 <img src="../images/2d-usage/m-grid-33,3.png" width="197"/> 
