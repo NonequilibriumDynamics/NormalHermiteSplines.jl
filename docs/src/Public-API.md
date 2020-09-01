@@ -33,7 +33,7 @@ estimate_epsilon
 
 ## Types
 
-### Bessel Potential space Reproducing Kernels
+### Bessel Potential Space Reproducing Kernels
 
 ```@docs
 RK_H0

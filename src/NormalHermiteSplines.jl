@@ -30,7 +30,7 @@ Define a structure containing full information of a normal spline
 - `_compression`: factor of transforming the original node locations into unit hypercube
 - `_nodes`: transformed function value nodes
 - `_values`: function values at interpolation nodes
-- `_d_nodes`: transformed function derivative nodes
+- `_d_nodes`: transformed function directional derivative nodes
 - `_es`: normalized derivative directions
 - `_d_values`: function directional derivative values
 - `_min_bound`: minimal bounds of the original node locations area

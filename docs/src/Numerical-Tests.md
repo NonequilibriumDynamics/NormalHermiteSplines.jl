@@ -1,6 +1,6 @@
 # Numerical Tests
 
-## 2D
+## 2D interpolation case
 
 ### Grids
 
@@ -10,7 +10,7 @@ bb
 c
 
 
-## 3D
+## 3D interpolation case
 
 ### Grids
 
