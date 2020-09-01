@@ -169,24 +169,24 @@ Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1
 <img src="../images/2d-usage/m-grid-32,3.png" width="197"/>
 ```
 We built a spline using function ``\phi`` values sampled on 200 pseudo-random points uniformly distributed on ``\Omega`` (case A).
-The spline plot
-```@raw html
+
+| The spline plot                            | Approximation error plots                                                                          |
+|:------------------------------------------ |:-------------------------------------------------------------------------------------------------- |
+|```@raw html
 <img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/>
-```                 Approximation error plots:
-```@raw html
+```                        |```@raw html
  <img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/>
  ``` ```@raw html
   <img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/>
- ``` 
+ ```        |
 
-and 
-
-using function ``\phi`` values sampled on 200 pseudo-random points uniformly distributed on ``\Omega`` and 80 values of function ``\phi`` gradient given at the border of ``\Omega`` (case B):
-```@raw html
-<img src="../images/2d-usage/m-grid-32,3.png" width="197"/> 
-```
-- here function ``\phi`` gradient locations are marked with 'red'. 
  
+
+ 
+
+
+
+
 ```@example 2A
     using Random
     using NormalHermiteSplines
