@@ -93,57 +93,52 @@
   7.000715796541619e-13
  -6.969127609504778e-8 
  -0.20000003580349512  
- -1.234100541057016e-13</code></pre><h2 id="D-interpolation-case-2"><a class="docs-heading-anchor" href="#D-interpolation-case-2">2D interpolation case</a><a class="docs-heading-anchor-permalink" href="#D-interpolation-case-2" title="Permalink"></a></h2><p>Let&#39;s interpolate function <span>$\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)$</span> defined on domain <span>$\Omega = [0,1]^2$</span>.</p><img src="../images/2d-usage/m-cf-32.png" width="256"/><img src="../images/2d-usage/m-t-32.png" width="256"/><img src="../images/2d-usage/m-grid-32,3.png" width="197"/><p>We built a spline using function <span>$\phi$</span> values sampled on 200 pseudo-random points uniformly distributed on <span>$\Omega$</span> (case A).</p><p>The spline plot  &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; Approximation error plots</p><img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/> <img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/>
- ``` ```@raw html
-  <img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/>
- ```        |
+ -1.234100541057016e-13</code></pre><h2 id="D-interpolation-case-2"><a class="docs-heading-anchor" href="#D-interpolation-case-2">2D interpolation case</a><a class="docs-heading-anchor-permalink" href="#D-interpolation-case-2" title="Permalink"></a></h2><p>Let&#39;s interpolate function <span>$\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)$</span> defined on domain <span>$\Omega = [0,1]^2$</span>.</p><img src="../images/2d-usage/m-cf-32.png" width="256"/><img src="../images/2d-usage/m-t-32.png" width="256"/><img src="../images/2d-usage/m-grid-32,3.png" width="197"/><p>We built a spline using function <span>$\phi$</span> values sampled on 200 pseudo-random points uniformly distributed on <span>$\Omega$</span> (case A).</p><p>The spline plot  &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;                                                                      Approximation error plots</p><p>aaa</p><pre><code class="language-">    using Random
+    using NormalHermiteSplines
 
- 
-
- 
-
-
-
-<p>@example 2A     using Random     using NormalHermiteSplines</p><pre><code class="language-none"># generating 200 uniform random nodes
-m = 200
-nodes = Matrix{Float64}(undef, 2, m)
-rng = MersenneTwister(0);
-rnd = rand(rng, Float64, (2, m))
-for i = 1:m
-    nodes[1, i] = rnd[1, i]
-    nodes[2, i] = rnd[2, i]
-end
-
-# creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
-t = 50
-x = collect(range(0.0, 1.0; step = 1.0/t))
-y = collect(range(0.0, 1.0; step = 1.0/t))
-t1 +=  1
-grid = Matrix{Float64}(undef, 2, t1^2)
-for i = 1:t1
-    for j = 1:t1
-        r = (i - 1) * t1 + j
-        grid[1, r] = x[i]
-        grid[2, r] = y[j]
+    # generating 200 uniform random nodes
+    m = 200
+    nodes = Matrix{Float64}(undef, 2, m)
+    rng = MersenneTwister(0);
+    rnd = rand(rng, Float64, (2, m))
+    for i = 1:m
+        nodes[1, i] = rnd[1, i]
+        nodes[2, i] = rnd[2, i]
     end
-end
 
-n_1 = size(nodes, 2)
-u = Vector{Float64}(undef, n_1)     # function values
-for i = 1:n_1
-    x = nodes[1,i]
-    y = nodes[2,i]
-    u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
-end
+    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
+    t = 50
+    x = collect(range(0.0, 1.0; step = 1.0/t))
+    y = collect(range(0.0, 1.0; step = 1.0/t))
+    t1 +=  1
+    grid = Matrix{Float64}(undef, 2, t1^2)
+    for i = 1:t1
+        for j = 1:t1
+            r = (i - 1) * t1 + j
+            grid[1, r] = x[i]
+            grid[2, r] = y[j]
+        end
+    end
 
-# Here spline is being constructed with RK_H1 kernel,
-# the &#39;scaling parameter&#39; ε is defined explicitly.
-rk = RK_H1()
-#
-spline = interpolate(nodes, u, rk)
-cond = get_cond(spline)</code></pre><pre><code class="language-none"></code></pre><p>@example 2A     # A value of the &#39;scaling parameter&#39; of Bessel Potential space     # the normal spline was built in.     ε = get_epsilon(spline)</p><pre><code class="language-none">
-</code></pre><p>@example 2A</p><pre><code class="language-none">σ = evaluate(spline, grid)
-σ = nothing</code></pre><pre><code class="language-none">
+    n_1 = size(nodes, 2)
+    u = Vector{Float64}(undef, n_1)     # function values
+    for i = 1:n_1
+        x = nodes[1,i]
+        y = nodes[2,i]
+        u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+    end
 
-Value of function ``\phi`` in evaluation point ``p = [0.5; 0.5]``</code></pre><p>@example 2A     p = [0.5; 0.5]     f1 = (2.0<em>cos(10.0</em>p[1])<em>sin(10.0</em>p[2]) + sin(10.0<em>p[1]</em>p[2]))/3.0</p><pre><code class="language-none">
-Value of spline in that evaluation point:</code></pre><p>@example 2A     σ1 = evaluate_one(spline, p)</p><pre><code class="language-none"></code></pre><p>@example 2A     g1 = evaluate_gradient(spline, p)     #  ≈ -1.486     #  ≈  0.065     #  ≈ -1.486 ```</p><h2 id="Choice-of-the-scaling-parameter"><a class="docs-heading-anchor" href="#Choice-of-the-scaling-parameter">Choice of the scaling parameter</a><a id="Choice-of-the-scaling-parameter-1"></a><a class="docs-heading-anchor-permalink" href="#Choice-of-the-scaling-parameter" title="Permalink"></a></h2><p>aa</p><h2 id="Q-and-A"><a class="docs-heading-anchor" href="#Q-and-A">Q &amp; A</a><a id="Q-and-A-1"></a><a class="docs-heading-anchor-permalink" href="#Q-and-A" title="Permalink"></a></h2><p>ss</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Public-API/">« Public API</a><a class="docs-footer-nextpage" href="../Numerical-Tests/">Numerical Tests »</a></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Tuesday 1 September 2020 10:20">Tuesday 1 September 2020</span>. Using Julia version 1.3.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    # Here spline is being constructed with RK_H1 kernel,
+    # the &#39;scaling parameter&#39; ε is defined explicitly.
+    rk = RK_H1()
+    #
+    spline = interpolate(nodes, u, rk)
+    cond = get_cond(spline)</code></pre><pre><code class="language-">    # A value of the &#39;scaling parameter&#39; of Bessel Potential space
+    # the normal spline was built in.
+    ε = get_epsilon(spline)</code></pre><pre><code class="language-">
+    σ = evaluate(spline, grid)
+    σ = nothing</code></pre><p>Value of function <span>$\phi$</span> in evaluation point <span>$p = [0.5; 0.5]$</span></p><pre><code class="language-julia">    p = [0.5; 0.5]
+    f1 = (2.0*cos(10.0*p[1])*sin(10.0*p[2]) + sin(10.0*p[1]*p[2]))/3.0</code></pre><pre><code class="language-none">0.018150344404862222</code></pre><p>Value of spline in that evaluation point:</p><pre><code class="language-">    σ1 = evaluate_one(spline, p)</code></pre><pre><code class="language-">    g1 = evaluate_gradient(spline, p)
+    #  ≈ -1.486
+    #  ≈  0.065
+    #  ≈ -1.486</code></pre><h2 id="Choice-of-the-scaling-parameter"><a class="docs-heading-anchor" href="#Choice-of-the-scaling-parameter">Choice of the scaling parameter</a><a id="Choice-of-the-scaling-parameter-1"></a><a class="docs-heading-anchor-permalink" href="#Choice-of-the-scaling-parameter" title="Permalink"></a></h2><p>aa</p><h2 id="Q-and-A"><a class="docs-heading-anchor" href="#Q-and-A">Q &amp; A</a><a id="Q-and-A-1"></a><a class="docs-heading-anchor-permalink" href="#Q-and-A" title="Permalink"></a></h2><p>ss</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Public-API/">« Public API</a><a class="docs-footer-nextpage" href="../Numerical-Tests/">Numerical Tests »</a></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Tuesday 1 September 2020 10:24">Tuesday 1 September 2020</span>. Using Julia version 1.3.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
