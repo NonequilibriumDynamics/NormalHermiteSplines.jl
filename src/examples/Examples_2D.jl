@@ -1,5 +1,6 @@
 using Printf
 using PyPlot
+using Random
 
 function test_2D(model_id::Int,
                  use_grad::Bool,
@@ -893,6 +894,52 @@ function readme_2()
     σ = evaluate(spline, grid)
     return σ
 end
+
+function usage1()
+    # generating 200 uniform random nodes
+    m = 200
+    nodes = Matrix{Float64}(undef, 2, m)
+    rng = MersenneTwister(0);
+    rnd = rand(rng, Float64, (2, m))
+    for i = 1:m
+        nodes[1, i] = rnd[1, i]
+        nodes[2, i] = rnd[2, i]
+    end
+
+    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
+    t = 50
+    x = collect(range(0.0, 1.0; step = 1.0/t))
+    y = collect(range(0.0, 1.0; step = 1.0/t))
+    t1 = t + 1
+    grid = Matrix{Float64}(undef, 2, t1^2)
+    for i = 1:t1
+        for j = 1:t1
+            r = (i - 1) * t1 + j
+            grid[1, r] = x[i]
+            grid[2, r] = y[j]
+        end
+    end
+
+    n_1 = size(nodes, 2)
+    u = Vector{Float64}(undef, n_1)     # function values
+    for i = 1:n_1
+        x = nodes[1,i]
+        y = nodes[2,i]
+        u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+    end
+
+    # Here spline is being constructed with RK_H1 kernel,
+    # the 'scaling parameter' ε is defined explicitly.
+    rk = RK_H1()
+    #
+    spline = interpolate(nodes, u, rk)
+    cond = get_cond(spline)
+    @printf "cond #: %0.1e\n" cond
+    ε = get_epsilon(spline)
+    @printf "ε #: %0.1e\n" ε
+end
+
+
 
 function big_sur()
 # Foley, T. A. (1986). Scattered data interpolation and approximation with error bounds. Computer Aided Geometric Design, Vol. 3, No. 3, 1986.

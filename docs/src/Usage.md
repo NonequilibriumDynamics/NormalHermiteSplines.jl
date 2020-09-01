@@ -159,7 +159,7 @@ Evaluate the spline derivatives at the same points:
 
 ## 2D interpolation case
 
-Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)`` defined on domain ``\Omega = [0,1]^2``.
+Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)`` defined on unit square ``\Omega = [0,1]^2``.
 
 ```@raw html
 <img src="../images/2d-usage/m-cf-32.png" width="256"/>
@@ -168,7 +168,7 @@ Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1
 ```  ```@raw html
 <img src="../images/2d-usage/m-grid-32,3.png" width="197"/>
 ```
-We built a spline using function ``\phi`` values sampled on 200 pseudo-random points uniformly distributed on ``\Omega`` (case A).
+We built a spline using function ``\phi`` values sampled on set of 200 pseudo-random points uniformly distributed on ``\Omega`` (case A).
 
 Spline plot                                                                        Approximation error plots
 
@@ -181,7 +181,7 @@ Spline plot                                   �
 ```
 and 
 
-using function ``\phi`` values sampled on 200 pseudo-random points uniformly distributed on ``\Omega`` and 80 values of function ``\phi`` gradient given at the border of ``\Omega`` (case B):
+using function ``\phi`` values sampled on set of 200 pseudo-random points uniformly distributed on ``\Omega`` and 80 values of function ``\phi`` gradient given at the border of ``\Omega`` (case B):
 
 ```@raw html
 <img src="../images/2d-usage/m-grid-33,3.png" width="197"/> 
@@ -197,9 +197,7 @@ Spline plot                                   �
 ```  ```@raw html
 <img src="../images/2d-usage/delta-s-33,33,3,1,0.0,-.png" width="256"/>
 ```
-ccc
-
-ddd
+Following is the code example for case A:
 
 ```@example 2A
     using Random
@@ -219,7 +217,8 @@ ddd
     t = 50
     x = collect(range(0.0, 1.0; step = 1.0/t))
     y = collect(range(0.0, 1.0; step = 1.0/t))
-    t1 +=  1
+    t1 = t + 1
+
     grid = Matrix{Float64}(undef, 2, t1^2)
     for i = 1:t1
         for j = 1:t1
