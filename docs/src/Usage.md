@@ -170,11 +170,11 @@ Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1
 ```
 We built a spline using function ``\phi`` values sampled on 200 pseudo-random points uniformly distributed on ``\Omega`` (case A).
 
-| The spline plot                            | Approximation error plots                                                                          |
-|:------------------------------------------ |:-------------------------------------------------------------------------------------------------- |
-|```@raw html
+The spline plot  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Approximation error plots
+
+```@raw html
 <img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/>
-```                        |```@raw html
+``` ```@raw html
  <img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/>
  ``` ```@raw html
   <img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/>
