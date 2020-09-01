@@ -250,31 +250,144 @@ Following is the code example for case A:
     ε = get_epsilon(spline)
 ```
 
-
 ```@example 2A
 
     σ = evaluate(spline, grid)
     σ = nothing
 ```
 
-
-Value of function ``\phi`` in evaluation point ``p = [0.5; 0.5]``
+Value of function ``\phi`` at evaluation point ``p = [0.5; 0.5]``
 ```@example 2A
     p = [0.5; 0.5]
-    f1 = (2.0*cos(10.0*p[1])*sin(10.0*p[2]) + sin(10.0*p[1]*p[2]))/3.0
+    x = p[1]
+    y = p[2]
+    f = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
 ```
 
-Value of spline in that evaluation point:
+Value of spline at the evaluation point:
 ```@example 2A
-    σ1 = evaluate_one(spline, p)
+    σ = evaluate_one(spline, p)
+    diff = f - σ
 ```
 
+Difference of function ``\phi`` and spline values at the evaluation point:
 ```@example 2A
-    g1 = evaluate_gradient(spline, p)
-    #  ≈ -1.486
-    #  ≈  0.065
-    #  ≈ -1.486
+    diff = f1 - σ1
 ```
+
+Gradient of function ``\phi`` at the evaluation point
+```@example 2A
+    g1 = (10.0*y*cos(10.0*x*y) - 20.0*sin(10.0*x)*sin(10.0*y))/3.0
+    g2 = (20.0*cos(10.0*x)*cos(10.0*y) + 10.0*x*cos(10.0*x*y))/3.0 
+    f_grad = [g1; g2]
+```
+
+Gradient of spline at the evaluation point
+```@example 2A
+    σ_grad = evaluate_gradient(spline, p)
+```
+
+Norm of difference of function ``\phi`` and spline gradient values at the evaluation point:
+```@example 2A
+    diff_grad = sqrt(sum((f_grad .- σ_grad).^2))
+```
+
+Corresponding code example for case B:
+
+```@example 2B
+    using Random
+    using NormalHermiteSplines
+
+    # generating 200 uniform random nodes
+    m = 200
+    nodes = Matrix{Float64}(undef, 2, m)
+    rng = MersenneTwister(0);
+    rnd = rand(rng, Float64, (2, m))
+    for i = 1:m
+        nodes[1, i] = rnd[1, i]
+        nodes[2, i] = rnd[2, i]
+    end
+
+    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
+    t = 50
+    x = collect(range(0.0, 1.0; step = 1.0/t))
+    y = collect(range(0.0, 1.0; step = 1.0/t))
+    t1 = t + 1
+
+    grid = Matrix{Float64}(undef, 2, t1^2)
+    for i = 1:t1
+        for j = 1:t1
+            r = (i - 1) * t1 + j
+            grid[1, r] = x[i]
+            grid[2, r] = y[j]
+        end
+    end
+
+    n_1 = size(nodes, 2)
+    u = Vector{Float64}(undef, n_1)     # function values
+    for i = 1:n_1
+        x = nodes[1,i]
+        y = nodes[2,i]
+        u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+    end
+
+    # Here spline is being constructed with RK_H1 kernel,
+    # the 'scaling parameter' ε is defined explicitly.
+    rk = RK_H1()
+    #
+    spline = interpolate(nodes, u, rk)
+    cond = get_cond(spline)
+```
+
+```@example 2B
+    # A value of the 'scaling parameter' of Bessel Potential space
+    # the normal spline was built in.
+    ε = get_epsilon(spline)
+```
+
+```@example 2B
+
+    σ = evaluate(spline, grid)
+    σ = nothing
+```
+
+Value of function ``\phi`` at evaluation point ``p = [0.5; 0.5]``
+```@example 2B
+    p = [0.5; 0.5]
+    x = p[1]
+    y = p[2]
+    f = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+```
+
+Value of spline at the evaluation point:
+```@example 2B
+    σ = evaluate_one(spline, p)
+    diff = f - σ
+```
+
+Difference of function ``\phi`` and spline values at the evaluation point:
+```@example 2B
+    diff = f1 - σ1
+```
+
+Gradient of function ``\phi`` at the evaluation point
+```@example 2B
+    g1 = (10.0*y*cos(10.0*x*y) - 20.0*sin(10.0*x)*sin(10.0*y))/3.0
+    g2 = (20.0*cos(10.0*x)*cos(10.0*y) + 10.0*x*cos(10.0*x*y))/3.0 
+    f_grad = [g1; g2]
+```
+
+Gradient of spline at the evaluation point
+```@example 2B
+    σ_grad = evaluate_gradient(spline, p)
+```
+
+Norm of difference of function ``\phi`` and spline gradient values at the evaluation point:
+```@example 2B
+    diff_grad = sqrt(sum((f_grad .- σ_grad).^2))
+```
+
+
 
 
 
