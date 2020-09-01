@@ -267,12 +267,11 @@ Value of function ``\phi`` at evaluation point ``p = [0.5; 0.5]``
 Value of spline at the evaluation point:
 ```@example 2A
     σ = evaluate_one(spline, p)
-    diff = f - σ
 ```
 
 Difference of function ``\phi`` and spline values at the evaluation point:
 ```@example 2A
-    diff = f1 - σ1
+    diff = f - σ
 ```
 
 Gradient of function ``\phi`` at the evaluation point
@@ -362,12 +361,11 @@ Value of function ``\phi`` at evaluation point ``p = [0.5; 0.5]``
 Value of spline at the evaluation point:
 ```@example 2B
     σ = evaluate_one(spline, p)
-    diff = f - σ
 ```
 
 Difference of function ``\phi`` and spline values at the evaluation point:
 ```@example 2B
-    diff = f1 - σ1
+    diff = f - σ
 ```
 
 Gradient of function ``\phi`` at the evaluation point
