@@ -186,7 +186,7 @@ using function ``\phi`` values sampled on set of 200 pseudo-random points unifor
 ```@raw html
 <img src="../images/2d-usage/m-grid-33,3.png" width="197"/> 
 ```
-here function ``\phi`` gradient locations are marked with 'red'. 
+here red dots represent the``\phi``function gradient locations. 
 
 Spline plot                                                                         Approximation error plots
 
