@@ -181,12 +181,12 @@ Spline plot                                   �
 ```
 and 
 
-using function ``\phi`` values sampled on set of 200 pseudo-random points uniformly distributed on ``\Omega`` and 80 values of function ``\phi`` gradient given at the border of ``\Omega`` (case B):
+using function ``\phi`` values sampled on set of 200 pseudo-random points uniformly distributed on ``\Omega`` and 80 values of function ``\phi`` gradient located at the border of ``\Omega`` domain (case B):
 
 ```@raw html
 <img src="../images/2d-usage/m-grid-33,3.png" width="197"/> 
 ```
-here red dots represent the``\phi``function gradient locations. 
+here red dots represent the function ``\phi`` gradient value nodes. 
 
 Spline plot                                                                         Approximation error plots
 
