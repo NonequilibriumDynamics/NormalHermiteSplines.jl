@@ -8,6 +8,7 @@ makedocs(
 				"Home" => "index.md",
 				"Public API" => "Public-API.md",
 				"Example Usage" => "Usage.md",
+				"Choice of the scaling parameter" => "Parameter-Choice.md",
 				"Numerical Tests" => "Numerical-Tests.md",
 				"Tests with real data" => "Tests-with-real-data.md",
 				"Interpolating Normal Splines" => "Interpolating-Normal-Splines.md",

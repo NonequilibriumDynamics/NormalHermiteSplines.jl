@@ -67,6 +67,7 @@ Pages = [
       "index.md",
       "Public-API.md",
       "Usage.md",
+      "Parameter-Choice.md",
       "Numerical-Tests.md",
       "Tests-with-real-data.md",
       "Interpolating-Normal-Splines.md",

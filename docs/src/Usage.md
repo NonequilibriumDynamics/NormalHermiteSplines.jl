@@ -281,12 +281,5 @@ Value of spline in that evaluation point:
 
 
 
-
-
-
-
-## Choice of the scaling parameter
-aa
-
 ## Q & A
 ss
