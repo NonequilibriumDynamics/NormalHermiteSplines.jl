@@ -75,7 +75,7 @@ Elements ``h_i`` and ``h'_j`` are continuously differentiable functions. Thereby
   i = 1, 2, \dots, n_1 \, , \ \  j = 1, 2, \dots, n_2 \, .
  \end{aligned}
 ```
-here all functions ``h_i`` and ``h'_j`` are linear independent and system of constrains (2) defines a nonempty convex and closed set (as an intersection of hyper-planes in the Hilbert space ``H^s_\varepsilon``).
+here all functions ``h_i`` and ``h'_j`` are linear independent and system of constrains (2) defines a nonempty convex and closed set (as an intersection of hyper-planes) in the Hilbert space ``H^s_\varepsilon``.
 
 Problem of reconstruction of function ``f`` satisfying system of constraints (2) is undetermined. We reformulate it as a problem of finding solution of this system of constraints that has minimal norm:
 
