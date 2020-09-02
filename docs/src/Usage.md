@@ -383,9 +383,8 @@ Corresponding code example for case B:
     end
 
     # Here spline is being constructed with RK_H1 kernel,
-    # the value of the 'scaling parameter' ε is estimated
-    # in the interpolate procedure.
-    rk = RK_H1()
+    # the 'scaling parameter' ε is defined explicitly.
+    rk = RK_H1(1.0)
     #
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
     cond = get_cond(spline)
