@@ -16,7 +16,7 @@ Consider the following interpolation problem:
 ```
 where ``\frac{ \partial{f} }{ \partial{e_j} }(s_j) = \nabla f(s_j) \cdot e_j = \sum _{k=1}^{n}  \frac{ \partial{f} }{ \partial{x_k} } (s_j) e_{jk}`` is a directional derivative of ``f`` at the point ``s_j`` in the direction of ``e_j``.
 
-We assume that function ``f`` is an element of the Bessel potential space ``H^s_\varepsilon (R^n)`` which is defined as:
+We assume that function ``f`` is an element of the Bessel Potential space ``H^s_\varepsilon (R^n)`` which is defined as:
 
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
@@ -170,9 +170,9 @@ Further
 \end{aligned}
 ```
 
-Here normal hermite splines will be constructed in Bessel potential spaces ``H^{s_1}_\varepsilon (R^n) , \, s_1 = n/2 + 3/2`` and ``H^{s_2}_\varepsilon (R^n) , \, s_2 = n/2 + 5/2``. Elements of space ``H^{s_1}`` can be treated as  continuously differentiable functions and elements of space ``H^{s_2}`` can be treated as twice continuously differentiable functions. Note, the spline is infinitely differentiable everywhere in ``R^n`` excepting the knots ``p_i`` and ``s_j``.
+Here normal hermite splines will be constructed in Bessel Potential spaces ``H^{s_1}_\varepsilon (R^n) , \, s_1 = n/2 + 3/2`` and ``H^{s_2}_\varepsilon (R^n) , \, s_2 = n/2 + 5/2``. Elements of space ``H^{s_1}`` can be treated as  continuously differentiable functions and elements of space ``H^{s_2}`` can be treated as twice continuously differentiable functions. Note, the spline is infinitely differentiable everywhere in ``R^n`` excepting the knots ``p_i`` and ``s_j``.
 
-Reproducing kernel of Bessel potential space was presented in [5] and its simplified form was given in [14], [18], [19], [20]. For space ``H^{s}_\varepsilon (R^n), \, s = n/2 + 1/2 + r, \, r \ge 0`` it can be written as:
+Reproducing kernel of Bessel Potential space was presented in [5] and its simplified form was given in [14], [18], [19], [20]. For space ``H^{s}_\varepsilon (R^n), \, s = n/2 + 1/2 + r, \, r \ge 0`` it can be written as:
 
 ```math
  V(\eta , \xi) = \exp (-\varepsilon |\eta - \xi|) \,
@@ -259,9 +259,9 @@ In a case when there is no information of function ``f`` derivatives the Problem
 & n_1 \gt 0 \, .
 \end{aligned}
 ```
-We assume that ``f`` is a continuous function. It can be treated as an element of Bessel potential space ``H_\varepsilon^{s_0} (R^n) \, , s_0 =  n/2 + 1/2``, this space is continuously embedded in Hölder space ``C_b(R^n)`` of continuous and bounded functions.
+We assume that ``f`` is a continuous function. It can be treated as an element of Bessel Potential space ``H_\varepsilon^{s_0} (R^n) \, , s_0 =  n/2 + 1/2``, this space is continuously embedded in Hölder space ``C_b(R^n)`` of continuous and bounded functions.
 
-Reproducing kernel of Bessel potential space ``H_\varepsilon^{s_0}(R^n)``
+Reproducing kernel of Bessel Potential space ``H_\varepsilon^{s_0}(R^n)``
 can be written as:
 
 ```math

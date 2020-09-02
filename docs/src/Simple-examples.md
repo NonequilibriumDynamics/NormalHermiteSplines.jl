@@ -16,7 +16,7 @@ Let's there is the following information of a smooth function ``\varphi (x,y), \
 ```
 and it is necessary to reconstruct ``\varphi`` using this data.
 
-We assume this function is an element of the Bessel potential space ``H^{2.5}_\varepsilon (R^2)``, thereby it can be treated as a continuously differentiable function. We construct a normal spline ``\sigma_1^{(2.5)}`` approximating ``\varphi``:
+We assume this function is an element of the Bessel Potential space ``H^{2.5}_\varepsilon (R^2)``, thereby it can be treated as a continuously differentiable function. We construct a normal spline ``\sigma_1^{(2.5)}`` approximating ``\varphi``:
 
 ```math
 \begin{aligned}

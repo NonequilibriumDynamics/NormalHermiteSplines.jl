@@ -1,7 +1,7 @@
 ﻿
 # Reproducing Kernel of Bessel Potential space
 
-The standard definition of Bessel potential space ``H^s`` can be found in ([1], [2], [6], [11], [12]). Here the normal splines will be constructed in the Bessel potential space ``H^s_\varepsilon`` defined as:
+The standard definition of Bessel Potential space ``H^s`` can be found in ([1], [2], [6], [11], [12]). Here the normal splines will be constructed in the Bessel Potential space ``H^s_\varepsilon`` defined as:
 
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
@@ -51,7 +51,7 @@ Below is a definition of Hölder space ``C^t_b(R^n)`` [9]:
 ```
 Space ``C^{[t]}_b (R^n)`` consists of all functions having bounded continuous derivatives up to order ``[t]``. It is easy to see that ``C_b^t(R^n)`` is Banach space [9].
 
-Connection of Bessel potential spaces ``H^s(R^n)`` with the spaces ``C_b^t(R^n)`` is expressed in Embedding theorem ([9], [2]).
+Connection of Bessel Potential spaces ``H^s(R^n)`` with the spaces ``C_b^t(R^n)`` is expressed in Embedding theorem ([9], [2]).
 
 *Embedding Theorem:* If ``s = n/2+t``, where ``t`` non-integer, ``t \gt 0``, then space ``H^s(R^n)`` is continuously embedded in ``C_b^t(R^n)``.
 
