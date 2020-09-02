@@ -446,15 +446,15 @@ spline = interpolate(x, u, RK_H2())
 ```
 cause the following error: `PosDefException: matrix is not positive definite; Cholesky factorization failed.` What is a reason of the error and how to resolve it?
 
-A1. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too small and corresponding  Gram matrix of system of linear equations which defines the normal spline coefficients is very ill-conditioned and it lost its positive definiteness property because of floating-point rounding errors.  
+A1. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this parameter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too small and corresponding  Gram matrix of the system of linear equations which defines the normal spline coefficients is very ill-conditioned and it lost its positive definiteness property because of floating-point rounding errors.  
 
 There are two ways to fix it.
 
-- We can get the estimated value of the reproducing kernel object scaling parameter `ε` by calling function `get_epsilon`:
+- We can get the estimated value of the parameter `ε` by calling `get_epsilon` function:
 ```julia
 ε = get_epsilon(spline)
 ``` 
-then we call the `interpolate` function with a greater value of the parameter `ε`:
+then we can call the `interpolate` function with a greater value of this parameter:
 ```julia
 greater_ε = 10.0*ε
 spline = interpolate(x, u, RK_H2(greater_ε))
@@ -468,7 +468,7 @@ x = Double64.(x)
 u = Double64.(u)
 spline = interpolate(x, u, RK_H2())
 ```
-This answer also applies to reproducing kernel object of types `RK_H0` and `RK_H1`.
+This answer also applies to reproducing kernel object of type `RK_H0` or `RK_H1`.
 
 Q2. *Question*: The following calls
 
@@ -479,7 +479,7 @@ spline = interpolate(x, u, RK_H2())
 produce the output which is not quite satisfactoty.
 Is it possible to improve the quality of interpolation?
 
-A2. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a lesser `ε` value which would result in better quality of interpolation. 
+A2. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this parameter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a lesser value of `ε` which can lead to a better quality of interpolation. 
 - We can get the estimated value of `ε` by calling function `get_epsilon`:
 ```julia
 ε = get_epsilon(spline)
@@ -488,17 +488,17 @@ and get an estimation of the problem's Gram matrix condition number by calling `
 ```julia
 cond = get_cond(spline)
 ```
-In a case when estimated condition number is not very large, i.e. less than ``10^{12}`` using standard `Float64` floating-point arithmetic, we may attempt to build a better interpolation spline by calling `interpolate` function with lesser value of the scaling parameter:
+In a case when estimated condition number is not very large, i.e. it less than ``10^{12}`` with using standard `Float64` floating-point arithmetic, we may attempt to build a better interpolation spline by calling `interpolate` function with a lesser value of the scaling parameter:
 ```julia
 e_lesser = ε/5.0 
 spline = interpolate(x, u, RK_H3(e_lesser))
 σ = evaluate(spline, p)
 ```
-Also it is possible to make an assessment of interpolation quality by calling `assess_interpolation` function. It calculates the value of the Relative Maximum Absolute Error (RMAE) using data of the function value interpolation nodes
+Also it is possible to make an assessment of interpolation quality by calling `assess_interpolation` function. It calculates value of the Relative Maximum Absolute Error (RMAE) using data of the function value interpolation nodes
 ```julia
 rmae = assess_interpolation(spline)
 ```
-Taking into account the value of this error and the estimation of the Gram matrix condition number we can make decision of making further correction of the scaling parameter.
+Taking into account the value of this error and the estimation of the Gram matrix condition number we can decide of making further correction of the scaling parameter.
 
  For further information, see [Choice of the scaling parameter](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Parameter-Choice/).
 
