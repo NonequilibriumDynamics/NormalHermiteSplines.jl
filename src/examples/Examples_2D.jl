@@ -928,7 +928,8 @@ function usage1()
     end
 
     # Here spline is being constructed with RK_H1 kernel,
-    # the 'scaling parameter' ε is defined explicitly.
+    # the value of the 'scaling parameter' ε is estimated
+    # in the interpolate procedure.
     rk = RK_H1()
     #
     spline = interpolate(nodes, u, rk)
@@ -1025,7 +1026,8 @@ function usage2()
     end
 
     # Here spline is being constructed with RK_H1 kernel,
-    # the 'scaling parameter' ε is defined explicitly.
+    # the value of the 'scaling parameter' ε is estimated
+    # in the interpolate procedure.
     rk = RK_H1()
     #
     spline = interpolate(nodes, u, d_nodes, es, du, rk)

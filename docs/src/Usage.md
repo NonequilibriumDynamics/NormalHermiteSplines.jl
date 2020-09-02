@@ -351,7 +351,7 @@ Corresponding code example for case B:
     du = Vector{Float64}(undef, 2 * bn_1)
     k = 0
     for i = 1:bn_1
-        k += 1
+        global k += 1
         x = bnodes[1,i]
         y = bnodes[2,i]
         grad = [0.0; 0.0]
@@ -360,7 +360,7 @@ Corresponding code example for case B:
         du[k] = (10.0*y*cos(10.0*x*y) - 20.0*sin(10.0*x)*sin(10.0*y))/3.0
         es[1,k] = 1.0
         es[2,k] = 0.0
-        k += 1
+        global k += 1
         d_nodes[1,k] = x
         d_nodes[2,k] = y
         du[k] = (20.0*cos(10.0*x)*cos(10.0*y) + 10.0*x*cos(10.0*x*y))/3.0
@@ -384,7 +384,8 @@ Corresponding code example for case B:
 
     # Here spline is being constructed with RK_H1 kernel,
     # the value of the 'scaling parameter' ε is estimated
-    # in the interpolate procedure.rk = RK_H1()
+    # in the interpolate procedure.
+    rk = RK_H1()
     #
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
     cond = get_cond(spline)
