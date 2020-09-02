@@ -446,61 +446,64 @@ spline = interpolate(x, u, RK_H2())
 ```
 cause the following error: `PosDefException: matrix is not positive definite; Cholesky factorization failed.` What is a reason of the error and how to resolve it?
 
-A1. *Answer*: Creating a Bessel Potential kernel object with omitted parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too small and corresponding  Gram matrix of linear system of equations which defines the normal spline coefficients is very ill-conditioned and it lost its positive definiteness because of floating-point rounding errors.  
+A1. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too small and corresponding  Gram matrix of system of linear equations which defines the normal spline coefficients is very ill-conditioned and it lost its positive definiteness property because of floating-point rounding errors.  
 
-There are two ways to fix it.
+There are a few ways to fix it.
 
-- We can get the estimated value of `ε` by calling function `get_epsilon()`:
-
+- We can get the estimated value of the reproducing kernel object scaling parameter `ε` by calling function `get_epsilon`:
 ```julia
-ε = get_epsilon()
+ε = get_epsilon(spline)
+```
+then we could try to call the `interpolate` function with larger value of the parameter `ε`:
+```julia
+larger_ε = 10.0*ε
+spline = interpolate(x, u, RK_H2(larger_ε))
 ```
 
-then we could try to call the `interpolate` function with greater `ε` value of the reproducing kernel parameter:
-
+- We may estimate the value of the reproducing kernel object scaling parameter in advance, before the `interpolate` function call. It can be done by calling function `estimate_epsilon`:
 ```julia
-interpolate(x, u, RK_H3(10.0*ε))
+estimated_ε = estimate_epsilon(x)
+```
+Then we can call the `interpolate` function with explicitly provided value of the scaling parameter:
+```julia
+spline = interpolate(x, u, RK_H2(estimated_ε))
 ```
 
 - We may change the precision of floating point calculations. Namely it is possible to use Julia standard BigFloat numbers or Double64 - extended precision float type from the package [DoubleFloats](https://github.com/JuliaMath/DoubleFloats.jl):
-
 ```julia
 using DoubleFloats
 
 x = Double64.(x)
 u = Double64.(u)
-interpolate(x, u, RK_H3())
+spline = interpolate(x, u, RK_H2())
 ```
 
-This answer also applies to types `RK_H1()` and `RK_H2()`.
+This answer also applies to reproducing kernel object of types `RK_H0` and `RK_H1`.
 
 Q2. *Question*: The following calls
 
 ```julia
-interpolate(x, u, RK_H3())
-σ = evaluate(p)
+spline = interpolate(x, u, RK_H2())
+σ = evaluate(spline, p)
 ```
-
 produce the output which is not quite satisfactoty.
 Is it possible to improve the quality of interpolation?
 
-A2. *Answer*: Creating a Bessel Potential kernel object with omitted parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a smaller `ε` value which would result in better quality of interpolation. We can get the estimated value of `ε` by calling function `get_epsilon()`:
-
+A2. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a smaller `ε` value which would result in better quality of interpolation. 
+We can get the estimated value of `ε` by calling function `get_epsilon`:
 ```julia
 ε = get_epsilon()
 ```
-
-and get an estimation of the problem's Gram matrix condition number by calling `get_cond()` function:
-
+and get an estimation of the problem's Gram matrix condition number by calling `get_cond` function:
 ```julia
-cond = get_cond()
+cond = get_cond(spline)
 ```
-
-In a case when estimated condition number is not very large, i.e. less than ``10^{12}`` using standard `Float64` floating-point arithmetic, we may attempt to build a better interpolation spline by calls:
-
+In a case when estimated condition number is not very large, i.e. less than ``10^{12}`` using standard `Float64` floating-point arithmetic, we may attempt to build a better interpolation spline by calling `interpolate` function with smaller value of the scaling parameter::
 ```julia
-interpolate(x, u, RK_H3(ε/5))
+e_smaller = ε/5.0 
+interpolate(x, u, RK_H3(e_smaller))
 σ = evaluate(p)
 ```
+
 
 Another option is using a smaller value of the `ε` and perform calculations using extended precision floating-point arithmetic.

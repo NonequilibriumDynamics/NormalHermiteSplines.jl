@@ -48,7 +48,7 @@ Normal splines method is based on the following functional analysis results:
 
 Using these results it is possible to reduce the task (2) to solving a system of linear equations with symmetric positive definite Gram matrix.
 
-Detailed explanation is given in [Multivariate Normal Hermite Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Splines/)
+Detailed explanation is given in [Interpolating Normal Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Splines/)
 
 The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [1]. Multivariate generalization of the normal splines method was developed for two-dimensional problem of low-range computerized tomography in [2] and applied for solving a mathematical economics problem in [3]. Further results were reported at the seminars and conferences [4,5,6].
 
