@@ -22,7 +22,7 @@ export get_separation_distance, get_fill_distance
 
 export readme_3
 export demo
-export usage1
+export usage1, usage2
 
 include("Halton.jl")
 include("Grids.jl")

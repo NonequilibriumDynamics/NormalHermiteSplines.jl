@@ -906,6 +906,13 @@ function usage1()
         nodes[2, i] = rnd[2, i]
     end
 
+    u = Vector{Float64}(undef, m)     # function values at nodes
+    for i = 1:m
+        x = nodes[1,i]
+        y = nodes[2,i]
+        u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+    end
+
     # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
     t = 50
     x = collect(range(0.0, 1.0; step = 1.0/t))
@@ -920,14 +927,6 @@ function usage1()
         end
     end
 
-    n_1 = size(nodes, 2)
-    u = Vector{Float64}(undef, n_1)     # function values
-    for i = 1:n_1
-        x = nodes[1,i]
-        y = nodes[2,i]
-        u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
-    end
-
     # Here spline is being constructed with RK_H1 kernel,
     # the 'scaling parameter' ε is defined explicitly.
     rk = RK_H1()
@@ -939,6 +938,102 @@ function usage1()
     @printf "ε #: %0.1e\n" ε
 end
 
+function usage2()
+    function get_2D_border_nodes(m::Int)
+        mat0 = [0.0 0.0; 0.0 1.0; 1.0 0.0; 1.0 1.0]'
+        if m < 1
+            return mat0
+        end
+        m1 = m + 1
+        p = collect(range(1.0/m1, (1.0 - 1.0/m1); step = 1.0/m1))
+        ms = m * 4
+        mat = Matrix{Float64}(undef, 2, ms)
+        for i = 1:m
+            mat[1,i] = 0.0
+            mat[2,i] = p[i]
+        end
+        for i = (m+1):(2*m)
+            mat[1,i] = 1.0
+            mat[2,i] = p[i-m]
+        end
+        for i = (2*m+1):(3*m)
+            mat[1,i] = p[i-2*m]
+            mat[2,i] = 0.0
+        end
+        for i = (3*m+1):(4*m)
+            mat[1,i] = p[i-3*m]
+            mat[2,i] = 1.0
+        end
+        w = hcat(mat0, mat)
+        return w
+    end
+
+    # generating 200 uniform random nodes
+    m = 200
+    nodes = Matrix{Float64}(undef, 2, m)
+    rng = MersenneTwister(0);
+    rnd = rand(rng, Float64, (2, m))
+    rnd = rand(rng, Float64, (2, m))
+    for i = 1:m
+        nodes[1, i] = rnd[1, i]
+        nodes[2, i] = rnd[2, i]
+    end
+
+    u = Vector{Float64}(undef, m)     # function values at nodes
+    for i = 1:m
+        x = nodes[1,i]
+        y = nodes[2,i]
+        u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+    end
+
+    bnodes = get_2D_border_nodes(19)
+    bn_1 = size(bnodes, 2)
+    d_nodes = Matrix{Float64}(undef, 2, 2 * bn_1)
+    es = Matrix{Float64}(undef, 2, 2 * bn_1)
+    du = Vector{Float64}(undef, 2 * bn_1)
+    k = 0
+    for i = 1:bn_1
+        k += 1
+        x = bnodes[1,i]
+        y = bnodes[2,i]
+        grad = [0.0; 0.0]
+        d_nodes[1,k] = x
+        d_nodes[2,k] = y
+        du[k] = (10.0*y*cos(10.0*x*y) - 20.0*sin(10.0*x)*sin(10.0*y))/3.0
+        es[1,k] = 1.0
+        es[2,k] = 0.0
+        k += 1
+        d_nodes[1,k] = x
+        d_nodes[2,k] = y
+        du[k] = (20.0*cos(10.0*x)*cos(10.0*y) + 10.0*x*cos(10.0*x*y))/3.0
+        es[1,k] = 0.0
+        es[2,k] = 1.0
+    end
+
+    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
+    t = 50
+    x = collect(range(0.0, 1.0; step = 1.0/t))
+    y = collect(range(0.0, 1.0; step = 1.0/t))
+    t1 = t + 1
+    grid = Matrix{Float64}(undef, 2, t1^2)
+    for i = 1:t1
+        for j = 1:t1
+            r = (i - 1) * t1 + j
+            grid[1, r] = x[i]
+            grid[2, r] = y[j]
+        end
+    end
+
+    # Here spline is being constructed with RK_H1 kernel,
+    # the 'scaling parameter' ε is defined explicitly.
+    rk = RK_H1()
+    #
+    spline = interpolate(nodes, u, d_nodes, es, du, rk)
+    cond = get_cond(spline)
+    @printf "cond #: %0.1e\n" cond
+    ε = get_epsilon(spline)
+    @printf "ε #: %0.1e\n" ε
+end
 
 
 function big_sur()
