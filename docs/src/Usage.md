@@ -460,7 +460,7 @@ greater_ε = 10.0*ε
 spline = interpolate(x, u, RK_H2(greater_ε))
 ```
 
-- We may change the precision of floating point calculations. Namely it is possible to use Julia standard BigFloat numbers or Double64 - extended precision float type from the package [DoubleFloats](https://github.com/JuliaMath/DoubleFloats.jl):
+- We may change the precision of floating point calculations. Namely, it is possible to use Julia standard BigFloat numbers or Double64 - extended precision float type from the package [DoubleFloats](https://github.com/JuliaMath/DoubleFloats.jl):
 ```julia
 using DoubleFloats
 
@@ -480,7 +480,7 @@ produce the output which is not quite satisfactoty.
 Is it possible to improve the quality of interpolation?
 
 A2. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this parameter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a lesser value of `ε` which can lead to a better quality of interpolation. 
-- We can get the estimated value of `ε` by calling function `get_epsilon`:
+- We can get the estimated value of `ε` by calling `get_epsilon` function:
 ```julia
 ε = get_epsilon(spline)
 ```
@@ -494,7 +494,7 @@ e_lesser = ε/5.0
 spline = interpolate(x, u, RK_H3(e_lesser))
 σ = evaluate(spline, p)
 ```
-Also it is possible to make an assessment of interpolation quality by calling `assess_interpolation` function. It calculates value of the Relative Maximum Absolute Error (RMAE) using data of the function value interpolation nodes
+Also it is possible to make an assessment of interpolation quality by calling `assess_interpolation` function. It calculates value of the Relative Maximum Absolute Error (RMAE) using data of the function value interpolation nodes:
 ```julia
 rmae = assess_interpolation(spline)
 ```

@@ -70,9 +70,10 @@ Pages = [
       "Parameter-Choice.md",
       "Numerical-Tests.md",
       "Tests-with-real-data.md",
-      "Interpolating-Normal-Splines.md",
-      "Reproducing-Kernel-of-Bessel-Potential-space.md",
       "Riesz-representers.md",
+      "Reproducing-Kernel-of-Bessel-Potential-space.md",
+      "Interpolating-Normal-Splines.md",
+      "Simple-examples.md",
       "Relation-to-Polyharmonic-Splines.md",
       "Updating-Cholesky-Factorization.md"
 ]
