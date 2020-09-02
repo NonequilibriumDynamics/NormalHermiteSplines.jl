@@ -437,16 +437,13 @@ Norm of difference of function ``\phi`` and spline gradient values at the evalua
     diff_grad = sqrt(sum((f_grad .- σ_grad).^2))
 ```
 
-
-
 ## Q & A
 
 Q1. *Question*: The call
 
 ```julia
-interpolate(x, u, RK_H3())
+spline = interpolate(x, u, RK_H2())
 ```
-
 cause the following error: `PosDefException: matrix is not positive definite; Cholesky factorization failed.` What is a reason of the error and how to resolve it?
 
 A1. *Answer*: Creating a Bessel Potential kernel object with omitted parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too small and corresponding  Gram matrix of linear system of equations which defines the normal spline coefficients is very ill-conditioned and it lost its positive definiteness because of floating-point rounding errors.  
@@ -477,30 +474,7 @@ interpolate(x, u, RK_H3())
 
 This answer also applies to types `RK_H1()` and `RK_H2()`.
 
-Q2. *Question*: The call
-
-```julia
-interpolate(x, u, RK_W3())
-```
-
-cause the following error: `PosDefException: matrix is not positive definite; Cholesky factorization failed.` How to resolve it?
-
-A2. *Answer*: The reason of that exception is the Gram matrix of linear system of equations which defines the normal spline coefficients is very ill-conditioned and it lost its positive definiteness because of floating-point rounding errors.  
-
-The only way to fix it - is using floating-point arithmetic with extended precision. It can be provided by Julia standard BigFloat type or Double64 type from the package
-[DoubleFloats](https://github.com/JuliaMath/DoubleFloats.jl):
-
-```julia
-using DoubleFloats
-
-x = Double64.(x)
-u = Double64.(u)
-interpolate(x, u, RK_W3())
-```
-
-This answer also applies to types `RK_W1()` and `RK_W2()`.
-
-Q3. *Question*: The following calls
+Q2. *Question*: The following calls
 
 ```julia
 interpolate(x, u, RK_H3())
@@ -510,7 +484,7 @@ interpolate(x, u, RK_H3())
 produce the output which is not quite satisfactoty.
 Is it possible to improve the quality of interpolation?
 
-A3. *Answer*: Creating a Bessel Potential kernel object with omitted parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a smaller `ε` value which would result in better quality of interpolation. We can get the estimated value of `ε` by calling function `get_epsilon()`:
+A2. *Answer*: Creating a Bessel Potential kernel object with omitted parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a smaller `ε` value which would result in better quality of interpolation. We can get the estimated value of `ε` by calling function `get_epsilon()`:
 
 ```julia
 ε = get_epsilon()

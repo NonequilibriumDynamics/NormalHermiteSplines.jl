@@ -72,6 +72,7 @@ Pages = [
       "Tests-with-real-data.md",
       "Interpolating-Normal-Splines.md",
       "Reproducing-Kernel-of-Bessel-Potential-space.md",
+      "Riesz-representers.md",
       "Relation-to-Polyharmonic-Splines.md",
       "Updating-Cholesky-Factorization.md"
 ]

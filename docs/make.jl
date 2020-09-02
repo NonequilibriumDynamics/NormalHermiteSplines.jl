@@ -13,6 +13,7 @@ makedocs(
 				"Tests with real data" => "Tests-with-real-data.md",
 				"Interpolating Normal Splines" => "Interpolating-Normal-Splines.md",
 				"Reproducing Kernel of Bessel Potential space" => "Reproducing-Kernel-of-Bessel-Potential-space.md",
+				"The Riesz representation of functionals and a reproducing kernel Hilbert space" => "Riesz-representers.md",
 				"Relation to Polyharmonic Splines"  => "Relation-to-Polyharmonic-Splines.md",
 				"Updating Cholesky Factorization" => "Updating-Cholesky-Factorization.md",
 			]
