@@ -454,10 +454,10 @@ There are a few ways to fix it.
 ```julia
 ε = get_epsilon(spline)
 ```
-then we could try to call the `interpolate` function with larger value of the parameter `ε`:
+then we could try to call the `interpolate` function with greater value of the parameter `ε`:
 ```julia
-larger_ε = 10.0*ε
-spline = interpolate(x, u, RK_H2(larger_ε))
+greater_ε = 10.0*ε
+spline = interpolate(x, u, RK_H2(greater_ε))
 ```
 
 - We may estimate the value of the reproducing kernel object scaling parameter in advance, before the `interpolate` function call. It can be done by calling function `estimate_epsilon`:
@@ -489,7 +489,7 @@ spline = interpolate(x, u, RK_H2())
 produce the output which is not quite satisfactoty.
 Is it possible to improve the quality of interpolation?
 
-A2. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a smaller `ε` value which would result in better quality of interpolation. 
+A2. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this paramter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a lesser `ε` value which would result in better quality of interpolation. 
 We can get the estimated value of `ε` by calling function `get_epsilon`:
 ```julia
 ε = get_epsilon()
@@ -498,12 +498,12 @@ and get an estimation of the problem's Gram matrix condition number by calling `
 ```julia
 cond = get_cond(spline)
 ```
-In a case when estimated condition number is not very large, i.e. less than ``10^{12}`` using standard `Float64` floating-point arithmetic, we may attempt to build a better interpolation spline by calling `interpolate` function with smaller value of the scaling parameter::
+In a case when estimated condition number is not very large, i.e. less than ``10^{12}`` using standard `Float64` floating-point arithmetic, we may attempt to build a better interpolation spline by calling `interpolate` function with lesser value of the scaling parameter:
 ```julia
-e_smaller = ε/5.0 
-interpolate(x, u, RK_H3(e_smaller))
+e_lesser = ε/5.0 
+interpolate(x, u, RK_H3(e_lesser))
 σ = evaluate(p)
 ```
 
 
-Another option is using a smaller value of the `ε` and perform calculations using extended precision floating-point arithmetic.
+Another option is using a lesser value of the `ε` and perform calculations using extended precision floating-point arithmetic.
