@@ -21,6 +21,75 @@ function _estimate_ε(nodes::Matrix{T},
     return _estimate_ε([nodes 0.1 .* d_nodes])
 end
 
+function _estimate_epsilon(nodes::Matrix{T}) where T <: AbstractFloat
+    n = size(nodes, 1)
+    n_1 = size(nodes, 2)
+    min_bound = Vector{T}(undef, n)
+    compression::T = 0
+    @inbounds for i = 1:n
+        min_bound[i] = nodes[i,1]
+        maxx::T = nodes[i,1]
+        for j = 2:n_1
+            min_bound[i] = min(min_bound[i], nodes[i,j])
+            maxx = max(maxx, nodes[i,j])
+        end
+        compression = max(compression, maxx - min_bound[i])
+    end
+
+    if compression <= eps(T(1.0))
+        error("Cannot prepare the spline: `nodes` data are not correct.")
+    end
+
+    t_nodes = similar(nodes)
+    @inbounds for i = 1:n
+        for j = 1:n_1
+            t_nodes[i,j] = (nodes[i,j] - min_bound[i]) / compression
+        end
+    end
+    ε = _estimate_ε(t_nodes)
+    return ε
+end
+
+function _estimate_epsilon(nodes::Matrix{T}, d_nodes::Matrix{T}) where T <: AbstractFloat
+    n = size(nodes, 1)
+    n_1 = size(nodes, 2)
+    n_2 = size(d_nodes, 2)
+
+    min_bound = Vector{T}(undef, n)
+    compression::T = 0
+    @inbounds for i = 1:n
+        min_bound[i] = nodes[i,1]
+        maxx::T = nodes[i,1]
+        for j = 2:n_1
+            min_bound[i] = min(min_bound[i], nodes[i,j])
+            maxx = max(maxx, nodes[i,j])
+        end
+        for j = 1:n_2
+            min_bound[i] = min(min_bound[i], d_nodes[i,j])
+            maxx = max(maxx, d_nodes[i,j])
+        end
+        compression = max(compression, maxx - min_bound[i])
+    end
+
+    if compression <= eps(T(1.0))
+        error("Cannot prepare the spline: `nodes` data are not correct.")
+    end
+
+    t_nodes = similar(nodes)
+    t_d_nodes = similar(d_nodes)
+    @inbounds for i = 1:n
+        for j = 1:n_1
+            t_nodes[i,j] = (nodes[i,j] - min_bound[i]) / compression
+        end
+        for j = 1:n_2
+            t_d_nodes[i,j] = (d_nodes[i,j] - min_bound[i]) / compression
+        end
+    end
+
+    ε = _estimate_ε(t_nodes, t_d_nodes)
+    return ε
+end
+
 function _prepare(nodes::Matrix{T},
                   kernel::RK
                  ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
@@ -471,4 +540,42 @@ function _get_cond(gram::Matrix{T},
     end
     cond = T(10.0)^floor(log10(mat_norm * gamma));
     return cond
+end
+
+# Return the Root Mean Square Error (RMSE) of interpolation
+@inline function get_RMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    return norm(f .- σ) / sqrt(length(f))
+end
+
+# Return the Maximum Absolute Error (MAE) of interpolation
+@inline function get_MAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    return maximum(abs.(f .- σ))
+end
+
+# Return the Relative Root Mean Square Error (RRMSE) of interpolation
+@inline function get_RRMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    n = length(f)
+    del = similar(f)
+    @inbounds for i = 1:n
+        if f[i] <= T(1.0)
+            del[i] = f[i] - σ[i]
+        else
+            del[i] = (f[i] - σ[i]) / f[i]
+        end
+    end
+    return norm(del) / sqrt(n)
+end
+
+# Return the Relative Maximum Absolute Error (RMAE) of interpolation
+@inline function get_RMAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    n = length(f)
+    del = similar(f)
+    @inbounds for i =1:n
+        if f[i] <= T(1.0)
+            del[i] = abs(f[i] - σ[i])
+        else
+            del[i] = abs(f[i] - σ[i]) / abs(f[i])
+        end
+    end
+    return maximum(del)
 end

@@ -4,7 +4,8 @@ module NormalHermiteSplines
 export prepare, construct, interpolate
 export evaluate, evaluate_one, evaluate_gradient
 export NormalSpline, RK_H0, RK_H1, RK_H2
-export get_epsilon, estimate_epsilon, get_cond, assess_interpolation
+export get_epsilon, estimate_epsilon, get_cond
+export assess_interpolation
 # -- 1D case --
 export evaluate_derivative
 # --
@@ -295,7 +296,7 @@ end
 `estimate_epsilon(nodes::Matrix{T}) where T <: AbstractFloat`
 
 Get the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function if all `nodes` are located in a unit hypercube.
+It should have the same order as result returned by `get_epsilon` function..
 # Arguments
 - `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
@@ -306,7 +307,7 @@ Return: estimation of `ε`.
 """
 function estimate_epsilon(nodes::Matrix{T}
                          ) where T <: AbstractFloat
-    ε = _estimate_ε(nodes)
+    ε = _estimate_epsilon(nodes)
     return ε
 end
 
@@ -314,7 +315,7 @@ end
 `estimate_epsilon(nodes::Matrix{T}, d_nodes::Matrix{T}) where T <: AbstractFloat`
 
 Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function if all `nodes` and `d_nodes` are located in a unit hypercube.
+It should have the same order as result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
@@ -329,7 +330,7 @@ Return: estimation of `ε`.
 function estimate_epsilon(nodes::Matrix{T},
                           d_nodes::Matrix{T}
                          ) where T <: AbstractFloat
-    ε = _estimate_ε(nodes, d_nodes)
+    ε = _estimate_epsilon(nodes, d_nodes)
     return ε
 end
 
@@ -348,48 +349,10 @@ function get_cond(spline::NormalSpline{T, RK}
     return spline._cond
 end
 
-# Return the Root Mean Square Error (RMSE) of interpolation
-@inline function get_RMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
-    return norm(f .- σ) / sqrt(length(f))
-end
-
-# Return the Maximum Absolute Error (MAE) of interpolation
-@inline function get_MAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
-    return maximum(abs.(f .- σ))
-end
-
-# Return the Relative Root Mean Square Error (RRMSE) of interpolation
-@inline function get_RRMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
-    n = length(f)
-    del = similar(f)
-    @inbounds for i = 1:n
-        if f[i] <= T(1.0)
-            del[i] = f[i] - σ[i]
-        else
-            del[i] = (f[i] - σ[i]) / f[i]
-        end
-    end
-    return norm(del) / sqrt(n)
-end
-
-# Return the Relative Maximum Absolute Error (RMAE) of interpolation
-@inline function get_RMAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
-    n = length(f)
-    del = similar(f)
-    @inbounds for i =1:n
-        if f[i] <= T(1.0)
-            del[i] = abs(f[i] - σ[i])
-        else
-            del[i] = abs(f[i] - σ[i]) / abs(f[i])
-        end
-    end
-    return maximum(del)
-end
-
 """
 `assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Assess the interpolation result by calculating value of the Relative Maximum Absolute Error (RMAE)
+Assess the interpolation result by calculating value of the maximum of relative residual error
 using data of the function value interpolation nodes.
 # Arguments
 - `spline`: the `NormalSpline` object returned by `construct` or `interpolate` function.
@@ -566,7 +529,7 @@ end
 `estimate_epsilon(nodes::Vector{T}) where T <: AbstractFloat`
 
 Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function if all `nodes` are located in a unit hypercube.
+It should have the same order as result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
 
@@ -574,7 +537,7 @@ Return: estimation of `ε`.
 """
 function estimate_epsilon(nodes::Vector{T}
                          ) where T <: AbstractFloat
-    ε = _estimate_ε(Matrix(nodes'))
+    ε = _estimate_epsilon(Matrix(nodes'))
     return ε
 end
 
@@ -582,7 +545,7 @@ end
 `estimate_epsilon(nodes::Vector{T}, d_nodes::Vector{T}) where T <: AbstractFloat`
 
 Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function if all `nodes` and `d_nodes` are located in a unit hypercube.
+It should have the same order as result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
 - `d_nodes`: The function derivative nodes.
@@ -592,7 +555,7 @@ Return: estimation of `ε`.
 function estimate_epsilon(nodes::Vector{T},
                           d_nodes::Vector{T}
                          ) where T <: AbstractFloat
-    ε = _estimate_ε(Matrix(nodes'), Matrix(d_nodes'))
+    ε = _estimate_epsilon(Matrix(nodes'), Matrix(d_nodes'))
     return ε
 end
 

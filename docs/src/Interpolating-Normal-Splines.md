@@ -282,7 +282,8 @@ i = 1, 2, \dots, n_1 \, , \ \ l = 1, 2, \dots, n_1 \, .
 
 When value of the parameter $\varepsilon$ is small this normal spline is similar to multivariate generalization of the one dimensional linear spline.
 
-We now consider the choice of value for parameterd $\varepsilon$. In a case when value of this parameter is small the normal spline is similar to Duchon's $D^m -$spline [12]. Approximating properties of the normal spline are getting better with smaller values of $\varepsilon$, however with decreasing value of $\varepsilon$ the condition number of the corresponding Gram matrix is increasing. Therefore, when choosing the value of parameter $\varepsilon$, a compromise is needed. In practice, it is necessary to choose such value of the $\varepsilon$ that condition number of Gram matrix is small enough. Numerical procedures of the matrix condition number estimation are well known.
+We now consider the choice of value for parameter $\varepsilon$. Approximating properties of the normal spline are getting better with smaller value of $\varepsilon$,
+and if the value of this parameter is small enough the normal spline become similar to Duchon's $D^m -$spline [12]. However with decreasing value of $\varepsilon$ the condition number of the corresponding problem Gram matrix is increasing and the problem becomes numerically unstable. Therefore, when choosing the value of parameter $\varepsilon$, a compromise is needed. In practice, it is necessary to choose such value of the $\varepsilon$ that condition number of Gram matrix is small enough. Numerical procedures of the matrix condition number estimation are well known.
 
 As well, it is useful to preprocess the source data of the problem by transforming the domain where interpolation nodes are located into the unit hypercube.
 
@@ -310,15 +311,15 @@ The normal splines method for one-dimensional function interpolation and linear 
 
 [10] V. Gorbunov, V. Petrishchev, Improvement of the normal spline collocation method for linear differential equations, Comput. Math. Math. Phys., Vol. 43, No. 8, 2003.
 
-[11] V. Gorbunov, I. Kohanovsky, K. Makedonsky, Normal splines in reconstruction of multi-dimensional dependencies. [Papers of WSEAS International Conference on Applied Mathematics, Numerical Analysis Symposium, Corfu, 2004.](http://www.wseas.us/e-library/conferences/corfu2004/papers/488-312.pdf)
+[11] V. Gorbunov, I. Kohanovsky, K. Makedonsky, Normal splines in reconstruction of multi-dimensional dependencies. [Papers of WSEAS International Conference on Applied Mathematics, Numerical Analysis Symposium, Corfu, 2004](http://www.wseas.us/e-library/conferences/corfu2004/papers/488-312.pdf)
 
-[12] J. Duchon, Splines minimizing rotation-invariant semi-norms in Sobolev spaces, Lect. Notes in Math., Vol. 571, Springer, Berlin, 1977
+[12] J. Duchon, Splines minimizing rotation-invariant semi-norms in Sobolev spaces, Lect. Notes in Math., Springer, Berlin, Vol. 571, 1977.
 
 [13] A. Ioffe, V. Tikhomirov, Theory of extremal problems, North-Holland, Amsterdam, 1979.
 
 [14] I. Kohanovsky, Multidimensional Normal Splines and Problem of Physical Field Approximation, International Conference on Fourier Analysis and its Applications, Kuwait, 1998.
 
-[15] I. Kohanovsky, Normal Splines in Computing Tomography, [Avtometriya, 1995, N 2.](https://www.iae.nsk.su/images/stories/5_Autometria/5_Archives/1995/2/84-89.pdf)
+[15] I. Kohanovsky, Normal Splines in Computing Tomography, [Avtometriya, No.2, 1995](https://www.iae.nsk.su/images/stories/5_Autometria/5_Archives/1995/2/84-89.pdf)
 
 [16] P.-J. Laurent, Approximation et optimization, Paris, 1972.
 
@@ -328,9 +329,9 @@ The normal splines method for one-dimensional function interpolation and linear 
 
 [19] H. Wendland, Scattered Data Approximation. Cambridge University Press, 2005.
 
-[20] [Reproducing Kernel of Bessel Potential space.](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Reproducing-Kernel-of-Bessel-Potential-space)
+[20] [Reproducing Kernel of Bessel Potential space](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Reproducing-Kernel-of-Bessel-Potential-space).
 
-[21] V. Gorbunov, I. Kohanovsky, Heterogeneous Parallel Method for the Construction of Multi-dimensional Smoothing Splines. [ESCO 2014 4th European Seminar on Computing, 2014.](https://www.ana.iusiani.ulpgc.es/proyecto2015-2017/pdfnew/ESCO2014_Book_of_Abstracts.pdf)
+[21] V. Gorbunov, I. Kohanovsky, Heterogeneous Parallel Method for the Construction of Multi-dimensional Smoothing Splines. [ESCO 2014 4th European Seminar on Computing, 2014](https://www.ana.iusiani.ulpgc.es/proyecto2015-2017/pdfnew/ESCO2014_Book_of_Abstracts.pdf)
 
 [22] I. Kohanovsky, Inequality-Constrained Multivariate Normal Splines with Some Applications in Finance. [27th GAMM-Seminar Leipzig on Approximation of Multiparametric functions, 2011](https://www.ana.iusiani.ulpgc.es/proyecto2015-2017/pdfnew/ESCO2014_Book_of_Abstracts.pdf)
 
