@@ -1,6 +1,7 @@
 using Printf
 using PyPlot
 using Random
+using DoubleFloats
 
 function test_2D(model_id::Int,
                  use_grad::Bool,
@@ -895,7 +896,8 @@ function readme_2()
     return σ
 end
 
-function usage1()
+function usage1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
+
     # generating 200 uniform random nodes
     m = 200
     nodes = Matrix{Float64}(undef, 2, m)
@@ -930,7 +932,14 @@ function usage1()
     # Here spline is being constructed with RK_H1 kernel,
     # the value of the 'scaling parameter' ε is estimated
     # in the interpolate procedure.
-    rk = RK_H1()
+    if eps == 0.0
+        rk = RK_H1()
+    else
+        if use_extended_precision
+            eps = DoubleFloat(eps)
+        end
+        rk = RK_H1(eps)
+    end
     #
     spline = interpolate(nodes, u, rk)
     cond = get_cond(spline)

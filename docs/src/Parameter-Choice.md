@@ -33,7 +33,9 @@ sampled on set of 200 pseudo-random nodes uniformly distributed on unit square `
     spline = interpolate(nodes, u, rk)
     σ = evaluate(spline, grid)
 ```
-Let's get values of scaling parameter, estimation of the Gram matrix condition number and assessed value of the interpolation quality (value of the maximum of relative residual error calculated
+(the complete code example is here: [Example usage](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Usage/#D-interpolation-case-2/))
+
+Let's get values of scaling parameter, estimation of the Gram matrix condition number (algorithm is taken from [3]) and assessed value of the interpolation quality (value of the maximum of relative residual error calculated
 using data of the function value interpolation nodes).
 ```
     ε = get_epsilon(spline)
