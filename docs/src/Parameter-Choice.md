@@ -1,11 +1,13 @@
 # Choice of the scaling parameter
 
-Approximating properties of the normal spline are getting better with the smaller value of the scaling parameter $\varepsilon$, and if the value of this parameter is small enough then normal spline become similar to Duchon's $D^m -$spline [1]. See also
+Approximating properties of the normal spline are getting better with the smaller value of the scaling parameter $\varepsilon$ (this parameter also is known as the "shape" parameter in RBF literature), and if the value of this parameter is small enough then normal spline become similar to Duchon's $D^m -$spline [1]. See also
 [Relation to Polyharmonic Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Relation-to-Polyharmonic-Splines/).
 
-However with decreasing value of the parameter $\varepsilon$ the condition number of the corresponding problem Gram matrix is increasing and the problem becomes numerically unstable. The Gram matrix of the interpolating problem can lost its positive deiniteness property if $\varepsilon$ is small. Therefore, when choosing the value of the $\varepsilon$, a compromise is needed. In practice, it is necessary to choose such value of the $\varepsilon$ that condition number of Gram matrix is small enough. 
+However with decreasing value of the parameter $\varepsilon$ the condition number of the corresponding problem Gram matrix is increasing and the problem becomes numerically unstable. The Gram matrix of the interpolating problem can lost its positive deiniteness property if $\varepsilon$ is small. Also, it was pointed out [2] that RBF interpolation with small value of the scaling (shape) parameter $\varepsilon$ may cause the Runge's phenomenon, but very small values of $\varepsilon$ have never been used here and Runge-type oscillations have not been observed. 
 
-The following API functions could be useful for selecting a suitable value of the scaling parameter:
+Therefore, when choosing the value of the $\varepsilon$, a compromise is needed. In practice, it is necessary to choose such value of the scaling parameter that condition number of the problem Gram matrix is small enough. 
+
+The following API functions could be useful for selecting a suitable value of the scaling parameter $\varepsilon$:
 
 - ```assess_interpolation```
 - ```get_cond```
@@ -31,13 +33,22 @@ sampled on set of 200 pseudo-random nodes uniformly distributed on unit square `
     spline = interpolate(nodes, u, rk)
     σ = evaluate(spline, grid)
 ```
+Let's get values of scaling parameter, estimation of the Gram matrix condition number and assessed value of the interpolation quality (value of the maximum of relative residual error calculated
+using data of the function value interpolation nodes).
+```
+    ε = get_epsilon(spline)
+```
 
 ```
     cond = get_cond(spline)
 ```
 
 
-
 **References**
 
 [1] J. Duchon, Splines minimizing rotation-invariant semi-norms in Sobolev spaces, Lect. Notes in Math., Springer, Berlin, Vol. 571, 1977.
+
+[2] B. Fornberg, J. Zuev, The Runge phenomenon and spatially variable shape parameters in RBF interpolation,
+Comput. Math. Appl., Vol.54, No.3, 2007.
+
+[3] C. Brás, W. Hager, J. Júdice, An investigation of feasible descent algorithms for estimating the condition number of a matrix. TOP 20, 2012.
