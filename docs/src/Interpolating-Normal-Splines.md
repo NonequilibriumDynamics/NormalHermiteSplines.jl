@@ -170,7 +170,7 @@ Further
 \end{aligned}
 ```
 
-Here normal hermite splines will be constructed in Bessel Potential spaces ``H^{s_1}_\varepsilon (R^n) , \, s_1 = n/2 + 3/2`` and ``H^{s_2}_\varepsilon (R^n) , \, s_2 = n/2 + 5/2``. Elements of space ``H^{s_1}`` can be treated as  continuously differentiable functions and elements of space ``H^{s_2}`` can be treated as twice continuously differentiable functions. Note, the spline is infinitely differentiable everywhere in ``R^n`` excepting the knots ``p_i`` and ``s_j``.
+Here normal hermite splines will be constructed in Bessel Potential spaces ``H^{s_1}_\varepsilon (R^n) , \, s_1 = n/2 + 3/2`` and ``H^{s_2}_\varepsilon (R^n) , \, s_2 = n/2 + 5/2``. Elements of space ``H^{s_1}`` can be treated as  continuously differentiable functions and elements of space ``H^{s_2}`` can be treated as twice continuously differentiable functions. Note, the spline is infinitely differentiable everywhere in ``R^n`` excepting the nodes ``p_i`` and ``s_j``.
 
 Reproducing kernel of Bessel Potential space was presented in [5] and its simplified form was given in [14], [18], [19], [20]. For space ``H^{s}_\varepsilon (R^n), \, s = n/2 + 1/2 + r, \, r \ge 0`` it can be written as:
 
@@ -284,7 +284,7 @@ When value of the parameter $\varepsilon$ is small this normal spline is similar
 
 We now consider the choice of value for parameterd $\varepsilon$. In a case when value of this parameter is small the normal spline is similar to Duchon's $D^m -$spline [12]. Approximating properties of the normal spline are getting better with smaller values of $\varepsilon$, however with decreasing value of $\varepsilon$ the condition number of the corresponding Gram matrix is increasing. Therefore, when choosing the value of parameter $\varepsilon$, a compromise is needed. In practice, it is necessary to choose such value of the $\varepsilon$ that condition number of Gram matrix is small enough. Numerical procedures of the matrix condition number estimation are well known.
 
-As well, it is useful to preprocess the source data of the problem by transforming the domain where interpolation knots are located into the unit hypercube.
+As well, it is useful to preprocess the source data of the problem by transforming the domain where interpolation nodes are located into the unit hypercube.
 
 The normal splines method for one-dimensional function interpolation and linear ordinary differential and integral equations was proposed in [8] and [9] and developed in [10]. Multivariate generalization of the normal splines method was developed for two-dimensional problem of low-range computerized tomography in [15] and applied for solving a mathematical economics problem in [11]. Further results were reported on seminars and conferences [14,21,22].
 

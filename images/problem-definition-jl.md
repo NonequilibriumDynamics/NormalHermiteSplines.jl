@@ -14,7 +14,7 @@ This Julia package implements the normal splines method for solving following in
 ``` 
 where ``\frac{ \partial{f} }{ \partial{e_j} }(s_j) = \nabla f(s_j) \cdot e_j = \sum _{k=1}^{n}  \frac{ \partial{f} }{ \partial{x_k} } (s_j) e_{jk}`` is a directional derivative of ``f`` at the point ``s_j`` in the direction of ``e_j``.
 
-We assume that function ``f`` is an element of the Bessel potential space ``H^s_\varepsilon (R^n)`` which is defined as:
+We assume that function ``f`` is an element of the Bessel Potential space ``H^s_\varepsilon (R^n)`` which is defined as:
 
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
@@ -23,7 +23,7 @@ We assume that function ``f`` is an element of the Bessel potential space ``H^s_
 ```
 where ``| \cdot |`` is the Euclidean norm, ``S'  (R^n)`` is space of L. Schwartz tempered distributions, parameter ``s`` may be treated as a fractional differentiation order and ``\mathcal F [\varphi ]`` is a Fourier transform of the ``\varphi``. The parameter ``\varepsilon`` can be considered as a "scaling parameter", it allows to control approximation properties of the normal spline which usually are getting better with smaller values of ``\varepsilon``, also it can be used to reduce the ill-conditioness of the related computational problem (in traditional theory ``\varepsilon = 1``).
 
-The Bessel potential space ``H^s_\varepsilon (R^n)`` is a Hilbert space, an element ``f`` from that space can be treated as a ``r``-times continuously differentiable function.
+The Bessel Potential space ``H^s_\varepsilon (R^n)`` is a Hilbert space, an element ``f`` from that space can be treated as a ``r``-times continuously differentiable function.
 
 The normal splines method consists in finding a solution of system (1) having minimal norm in Hilbert space ``H^s_\varepsilon (R^n)``, thus the interpolation normal spline ``\sigma`` is defined as follows:
 
@@ -34,7 +34,7 @@ The normal splines method consists in finding a solution of system (1) having mi
 
 Normal splines method is based on the following functional analysis results:
 
-* Bessel potential space embedding theorem
+* Bessel Potential space embedding theorem
 * The Riesz representation theorem for Hilbert spaces
 * Reproducing kernel properties 
 
