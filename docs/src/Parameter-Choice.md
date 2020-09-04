@@ -12,13 +12,29 @@ The following API functions could be useful for selecting a suitable value of th
 - ```get_epsilon```
 - ```estimate_epsilon```  
 
-Let's consider an example with interpolating a test function 
+Let's consider an example with interpolation of function 
 
 ```math
 \phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)
 ```
- sampled on set of 200 pseudo-random nodes uniformly distributed on unit square ``\Omega = [0,1]^2``.
+sampled on set of 200 pseudo-random nodes uniformly distributed on unit square ``\Omega = [0,1]^2``.
 
+```
+    using NormalHermiteSplines
+    ....
+    ....
+    # Here spline is being constructed with RK_H1 kernel,
+    # the value of the 'scaling parameter' ε is estimated
+    # in the interpolate procedure.
+    rk = RK_H1()
+    #
+    spline = interpolate(nodes, u, rk)
+    σ = evaluate(spline, grid)
+```
+
+```
+    cond = get_cond(spline)
+```
 
 
 
