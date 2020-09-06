@@ -157,6 +157,45 @@ Evaluate the spline derivatives at the same points:
     dσ
 ```
 
+Now let's interpolate function ``f(x)`` by a spline built with reproducing kernel RK_H0:
+```@example C
+    using NormalHermiteSplines
+
+    x = collect(1.0:1.0:20)       # function nodes
+    u = x.*0.0                    # function values in nodes
+    for i in 6:10
+        u[i] = 1.0
+    end
+    for i in 11:14
+        u[i] = -0.2 * i + 3.0
+    end
+
+    # Build a differentiable spline by values of function in nodes
+    # (a spline built with RK_H0 kernel is a continuous function).
+    # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
+    spline = interpolate(x, u, RK_H0())
+    
+    # An estimation of the Gram matrix condition number
+    cond = get_cond(spline)
+```
+
+```@example C
+    # A value of the 'scaling parameter' of Bessel Potential space
+    # the normal spline was built in.
+    ε = get_epsilon(spline)
+```
+
+```@example C
+    p = collect(1.0:0.2:20)        # evaluation points
+    σ = evaluate(spline, p)
+    σ = nothing                    # hide
+```
+
+![Example 1A](images/1d-usage/example-1c.svg)
+
+
+
+
 ## 2D interpolation case
 
 Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)`` defined on unit square ``\Omega = [0,1]^2``.

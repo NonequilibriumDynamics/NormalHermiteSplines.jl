@@ -59,9 +59,10 @@ function demo(type_of_kernel::Int = 1)
           Guide.manual_color_key("Legend", ["Points", "True", "Spline"], ["orange", "red", "blue"]),
           Guide.xlabel("nodes, points"), Guide.ylabel("f, σ"),
           Guide.title("Fig.1a"))
-    Gadfly.draw(SVG("c:/0/example-1a.svg", 13cm, 13cm), plt)
 
     if type_of_kernel != 0
+        Gadfly.draw(SVG("c:/0/example-1a.svg", 13cm, 13cm), plt)
+
         dσ = similar(σ)
         for i=1:length(p)
             dσ[i] = evaluate_derivative(spline, p[i])
@@ -73,6 +74,8 @@ function demo(type_of_kernel::Int = 1)
               Guide.xlabel("nodes, points"), Guide.ylabel(raw"σ'"),
               Guide.title("Fig.2a"))
         Gadfly.draw(SVG("c:/0/example-1a-der.svg", 13cm, 13cm), plt)
+    else
+        Gadfly.draw(SVG("c:/0/example-1c.svg", 13cm, 13cm), plt)
     end
 
     σ = evaluate(spline, [3.1, 8.1, 18.1])
