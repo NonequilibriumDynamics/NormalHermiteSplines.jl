@@ -5,7 +5,7 @@
        1 \, , &amp;  6 \le x \le 10 \\
        -x/5 + 3 \, , &amp;  6 \le x \le 15 \\
        0 \, , &amp;  15 \le x \le 20 
-    \end{cases}\]</div><p>by values of the function in nodes <span>$\{1, 2, 3, ..., 20\}$</span> (case A) and by values of the function and values of its first derivatives in the same nodes (case B).</p><p>A)</p><pre><code class="language-julia">    using NormalHermiteSplines
+    \end{cases}\]</div><p>by values of the function in nodes <span>$\{1, 2, 3, ..., 20\}$</span> (case A) and by values of the function and values of its first derivatives in the same nodes (case B). Firstly we&#39;ll build a spline using the reproducing kernel RK_H1():</p><p>A)</p><pre><code class="language-julia">    using NormalHermiteSplines
 
     x = collect(1.0:1.0:20)       # function nodes
     u = x.*0.0                    # function values in nodes
@@ -37,7 +37,7 @@
  0.005233851099164077 
  1.0029716012507652   
  0.5803978696510903   
- 0.0001617014038890474</code></pre><p>Evaluate the spline derivatives at the same points:</p><pre><code class="language-julia">    dσ = similar(p)
+ 0.0001617014038890474</code></pre><p>Evaluate the spline derivatives at the same evaluation points:</p><pre><code class="language-julia">    dσ = similar(p)
     for i=1:length(p)
         dσ[i] = evaluate_derivative(spline, p[i])
     end
@@ -76,7 +76,10 @@
     # Here value of the &#39;scaling parameter&#39; ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, s, v, RK_H1())
 
-    p = collect(1.0:0.2:20)      # evaluation points
+    # An estimation of the Gram matrix condition number
+    cond = get_cond(spline)</code></pre><pre><code class="language-none">1.0e7</code></pre><pre><code class="language-julia">    # A value of the &#39;scaling parameter&#39; of Bessel Potential space
+    # the normal spline was built in.
+    ε = get_epsilon(spline)</code></pre><pre><code class="language-none">1.1092343969889604</code></pre><pre><code class="language-julia">    p = collect(1.0:0.2:20)      # evaluation points
     σ = evaluate(spline, p)</code></pre><p><img src="../images/1d-usage/example-1b.svg" alt="Example 1B"/></p><pre><code class="language-julia">    dσ = similar(p)
     for i=1:length(p)
         dσ[i] = evaluate_derivative(spline, p[i])
@@ -85,7 +88,7 @@
  -3.481659405224491e-12 
   0.9999999960782304    
   0.5799999979738288    
- -2.2737367544323206e-12</code></pre><p>Evaluate the spline derivatives at the same points:</p><pre><code class="language-julia">    dσ = similar(p)
+ -2.2737367544323206e-12</code></pre><p>Evaluate the spline derivatives at the same evaluation points:</p><pre><code class="language-julia">    dσ = similar(p)
     for i=1:length(p)
         dσ[i] = evaluate_derivative(spline, p[i])
     end
@@ -93,7 +96,7 @@
   7.000715796541619e-13
  -6.969127609504778e-8 
  -0.20000003580349512  
- -1.234100541057016e-13</code></pre><p>Now let&#39;s interpolate function <span>$f(x)$</span> by a spline built with reproducing kernel RK_H0:</p><pre><code class="language-julia">    using NormalHermiteSplines
+ -1.234100541057016e-13</code></pre><p>C) </p><p>Now let&#39;s interpolate function <span>$f(x)$</span> using a spline built with reproducing kernel RK_H0:</p><pre><code class="language-julia">    using NormalHermiteSplines
 
     x = collect(1.0:1.0:20)       # function nodes
     u = x.*0.0                    # function values in nodes
@@ -104,16 +107,17 @@
         u[i] = -0.2 * i + 3.0
     end
 
-    # Build a differentiable spline by values of function in nodes
-    # (a spline built with RK_H0 kernel is a continuous function).
+    # Build a continuous spline by values of function in nodes
     # Here value of the &#39;scaling parameter&#39; ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, RK_H0())
 
     # An estimation of the Gram matrix condition number
     cond = get_cond(spline)</code></pre><pre><code class="language-none">10000.0</code></pre><pre><code class="language-julia">    # A value of the &#39;scaling parameter&#39; of Bessel Potential space
     # the normal spline was built in.
+    ε = get_epsilon(spline)</code></pre><pre><code class="language-none">0.47502308290410894</code></pre><pre><code class="language-julia">    # A value of the &#39;scaling parameter&#39; of Bessel Potential space
+    # the normal spline was built in.
     ε = get_epsilon(spline)</code></pre><pre><code class="language-none">0.47502308290410894</code></pre><pre><code class="language-julia">    p = collect(1.0:0.2:20)        # evaluation points
-    σ = evaluate(spline, p)</code></pre><p><img src="../images/1d-usage/example-1c.svg" alt="Example 1A"/></p><h2 id="D-interpolation-case-2"><a class="docs-heading-anchor" href="#D-interpolation-case-2">2D interpolation case</a><a class="docs-heading-anchor-permalink" href="#D-interpolation-case-2" title="Permalink"></a></h2><p>Let&#39;s interpolate function <span>$\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)$</span> defined on unit square <span>$\Omega = [0,1]^2$</span>.</p><img src="../images/2d-usage/m-cf-32.png" width="256"/><img src="../images/2d-usage/m-t-32.png" width="256"/><img src="../images/2d-usage/m-grid-32,3.png" width="197"/><p>We built a spline using function <span>$\phi$</span> values sampled on set of 200 pseudo-random nodes uniformly distributed on <span>$\Omega$</span> (case A).</p><p>Spline plot                                                                        Approximation error plots</p><img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/><img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/><img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/><p>and </p><p>using function <span>$\phi$</span> values sampled on set of 200 pseudo-random nodes uniformly distributed on <span>$\Omega$</span> and 80 function <span>$\phi$</span> gradient values defined at nodes located on the border of domain <span>$\Omega$</span> (case B):</p><img src="../images/2d-usage/m-grid-33,3.png" width="197"/> <p>here red dots represent the function <span>$\phi$</span> gradient value nodes. </p><p>Spline plot                                                                         Approximation error plots</p><img src="../images/2d-usage/s-cf-33,33,3,1,0.0,-.png" width="256"/><img src="../images/2d-usage/delta-cf-33,33,3,1,0.0,-.png" width="256"/><img src="../images/2d-usage/delta-s-33,33,3,1,0.0,-.png" width="256"/><p>Following is the code example for case A:</p><pre><code class="language-julia">    using Random
+    σ = evaluate(spline, p)</code></pre><p><img src="../images/1d-usage/example-1c.svg" alt="Example 1C"/></p><h2 id="D-interpolation-case-2"><a class="docs-heading-anchor" href="#D-interpolation-case-2">2D interpolation case</a><a class="docs-heading-anchor-permalink" href="#D-interpolation-case-2" title="Permalink"></a></h2><p>Let&#39;s interpolate function <span>$\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)$</span> defined on unit square <span>$\Omega = [0,1]^2$</span>.</p><img src="../images/2d-usage/m-cf-32.png" width="256"/><img src="../images/2d-usage/m-t-32.png" width="256"/><img src="../images/2d-usage/m-grid-32,3.png" width="197"/><p>We built a spline using function <span>$\phi$</span> values sampled on set of 200 pseudo-random nodes uniformly distributed on <span>$\Omega$</span> (case A).</p><p>Spline plot                                                                        Approximation error plots</p><img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/><img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/><img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/><p>and </p><p>using function <span>$\phi$</span> values sampled on set of 200 pseudo-random nodes uniformly distributed on <span>$\Omega$</span> and 80 function <span>$\phi$</span> gradient values defined at nodes located on the border of domain <span>$\Omega$</span> (case B):</p><img src="../images/2d-usage/m-grid-33,3.png" width="197"/> <p>here red dots represent the function <span>$\phi$</span> gradient value nodes. </p><p>Spline plot                                                                         Approximation error plots</p><img src="../images/2d-usage/s-cf-33,33,3,1,0.0,-.png" width="256"/><img src="../images/2d-usage/delta-cf-33,33,3,1,0.0,-.png" width="256"/><img src="../images/2d-usage/delta-s-33,33,3,1,0.0,-.png" width="256"/><p>Following is the code example for case A:</p><pre><code class="language-julia">    using Random
     using NormalHermiteSplines
 
     # generating 200 uniform random nodes
@@ -279,4 +283,4 @@ u = Double64.(u)
 spline = interpolate(x, u, RK_H2())</code></pre><p>This answer also applies to reproducing kernel object of type <code>RK_H0</code> or <code>RK_H1</code>.</p><p>Q2. <em>Question</em>: The following calls</p><pre><code class="language-julia">spline = interpolate(x, u, RK_H2())
 σ = evaluate(spline, p)</code></pre><p>produce the output which is not quite satisfactoty. Is it possible to improve the quality of interpolation?</p><p>A2. <em>Answer</em>: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter <code>ε</code> means that this parameter will be estimated during interpolating procedure execution. It might happen that estimated value of the <code>ε</code> is too large and it is possible to use a lesser value of <code>ε</code> which can lead to a better quality of interpolation. </p><ul><li>We can get the estimated value of <code>ε</code> by calling <code>get_epsilon</code> function:</li></ul><pre><code class="language-julia">ε = get_epsilon(spline)</code></pre><p>and get an estimation of the problem&#39;s Gram matrix condition number by calling <code>get_cond</code> function:</p><pre><code class="language-julia">cond = get_cond(spline)</code></pre><p>In a case when estimated condition number is not very large, i.e. it less than <span>$10^{12}$</span> with using standard <code>Float64</code> floating-point arithmetic, we may attempt to build a better interpolation spline by calling <code>interpolate</code> function with a lesser value of the scaling parameter:</p><pre><code class="language-julia">e_lesser = ε/5.0 
 spline = interpolate(x, u, RK_H3(e_lesser))
-σ = evaluate(spline, p)</code></pre><p>Also it is possible to make an assessment of interpolation quality by calling <code>assess_interpolation</code> function. It calculates value of the Relative Maximum Absolute Error (RMAE) using data of the function value interpolation nodes:</p><pre><code class="language-julia">rmae = assess_interpolation(spline)</code></pre><p>Taking into account the value of this error and the estimation of the Gram matrix condition number we can decide of making further correction of the scaling parameter.</p><p>For further information, see <a href="https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Parameter-Choice/">Choice of the scaling parameter</a>.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Public-API/">« Public API</a><a class="docs-footer-nextpage" href="../Parameter-Choice/">Choice of the scaling parameter »</a></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Sunday 6 September 2020 11:50">Sunday 6 September 2020</span>. Using Julia version 1.3.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+σ = evaluate(spline, p)</code></pre><p>Also it is possible to make an assessment of interpolation quality by calling <code>assess_interpolation</code> function. It calculates value of the Relative Maximum Absolute Error (RMAE) using data of the function value interpolation nodes:</p><pre><code class="language-julia">rmae = assess_interpolation(spline)</code></pre><p>Taking into account the value of this error and the estimation of the Gram matrix condition number we can decide of making further correction of the scaling parameter.</p><p>For further information, see <a href="https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Parameter-Choice/">Choice of the scaling parameter</a>.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Public-API/">« Public API</a><a class="docs-footer-nextpage" href="../Parameter-Choice/">Choice of the scaling parameter »</a></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Sunday 6 September 2020 13:19">Sunday 6 September 2020</span>. Using Julia version 1.3.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
