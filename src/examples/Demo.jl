@@ -52,15 +52,15 @@ function demo(type_of_kernel::Int = 1)
     println("rmse = $rmse")
 
     set_default_plot_size(13cm, 13cm)
-    plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
-          layer(x = p, y = r, Geom.line, Theme(default_color=colorant"red")),
-          layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
-          Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-          Guide.manual_color_key("Legend", ["Points", "True", "Spline"], ["orange", "red", "blue"]),
-          Guide.xlabel("nodes, points"), Guide.ylabel("f, σ"),
-          Guide.title("Fig.1a"))
 
     if type_of_kernel != 0
+        plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
+              layer(x = p, y = r, Geom.line, Theme(default_color=colorant"red")),
+              layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
+              Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
+              Guide.manual_color_key("Legend", ["Points", "True", "Spline"], ["orange", "red", "blue"]),
+              Guide.xlabel("nodes, points"), Guide.ylabel("f, σ"),
+              Guide.title("Fig.1a"))
         Gadfly.draw(SVG("c:/0/example-1a.svg", 13cm, 13cm), plt)
 
         dσ = similar(σ)
@@ -75,6 +75,13 @@ function demo(type_of_kernel::Int = 1)
               Guide.title("Fig.2a"))
         Gadfly.draw(SVG("c:/0/example-1a-der.svg", 13cm, 13cm), plt)
     else
+        plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
+              layer(x = p, y = r, Geom.line, Theme(default_color=colorant"red")),
+              layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
+              Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
+              Guide.manual_color_key("Legend", ["Points", "True", "Spline"], ["orange", "red", "blue"]),
+              Guide.xlabel("nodes, points"), Guide.ylabel("f, σ"),
+              Guide.title("Fig.1c"))
         Gadfly.draw(SVG("c:/0/example-1c.svg", 13cm, 13cm), plt)
     end
 

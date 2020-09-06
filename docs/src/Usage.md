@@ -13,7 +13,7 @@ f(x) =
        0 \, , &  15 \le x \le 20 
     \end{cases}
 ```
-by values of the function in nodes ``\{1, 2, 3, ..., 20\}`` (case A) and by values of the function and values of its first derivatives in the same nodes (case B).
+by values of the function in nodes ``\{1, 2, 3, ..., 20\}`` (case A) and by values of the function and values of its first derivatives in the same nodes (case B). Firstly we'll build a spline using the reproducing kernel RK_H1():
 
 ```@meta
 DocTestSetup = quote
@@ -79,7 +79,7 @@ Evaluate the spline at some points:
     σ = evaluate(spline, p)
 ```
 
-Evaluate the spline derivatives at the same points:
+Evaluate the spline derivatives at the same evaluation points:
 
 ```@example A
     dσ = similar(p)
@@ -125,9 +125,20 @@ B)
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, s, v, RK_H1())
 
+    # An estimation of the Gram matrix condition number
+    cond = get_cond(spline)
+```
+
+```@example B
+    # A value of the 'scaling parameter' of Bessel Potential space
+    # the normal spline was built in.
+    ε = get_epsilon(spline)
+```
+
+```@example B
     p = collect(1.0:0.2:20)      # evaluation points
     σ = evaluate(spline, p)
-    σ = nothing                    # hide
+    σ = nothing                  # hide
 ```
 
 ![Example 1B](images/1d-usage/example-1b.svg)
@@ -147,7 +158,7 @@ Evaluate the spline at some points:
     σ = evaluate(spline, p)
 ```
 
-Evaluate the spline derivatives at the same points:
+Evaluate the spline derivatives at the same evaluation points:
 
 ```@example B
     dσ = similar(p)
@@ -157,7 +168,9 @@ Evaluate the spline derivatives at the same points:
     dσ
 ```
 
-Now let's interpolate function ``f(x)`` by a spline built with reproducing kernel RK_H0:
+C) 
+
+Now let's interpolate function ``f(x)`` using a spline built with reproducing kernel RK_H0:
 ```@example C
     using NormalHermiteSplines
 
@@ -170,8 +183,7 @@ Now let's interpolate function ``f(x)`` by a spline built with reproducing kerne
         u[i] = -0.2 * i + 3.0
     end
 
-    # Build a differentiable spline by values of function in nodes
-    # (a spline built with RK_H0 kernel is a continuous function).
+    # Build a continuous spline by values of function in nodes
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, RK_H0())
     
@@ -186,12 +198,18 @@ Now let's interpolate function ``f(x)`` by a spline built with reproducing kerne
 ```
 
 ```@example C
+    # A value of the 'scaling parameter' of Bessel Potential space
+    # the normal spline was built in.
+    ε = get_epsilon(spline)
+```
+
+```@example C
     p = collect(1.0:0.2:20)        # evaluation points
     σ = evaluate(spline, p)
     σ = nothing                    # hide
 ```
 
-![Example 1A](images/1d-usage/example-1c.svg)
+![Example 1C](images/1d-usage/example-1c.svg)
 
 
 
