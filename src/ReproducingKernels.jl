@@ -139,7 +139,8 @@ end
                           ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
    value::T = T(0.0)
    defined::Bool  = false
-   x = kernel.ε * norm(η .- ξ)
+   normt = norm(η .- ξ)
+   x = kernel.ε * normt
    if isa(kernel, RK_H2)
       defined = true
       value = kernel.ε^2 * exp(-x) * (T(1.0) + x) * (ξ[k] - η[k])
@@ -147,6 +148,13 @@ end
    if isa(kernel, RK_H1)
       defined = true
       value = kernel.ε^2 * exp(-x) * (ξ[k] - η[k])
+   end
+   if isa(kernel, RK_H0)
+      if normt < sqrt(eps(T))
+         Throw(ArgumentError("Derivative does not exist at this point."))
+      end
+      defined = true
+      value = kernel.ε * exp(-x) * (ξ[k] - η[k]) / normt
    end
    if !defined
       Throw(ArgumentError("`kernel`: Incorrect parameter type."))

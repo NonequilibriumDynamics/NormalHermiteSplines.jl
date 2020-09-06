@@ -3,9 +3,12 @@
 Approximating properties of the normal spline are getting better with the smaller value of the scaling parameter $\varepsilon$ (this parameter also is known as the "shape" parameter in RBF literature), and if the value of this parameter is small enough then normal spline become similar to Duchon's $D^m -$spline [1]. See also
 [Relation to Polyharmonic Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Relation-to-Polyharmonic-Splines/).
 
-However with decreasing value of the parameter $\varepsilon$ the condition number of the corresponding problem Gram matrix is increasing and the problem becomes numerically unstable. The Gram matrix of the interpolating problem can lost its positive deiniteness property if $\varepsilon$ is small. Also, it was pointed out [2] that RBF interpolation with small value of the scaling (shape) parameter $\varepsilon$ may cause the Runge's phenomenon, but very small values of $\varepsilon$ have never been used here and Runge-type oscillations have not been observed. 
+However with decreasing value of the parameter $\varepsilon$ the condition number of the corresponding problem Gram matrix is increasing and the problem becomes numerically unstable. The Gram matrix of the interpolating problem even can lost its positive deiniteness property if $\varepsilon$ is small.
 
-Therefore, when choosing the value of the $\varepsilon$, a compromise is needed. In practice, it is necessary to choose such value of the scaling parameter that condition number of the problem Gram matrix is small enough. 
+## TODO - rewrite it! 
+ Also, it was pointed out [2] that RBF interpolation with small value of the scaling (shape) parameter $\varepsilon$ may cause the Runge's phenomenon, but very small values of $\varepsilon$ have never been used here and Runge-type oscillations have not been observed. 
+
+Therefore, when choosing the value of the $\varepsilon$, a compromise is needed. In practice, it is necessary to choose such value of the scaling parameter that condition number of the problem Gram matrix is a small enough number. As a rule, the heuristic algorithm implemented within the interpolation procedure produces a good estimation of the scaling parameter value (this algorithm applies if the value of the scaling parameter was not provided explicitly in creation of the reproducing kernel object.)
 
 The following API functions could be useful for selecting a suitable value of the scaling parameter $\varepsilon$:
 

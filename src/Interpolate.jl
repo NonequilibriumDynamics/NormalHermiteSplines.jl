@@ -327,7 +327,15 @@ function _assess_interpolation(spline::NormalSpline{T, RK}) where {T <: Abstract
         end
     end
     σ = evaluate(spline, nodes)
-    return get_RMAE(σ, spline._values)
+    # calculating a value of the Relative Root Mean Square Error (RRMSE) of interpolation
+    # at the function value interpolation nodes.
+    rrmse = norm(spline._values .- σ) / (sqrt(length(spline._values)) * maximum(abs.(spline._values)))
+    rrmse = rrmse > eps(T) ? rrmse : eps(T)
+    res = -floor(log10(rrmse))
+    if res <= 0
+        res = 0
+    end
+    return trunc(Int, res)
 end
 
 function _evaluate(spline::NormalSpline{T, RK},
@@ -450,9 +458,6 @@ end
 function _evaluate_gradient(spline::NormalSpline{T, RK},
                             point::Vector{T}
                            ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    if isa(spline._kernel, RK_H0)
-       error("Cannot calculate gradient of spline built with `RK_H0` kernel")
-    end
     if isnothing(spline._mu)
         error("Spline coefficients were not calculated.")
     end
@@ -540,42 +545,4 @@ function _get_cond(gram::Matrix{T},
     end
     cond = T(10.0)^floor(log10(mat_norm * gamma));
     return cond
-end
-
-# Return the Root Mean Square Error (RMSE) of interpolation
-@inline function get_RMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
-    return norm(f .- σ) / sqrt(length(f))
-end
-
-# Return the Maximum Absolute Error (MAE) of interpolation
-@inline function get_MAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
-    return maximum(abs.(f .- σ))
-end
-
-# Return the Relative Root Mean Square Error (RRMSE) of interpolation
-@inline function get_RRMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
-    n = length(f)
-    del = similar(f)
-    @inbounds for i = 1:n
-        if f[i] <= T(1.0)
-            del[i] = f[i] - σ[i]
-        else
-            del[i] = (f[i] - σ[i]) / f[i]
-        end
-    end
-    return norm(del) / sqrt(n)
-end
-
-# Return the Relative Maximum Absolute Error (RMAE) of interpolation
-@inline function get_RMAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
-    n = length(f)
-    del = similar(f)
-    @inbounds for i =1:n
-        if f[i] <= T(1.0)
-            del[i] = abs(f[i] - σ[i])
-        else
-            del[i] = abs(f[i] - σ[i]) / abs(f[i])
-        end
-    end
-    return maximum(del)
 end

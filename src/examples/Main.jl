@@ -24,6 +24,54 @@ export readme_3
 export demo
 export usage1, usage2
 
+# Return the Root Mean Square Error (RMSE) of interpolation
+@inline function get_RMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    return norm(f .- σ) / sqrt(length(f))
+end
+
+# Return the Maximum Absolute Error (MAE) of interpolation
+@inline function get_MAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    return maximum(abs.(f .- σ))
+end
+
+# Return the Relative Root Mean Square Error (RRMSE) of interpolation
+@inline function get_RRMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    return norm(f .- σ) / (sqrt(length(f)) * maximum(abs.(f)))
+end
+
+# Return the Relative Maximum Absolute Error (RMAE) of interpolation
+@inline function get_RMAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+    return maximum(abs.(f .- σ)) / maximum(abs.(f))
+end
+
+# # Return the Relative Root Mean Square Error (RRMSE) of interpolation
+# @inline function get_RRMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+#     n = length(f)
+#     del = similar(f)
+#     @inbounds for i = 1:n
+#         if f[i] <= T(1.0)
+#             del[i] = f[i] - σ[i]
+#         else
+#             del[i] = (f[i] - σ[i]) / f[i]
+#         end
+#     end
+#     return norm(del) / sqrt(n)
+# end
+#
+# # Return the Relative Maximum Absolute Error (RMAE) of interpolation
+# @inline function get_RMAE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
+#     n = length(f)
+#     del = similar(f)
+#     @inbounds for i =1:n
+#         if f[i] <= T(1.0)
+#             del[i] = abs(f[i] - σ[i])
+#         else
+#             del[i] = abs(f[i] - σ[i]) / abs(f[i])
+#         end
+#     end
+#     return maximum(del)
+# end
+
 include("Halton.jl")
 include("Grids.jl")
 include("Models.jl")

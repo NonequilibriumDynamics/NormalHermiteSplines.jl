@@ -102,7 +102,7 @@
         @test all(isapprox.(σ, u, atol = 1e-5))
 
         q = assess_interpolation(s)
-        @test q < 1e-5
+        @test q ≈ 15
     end
 
     @testset "Test 2D-RK_H2 kernel" begin
@@ -156,7 +156,7 @@
         @test !isapprox(σ1[1], u[5], atol = 0.1)
 
         q = assess_interpolation(s)
-        @test q > 1.0
+        @test q == 0
 
 # Same tests with extended precision
         rk = RK_H2(Double64(eps))
@@ -173,7 +173,7 @@
         @test all(isapprox.(σ, u, atol = 1e-5))
 
         q = assess_interpolation(s)
-        @test q < 1e-5
+        @test q ≈ 16
     end
 end
 

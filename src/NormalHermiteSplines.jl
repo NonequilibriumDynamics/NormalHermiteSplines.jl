@@ -352,12 +352,12 @@ end
 """
 `assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Assess the interpolation result by calculating value of the maximum of relative residual error
-using data of the function value interpolation nodes.
+Assess the interpolation result by calculating an estimation of the number of significant digits in the
+interpolation result.
 # Arguments
 - `spline`: the `NormalSpline` object returned by `construct` or `interpolate` function.
 
-Return: RMSE of interpolation at function value nodes.
+Return: an estimation of the number of significant digits in the interpolation result.
 """
 function assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     return _assess_interpolation(spline)

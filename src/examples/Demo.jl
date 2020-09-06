@@ -2,7 +2,7 @@ export demo
 
 using Gadfly
 
-function demo()
+function demo(type_of_kernel::Int = 1)
 # Setup
     x = collect(1.0:1.0:20)
     u = x.*0.0
@@ -33,7 +33,13 @@ function demo()
         end
     end
 ####
-    spline = prepare(x, RK_H1())
+    rk = RK_H1()
+    if type_of_kernel == 0
+        rk = RK_H0()
+    elseif type_of_kernel == 2
+        rk = RK_H2()
+    end
+    spline = prepare(x, rk)
     cond = get_cond(spline)
     ε = get_epsilon(spline)
     println("cond = $cond, ε = $ε")
@@ -55,17 +61,19 @@ function demo()
           Guide.title("Fig.1a"))
     Gadfly.draw(SVG("c:/0/example-1a.svg", 13cm, 13cm), plt)
 
-    dσ = similar(σ)
-    for i=1:length(p)
-        dσ[i] = evaluate_derivative(spline, p[i])
+    if type_of_kernel != 0
+        dσ = similar(σ)
+        for i=1:length(p)
+            dσ[i] = evaluate_derivative(spline, p[i])
+        end
+        plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
+              layer(x = p, y = dσ, Geom.line, Theme(default_color=colorant"green")),
+              Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
+              Guide.manual_color_key("Legend", ["Points", "Spline 1st derivative"], ["orange", "green"]),
+              Guide.xlabel("nodes, points"), Guide.ylabel(raw"σ'"),
+              Guide.title("Fig.2a"))
+        Gadfly.draw(SVG("c:/0/example-1a-der.svg", 13cm, 13cm), plt)
     end
-    plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
-          layer(x = p, y = dσ, Geom.line, Theme(default_color=colorant"green")),
-          Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-          Guide.manual_color_key("Legend", ["Points", "Spline 1st derivative"], ["orange", "green"]),
-          Guide.xlabel("nodes, points"), Guide.ylabel(raw"σ'"),
-          Guide.title("Fig.2a"))
-    Gadfly.draw(SVG("c:/0/example-1a-der.svg", 13cm, 13cm), plt)
 
     σ = evaluate(spline, [3.1, 8.1, 18.1])
 
