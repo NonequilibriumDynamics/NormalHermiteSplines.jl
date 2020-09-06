@@ -58,8 +58,8 @@ function demo(type_of_kernel::Int = 1)
               layer(x = p, y = r, Geom.line, Theme(default_color=colorant"red")),
               layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
               Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-              Guide.manual_color_key("Legend", ["Points", "True", "Spline"], ["orange", "red", "blue"]),
-              Guide.xlabel("nodes, points"), Guide.ylabel("f, σ"),
+              Guide.manual_color_key("Legend", ["Nodes", "True", "Spline"], ["orange", "red", "blue"]),
+              Guide.xlabel("Nodes"), Guide.ylabel("f, σ"),
               Guide.title("Fig.1a"))
         Gadfly.draw(SVG("c:/0/example-1a.svg", 13cm, 13cm), plt)
 
@@ -70,8 +70,8 @@ function demo(type_of_kernel::Int = 1)
         plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
               layer(x = p, y = dσ, Geom.line, Theme(default_color=colorant"green")),
               Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-              Guide.manual_color_key("Legend", ["Points", "Spline 1st derivative"], ["orange", "green"]),
-              Guide.xlabel("nodes, points"), Guide.ylabel(raw"σ'"),
+              Guide.manual_color_key("Legend", ["Nodes", "Spline 1st derivative"], ["orange", "green"]),
+              Guide.xlabel("Nodes"), Guide.ylabel(raw"σ'"),
               Guide.title("Fig.2a"))
         Gadfly.draw(SVG("c:/0/example-1a-der.svg", 13cm, 13cm), plt)
     else
@@ -79,8 +79,8 @@ function demo(type_of_kernel::Int = 1)
               layer(x = p, y = r, Geom.line, Theme(default_color=colorant"red")),
               layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
               Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-              Guide.manual_color_key("Legend", ["Points", "True", "Spline"], ["orange", "red", "blue"]),
-              Guide.xlabel("nodes, points"), Guide.ylabel("f, σ"),
+              Guide.manual_color_key("Legend", ["Nodes", "True", "Spline"], ["orange", "red", "blue"]),
+              Guide.xlabel("Nodes"), Guide.ylabel("f, σ"),
               Guide.title("Fig.1c"))
         Gadfly.draw(SVG("c:/0/example-1c.svg", 13cm, 13cm), plt)
     end
@@ -110,8 +110,8 @@ function demo(type_of_kernel::Int = 1)
             layer(x = p, y = r, Geom.line, Theme(default_color=colorant"red")),
             layer(x = p, y = σ, Geom.line, Theme(default_color=colorant"blue")),
             Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-            Guide.manual_color_key("Legend", ["Points", "True", "Spline"], ["orange", "red", "blue"]),
-            Guide.xlabel("nodes, points"), Guide.ylabel("f, σ"),
+            Guide.manual_color_key("Legend", ["Nodes", "True", "Spline"], ["orange", "red", "blue"]),
+            Guide.xlabel("Nodes"), Guide.ylabel("f, σ"),
             Guide.title("Fig.1b"))
       Gadfly.draw(SVG("c:/0/example-1b.svg", 13cm, 13cm), plt)
 
@@ -122,8 +122,8 @@ function demo(type_of_kernel::Int = 1)
       plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
             layer(x = p, y = dσ, Geom.line, Theme(default_color=colorant"green")),
             Scale.y_continuous(minvalue=-0.5, maxvalue=1.5),
-            Guide.manual_color_key("Legend", ["Points", "Spline 1st derivative"], ["orange", "green"]),
-            Guide.xlabel("nodes, points"), Guide.ylabel(raw"σ'"),
+            Guide.manual_color_key("Legend", ["Nodes", "Spline 1st derivative"], ["orange", "green"]),
+            Guide.xlabel("Nodes"), Guide.ylabel(raw"σ'"),
             Guide.title("Fig.2b"))
       Gadfly.draw(SVG("c:/0/example-1b-der.svg", 13cm, 13cm), plt)
 

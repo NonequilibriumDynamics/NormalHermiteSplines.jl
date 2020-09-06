@@ -198,12 +198,6 @@ Now let's interpolate function ``f(x)`` using a spline built with reproducing ke
 ```
 
 ```@example C
-    # A value of the 'scaling parameter' of Bessel Potential space
-    # the normal spline was built in.
-    ε = get_epsilon(spline)
-```
-
-```@example C
     p = collect(1.0:0.2:20)        # evaluation points
     σ = evaluate(spline, p)
     σ = nothing                    # hide
