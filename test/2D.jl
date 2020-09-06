@@ -101,7 +101,7 @@
         σ = evaluate(s, p)
         @test all(isapprox.(σ, u, atol = 1e-5))
 
-        q = assess_interpolation(s)
+        q = estimate_accuracy(s)
         @test q ≈ 15
     end
 
@@ -155,7 +155,7 @@
         σ1 = evaluate_one(s, p[:,5])
         @test !isapprox(σ1[1], u[5], atol = 0.1)
 
-        q = assess_interpolation(s)
+        q = estimate_accuracy(s)
         @test q == 0
 
 # Same tests with extended precision
@@ -172,7 +172,7 @@
         σ = evaluate(s, p)
         @test all(isapprox.(σ, u, atol = 1e-5))
 
-        q = assess_interpolation(s)
+        q = estimate_accuracy(s)
         @test q ≈ 16
     end
 end

@@ -103,7 +103,7 @@ function test_1D(model_id::Int,
     ε = get_epsilon(spline)
     @printf "EPSILON:%0.1e   COND: %0.1e \n" ε cond
 
-    iq = assess_interpolation(spline)
+    iq = estimate_accuracy(spline)
     @printf "interpolation quality: %0.1e\n" iq
 
     @printf "Evaluating spline..\n"

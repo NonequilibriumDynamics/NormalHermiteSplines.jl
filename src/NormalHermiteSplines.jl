@@ -5,7 +5,7 @@ export prepare, construct, interpolate
 export evaluate, evaluate_one, evaluate_gradient
 export NormalSpline, RK_H0, RK_H1, RK_H2
 export get_epsilon, estimate_epsilon, get_cond
-export assess_interpolation
+export estimate_accuracy
 # -- 1D case --
 export evaluate_derivative
 # --
@@ -350,17 +350,17 @@ function get_cond(spline::NormalSpline{T, RK}
 end
 
 """
-`assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
+`estimate_accuracy(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Assess the interpolation result by calculating an estimation of the number of significant digits in the
+Estimate accuracy of interpolation by calculating an estimation of the number of significant digits in the
 interpolation result.
 # Arguments
 - `spline`: the `NormalSpline` object returned by `construct` or `interpolate` function.
 
 Return: an estimation of the number of significant digits in the interpolation result.
 """
-function assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    return _assess_interpolation(spline)
+function estimate_accuracy(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    return _estimate_accuracy(spline)
 end
 
 ############################## One-dimensional case

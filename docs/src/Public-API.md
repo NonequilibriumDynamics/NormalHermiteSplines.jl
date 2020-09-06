@@ -11,7 +11,7 @@
 |```evaluate_one```                   |Evaluate the spline value at the required location                                                  |
 |```evaluate_gradient```              |Evaluate gradient of the spline at the required location.                                           |
 |```evaluate_derivative```            |Evaluate the 1D spline derivative at the required location.                                         |
-|```assess_interpolation```           |Assess interpolation result.                                                                        |
+|```estimate_accuracy```              |Estimate accuracy of interpolation result.                                                          |
 |```get_cond```                       |Get an estimation of the Gram matrix condition number.                                              |
 |```get_epsilon```                    |Get the 'scaling parameter' of Bessel Potential space the normal spline was built in.               |
 |```estimate_epsilon```               |Get an estimation of the 'scaling parameter' of Bessel Potential space the spline being built in.   |
@@ -25,7 +25,7 @@ evaluate
 evaluate_one
 evaluate_gradient
 evaluate_derivative
-assess_interpolation
+verify_interpolation
 get_cond
 get_epsilon
 estimate_epsilon

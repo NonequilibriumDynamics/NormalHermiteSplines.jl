@@ -317,7 +317,7 @@ function _construct(spline::NormalSpline{T, RK},
     return spline
 end
 
-function _assess_interpolation(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+function _estimate_accuracy(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     n = size(spline._nodes, 1)
     m = size(spline._nodes, 2)
     nodes = similar(spline._nodes)
