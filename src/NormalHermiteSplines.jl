@@ -177,11 +177,13 @@ Evaluate gradient of the spline at the location defined in `point`.
 - `point`: location at which gradient value is evaluating.
            This should be a vector of size `n`, where `n` is dimension of the sampled space.
 
+Note: Gradient of spline built with reproducing kernel RK_H0 does not exist at the spline nodes.
+
 Return: `Vector{T}` - gradient of the spline at the location defined in `point`.
 """
 function evaluate_gradient(spline::NormalSpline{T, RK},
                            point::Vector{T}
-                          ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
+                          ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     return _evaluate_gradient(spline, point)
 end
 
@@ -461,11 +463,13 @@ Evaluate the 1D spline derivative at the `point` location.
 - `spline`: the `NormalSpline` object returned by `interpolate` or `construct` function.
 - `point`: location at which spline derivative is evaluating.
 
+Note: Derivative of spline built with reproducing kernel RK_H0 does not exist at the spline nodes.
+
 Return: the spline derivative value at the `point` location.
 """
 function evaluate_derivative(spline::NormalSpline{T, RK},
                              point::T
-                            ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
+                            ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     v_points = Vector{T}(undef, 1)
     v_points[1] = point
     return _evaluate_gradient(spline, v_points)[1]

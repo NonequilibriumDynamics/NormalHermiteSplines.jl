@@ -48,9 +48,14 @@ A)
 ```
 
 ```@example A
-    # A value of the 'scaling parameter' of Bessel Potential space
-    # the normal spline was built in.
-    ε = get_epsilon(spline)
+    # Construct the spline for given 'u' values
+    spline = construct(spline, u)
+```
+
+```@example A
+    # An estimation of the interpolation accuracy -
+    # number of significant digits in the function value interpolation result.
+    valid_digits = estimate_accuracy(spline)
 ```
 
 ```@example A
@@ -130,6 +135,12 @@ B)
 ```
 
 ```@example B
+    # An estimation of the interpolation accuracy -
+    # number of significant digits in the function value interpolation result.
+    valid_digits = estimate_accuracy(spline)
+```
+
+```@example B
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
@@ -192,6 +203,12 @@ Now let's interpolate function ``f(x)`` using a spline built with reproducing ke
 ```
 
 ```@example C
+    # An estimation of the interpolation accuracy -
+    # number of significant digits in the function value interpolation result.
+    valid_digits = estimate_accuracy(spline)
+```
+
+```@example C
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
@@ -205,8 +222,23 @@ Now let's interpolate function ``f(x)`` using a spline built with reproducing ke
 
 ![Example 1C](images/1d-usage/example-1c.svg)
 
+Evaluate the spline at some points:
 
+```@example C
+    p = [3.1, 8.1, 12.1, 18.1]
+    σ = evaluate(spline, p)
+```
 
+This spline is an infinitely differentiable function everywhere excepting the spline nodes. Its derivative does not exist at spline nodes but we can differentiate the spline at other points.
+Let's evaluate the spline derivatives at the same evaluation points (which does not coincide with the spline nodes):
+
+```@example C
+    dσ = similar(p)
+    for i=1:length(p)
+        dσ[i] = evaluate_derivative(spline, p[i])
+    end
+    dσ
+```
 
 ## 2D interpolation case
 
@@ -296,13 +328,18 @@ Following is the code example for case A:
 ```
 
 ```@example 2A
+    # An estimation of the interpolation accuracy -
+    # number of significant digits in the function value interpolation result.
+    valid_digits = estimate_accuracy(spline)
+```
+
+```@example 2A
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
 ```
 
 ```@example 2A
-
     σ = evaluate(spline, grid)
     σ = nothing
 ```
@@ -442,13 +479,18 @@ Corresponding code example for case B:
 ```
 
 ```@example 2B
+    # An estimation of the interpolation accuracy -
+    # number of significant digits in the function value interpolation result.
+    valid_digits = estimate_accuracy(spline)
+```
+
+```@example 2B
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
 ```
 
 ```@example 2B
-
     σ = evaluate(spline, grid)
     σ = nothing
 ```

@@ -136,7 +136,8 @@ end
                            η::Vector{T},
                            ξ::Vector{T},
                            k::Int
-                          ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
+                          ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+#  Note: Derivative of spline built with reproducing kernel RK_H0 does not exist at the spline nodes.
    value::T = T(0.0)
    defined::Bool  = false
    normt = norm(η .- ξ)
