@@ -168,7 +168,7 @@ function evaluate_one(spline::NormalSpline{T, RK},
 end
 
 """
-`evaluate_gradient(spline::NormalSpline{T, RK}, point::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_1}`
+`evaluate_gradient(spline::NormalSpline{T, RK}, point::Vector{T}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
 Evaluate gradient of the spline at the location defined in `point`.
 
@@ -455,7 +455,7 @@ function evaluate_one(spline::NormalSpline{T, RK},
 end
 
 """
-`evaluate_derivative(spline::NormalSpline{T, RK}, point::T) where {T <: AbstractFloat, RK <: ReproducingKernel_1}`
+`evaluate_derivative(spline::NormalSpline{T, RK}, point::T) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
 Evaluate the 1D spline derivative at the `point` location.
 

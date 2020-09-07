@@ -230,7 +230,7 @@ Evaluate the spline at some points:
 ```
 
 This spline is an infinitely differentiable function everywhere excepting the spline nodes. Its derivative does not exist at spline nodes but we can differentiate the spline at other points.
-Let's evaluate the spline derivatives at the same evaluation points (which does not coincide with the spline nodes):
+Let's evaluate the spline derivatives at the same evaluation points (which do not coincide with the spline nodes):
 
 ```@example C
     dσ = similar(p)
