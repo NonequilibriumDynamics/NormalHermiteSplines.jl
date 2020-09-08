@@ -1125,9 +1125,9 @@ function param1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
 
     # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
     t = 150
+    t1 = t + 1
     x = collect(range(0.0, 1.0; step = 1.0/t))
     y = collect(range(0.0, 1.0; step = 1.0/t))
-    t1 = t + 1
     grid = Matrix{Float64}(undef, 2, t1^2)
     for i = 1:t1
         for j = 1:t1
@@ -1164,7 +1164,7 @@ function param1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     σ = evaluate(spline, grid)
     gs = size(grid, 2)
     for i = 1:gs
-        if((grid[1,i] + grid[2,i]) < 1.0)
+        if((grid[1,i] + grid[2,i]) < (1.0 - 1.e-15))
             σ[i] = 0.0
         end
     end
@@ -1193,11 +1193,12 @@ function param1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     #PyPlot.suptitle("suptitle")
     if use_extended_precision
         PyPlot.title("ε:$ε, Extended Precision")
+        savefig("c:/0/p-cf-ext,$eps,-.png", dpi=150, bbox_inches="tight")
     else
         PyPlot.title("ε:$ε")
+        savefig("c:/0/p-cf,$eps,-.png", dpi=150, bbox_inches="tight")
     end
     #gca().set_aspect("equal")
-    savefig("c:/0/p-cf,$eps,-.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -1208,9 +1209,10 @@ function param1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     #PyPlot.suptitle("suptitle")
     if use_extended_precision
         PyPlot.title("ε:$ε, Extended Precision")
+        savefig("c:/0/p-s-ext,$eps,-.png", dpi=150, bbox_inches="tight")
     else
         PyPlot.title("ε:$ε")
+        savefig("c:/0/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
     end
-    savefig("c:/0/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
 
 end
