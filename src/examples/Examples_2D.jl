@@ -636,28 +636,28 @@ function test_2D(model_id::Int,
     colorbar(o)
     savefig("c:/0/m-cf-$model_id.png", dpi=150, bbox_inches="tight")
 
-    PyPlot.clf()
-    pygui(false)
-    o = contour(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
-    #    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
-    axis("equal")
-    # if n_of_samples <= 2
-    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
+    # PyPlot.clf()
+    # pygui(false)
+    # o = contour(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
+    # #    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
+    # axis("equal")
+    # # if n_of_samples <= 2
+    # #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
+    # # end
+    # if model_id == 6
+    #     PyPlot.xlim(-1.0, 1.0)
+    #     PyPlot.ylim(-1.0, 1.0)
     # end
-    if model_id == 6
-        PyPlot.xlim(-1.0, 1.0)
-        PyPlot.ylim(-1.0, 1.0)
-    end
-    if model_id == 12
-        PyPlot.xlim(-4.0, 4.0)
-        PyPlot.ylim(-2.0, 2.0)
-    end
-    if model_id == 15
-        PyPlot.xlim(-2.0, 2.0)
-        PyPlot.ylim(-1.0, 3.0)
-    end
-    colorbar(o)
-    #savefig("c:/0/m_c_$model_id.png", dpi=150, bbox_inches="tight")
+    # if model_id == 12
+    #     PyPlot.xlim(-4.0, 4.0)
+    #     PyPlot.ylim(-2.0, 2.0)
+    # end
+    # if model_id == 15
+    #     PyPlot.xlim(-2.0, 2.0)
+    #     PyPlot.ylim(-1.0, 3.0)
+    # end
+    # colorbar(o)
+    # #savefig("c:/0/m_c_$model_id.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -1116,4 +1116,101 @@ function big_sur()
             64 2.0 123.0 12.06
            ]
     return data
+end
+
+
+function param1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
+    nodes = [0.0 1.0 1.0 0.5; 1.0 0.0 1.0 0.5]
+    u = [0.0; 0.0; 0.0; 1.0]
+
+    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
+    t = 150
+    x = collect(range(0.0, 1.0; step = 1.0/t))
+    y = collect(range(0.0, 1.0; step = 1.0/t))
+    t1 = t + 1
+    grid = Matrix{Float64}(undef, 2, t1^2)
+    for i = 1:t1
+        for j = 1:t1
+            r = (i - 1) * t1 + j
+            grid[1, r] = x[i]
+            grid[2, r] = y[j]
+        end
+    end
+
+    if use_extended_precision
+        nodes = DoubleFloat.(nodes)
+        u = DoubleFloat.(u)
+        grid = DoubleFloat.(grid)
+    end
+
+    #
+    if eps == 0.0
+        rk = RK_H2()
+    else
+        if use_extended_precision
+            eps = DoubleFloat(eps)
+        end
+        rk = RK_H2(eps)
+    end
+    # #
+    spline = interpolate(nodes, u, rk)
+    ε = get_epsilon(spline)
+    @printf "ε #: %0.1e\n" ε
+    cond = get_cond(spline)
+    @printf "cond #: %0.1e\n" cond
+    acc = estimate_accuracy(spline)
+    @printf "acc #: %d\n" acc
+
+    σ = evaluate(spline, grid)
+    gs = size(grid, 2)
+    for i = 1:gs
+        if((grid[1,i] + grid[2,i]) < 1.0)
+            σ[i] = 0.0
+        end
+    end
+
+    gx = grid[1,:]
+    gy = grid[2,:]
+    x = unique(grid[1,:])
+    y = unique(grid[2,:])
+    gσ = reshape(σ, length(y), length(x))
+
+    PyPlot.clf()
+    pygui(false)
+    PyPlot.title("Nodes")
+    # PyPlot.suptitle("suptitle")
+    scatter(nodes[1,:], nodes[2,:], s=60, c="red")
+    gca().set_aspect("equal")
+    savefig("c:/0/p-grid.png", dpi=150, bbox_inches="tight")
+
+    PyPlot.clf()
+    pygui(false)
+    lvls = [-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1]
+    o = contourf(x, y, gσ, levels=lvls, cmap=ColorMap("gnuplot"))
+    axis("equal")
+    colorbar(o)
+    scatter(nodes[1,:], nodes[2,:], s=60, c="red")
+    #PyPlot.suptitle("suptitle")
+    if use_extended_precision
+        PyPlot.title("ε:$ε, Extended Precision")
+    else
+        PyPlot.title("ε:$ε")
+    end
+    #gca().set_aspect("equal")
+    savefig("c:/0/p-cf,$eps,-.png", dpi=150, bbox_inches="tight")
+
+    PyPlot.clf()
+    pygui(false)
+    o = surf(gx, gy, σ, cmap=ColorMap("gnuplot"), linewidth=0, antialiased=false, alpha=1.0)
+    tick_params(axis="both", which="major", labelsize=6)
+    tick_params(axis="both", which="minor", labelsize=6)
+    cb = colorbar(o, shrink=0.75)
+    #PyPlot.suptitle("suptitle")
+    if use_extended_precision
+        PyPlot.title("ε:$ε, Extended Precision")
+    else
+        PyPlot.title("ε:$ε")
+    end
+    savefig("c:/0/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
+
 end

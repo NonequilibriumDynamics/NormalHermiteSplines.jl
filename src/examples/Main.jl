@@ -24,6 +24,9 @@ export readme_3
 export demo
 export usage1, usage2
 
+export param1
+
+
 # Return the Root Mean Square Error (RMSE) of interpolation
 @inline function get_RMSE(f::Vector{T}, σ::Vector{T}) where T <: AbstractFloat
     return norm(f .- σ) / sqrt(length(f))

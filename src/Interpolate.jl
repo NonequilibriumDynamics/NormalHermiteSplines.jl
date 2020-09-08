@@ -336,7 +336,7 @@ function _estimate_accuracy(spline::NormalSpline{T, RK}) where {T <: AbstractFlo
         rmae = maximum(abs.(spline._values .- σ))
     end
     rmae = rmae > eps(T) ? rmae : eps(T)
-    res = -floor(log10(rmae))
+    res = -floor(log10(rmae)) - 1
     if res <= 0
         res = 0
     end
