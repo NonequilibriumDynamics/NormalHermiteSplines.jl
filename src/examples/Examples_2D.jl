@@ -1155,6 +1155,7 @@ function param1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     # #
     spline = interpolate(nodes, u, rk)
     ε = get_epsilon(spline)
+    sε = @sprintf "%0.1e" ε
     @printf "ε #: %0.1e\n" ε
     cond = get_cond(spline)
     @printf "cond #: %0.1e\n" cond
@@ -1192,10 +1193,10 @@ function param1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     scatter(nodes[1,:], nodes[2,:], s=60, c="red")
     #PyPlot.suptitle("suptitle")
     if use_extended_precision
-        PyPlot.title("ε:$ε, Extended Precision")
+        PyPlot.title("ε:$sε, Extended Precision")
         savefig("c:/0/p-cf-ext,$eps,-.png", dpi=150, bbox_inches="tight")
     else
-        PyPlot.title("ε:$ε")
+        PyPlot.title("ε:$sε")
         savefig("c:/0/p-cf,$eps,-.png", dpi=150, bbox_inches="tight")
     end
     #gca().set_aspect("equal")
@@ -1208,10 +1209,10 @@ function param1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     cb = colorbar(o, shrink=0.75)
     #PyPlot.suptitle("suptitle")
     if use_extended_precision
-        PyPlot.title("ε:$ε, Extended Precision")
+        PyPlot.title("ε:$sε, Extended Precision")
         savefig("c:/0/p-s-ext,$eps,-.png", dpi=150, bbox_inches="tight")
     else
-        PyPlot.title("ε:$ε")
+        PyPlot.title("ε:$sε")
         savefig("c:/0/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
     end
 
