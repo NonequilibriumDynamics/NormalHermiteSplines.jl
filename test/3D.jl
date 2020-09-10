@@ -64,7 +64,7 @@
         @test cond ≈ 1.0e6
 
         iq = estimate_accuracy(s)
-        @test iq ≈ 16.0
+        @test iq ≈ 15.0
 
         eps = get_epsilon(s)
         @test eps ≈ 1.0e-5
@@ -94,7 +94,7 @@
         @test cond ≈ 1.0e5
 
         iq = estimate_accuracy(s) + 1.0
-        @test iq ≈ 16.0 atol = 1.0
+        @test iq ≈ 14.0 atol = 1.0
 
         eps = get_epsilon(s)
         @test eps ≈ 0.1

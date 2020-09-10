@@ -102,7 +102,7 @@
         @test all(isapprox.(σ, u, atol = 1e-5))
 
         q = estimate_accuracy(s)
-        @test q ≈ 15
+        @test q ≈ 14
     end
 
     @testset "Test 2D-RK_H2 kernel" begin
@@ -173,7 +173,7 @@
         @test all(isapprox.(σ, u, atol = 1e-5))
 
         q = estimate_accuracy(s)
-        @test q ≈ 16
+        @test q ≈ 15
     end
 end
 
