@@ -12,10 +12,10 @@ Therefore, when choosing the value of the $\varepsilon$, a compromise is needed.
 
 The following API functions could be useful for selecting a suitable value of the scaling parameter $\varepsilon$:
 
-- ```estimate_accuracy```
 - ```get_cond```
 - ```get_epsilon```
 - ```estimate_epsilon```  
+- ```estimate_accuracy```
 
 Let's consider an example with interpolation of function 
 
