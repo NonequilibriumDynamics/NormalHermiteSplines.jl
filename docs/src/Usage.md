@@ -48,6 +48,12 @@ A)
 ```
 
 ```@example A
+    # A value of the 'scaling parameter' of Bessel Potential space
+    # the normal spline was built in.
+    ε = get_epsilon(spline)
+```
+
+```@example A
     # Construct the spline for given 'u' values
     spline = construct(spline, u)
 ```
@@ -135,15 +141,15 @@ B)
 ```
 
 ```@example B
-    # An estimation of the interpolation accuracy -
-    # number of significant digits in the function value interpolation result.
-    valid_digits = estimate_accuracy(spline)
-```
-
-```@example B
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
+```
+
+```@example B
+    # An estimation of the interpolation accuracy -
+    # number of significant digits in the function value interpolation result.
+    valid_digits = estimate_accuracy(spline)
 ```
 
 ```@example B
@@ -203,15 +209,15 @@ Now let's interpolate function ``f(x)`` using a spline built with reproducing ke
 ```
 
 ```@example C
-    # An estimation of the interpolation accuracy -
-    # number of significant digits in the function value interpolation result.
-    valid_digits = estimate_accuracy(spline)
-```
-
-```@example C
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
+```
+
+```@example C
+    # An estimation of the interpolation accuracy -
+    # number of significant digits in the function value interpolation result.
+    valid_digits = estimate_accuracy(spline)
 ```
 
 ```@example C
@@ -328,15 +334,15 @@ Following is the code example for case A:
 ```
 
 ```@example 2A
-    # An estimation of the interpolation accuracy -
-    # number of significant digits in the function value interpolation result.
-    valid_digits = estimate_accuracy(spline)
-```
-
-```@example 2A
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
+```
+
+```@example 2A
+    # An estimation of the interpolation accuracy -
+    # number of significant digits in the function value interpolation result.
+    valid_digits = estimate_accuracy(spline)
 ```
 
 ```@example 2A
@@ -479,15 +485,15 @@ Corresponding code example for case B:
 ```
 
 ```@example 2B
-    # An estimation of the interpolation accuracy -
-    # number of significant digits in the function value interpolation result.
-    valid_digits = estimate_accuracy(spline)
-```
-
-```@example 2B
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
+```
+
+```@example 2B
+    # An estimation of the interpolation accuracy -
+    # number of significant digits in the function value interpolation result.
+    valid_digits = estimate_accuracy(spline)
 ```
 
 ```@example 2B
