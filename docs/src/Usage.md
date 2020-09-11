@@ -56,9 +56,7 @@ A)
 ```@example A
     # Construct the spline for given 'u' values
     spline = construct(spline, u)
-```
 
-```@example A
     # An estimation of the interpolation accuracy -
     # number of significant digits in the function value interpolation result.
     valid_digits = estimate_accuracy(spline)
