@@ -11,8 +11,8 @@ The following API functions could be useful for selecting a suitable value of th
 
 - ```get_cond```
 - ```get_epsilon```
-- ```estimate_epsilon```  
 - ```estimate_accuracy```
+- ```estimate_epsilon```  
 
 Let's consider an example with interpolation of function 
 
@@ -25,25 +25,17 @@ sampled on set of 200 pseudo-random nodes uniformly distributed on unit square `
     using NormalHermiteSplines
     ....
     ....
-    # Here spline is being constructed with RK_H1 kernel,
-    # the value of the 'scaling parameter' ε is estimated
-    # in the interpolate procedure.
-    rk = RK_H1()
-    #
     spline = interpolate(nodes, u, rk)
     σ = evaluate(spline, grid)
+    ε = get_epsilon(spline)
+    cond = get_cond(spline)
+    ....
+    ....
 ```
-(the complete code example is here: [Example usage](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Usage/#D-interpolation-case-2/))
+(similar code example can be found here: [Example usage](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Usage/#D-interpolation-case-2/))
 
 Let's get values of scaling parameter, estimation of the Gram matrix condition number (algorithm is taken from [3]) and assessed value of the interpolation quality (value of the maximum of relative residual error calculated
 using data of the function value interpolation nodes).
-```
-    ε = get_epsilon(spline)
-```
-
-```
-    cond = get_cond(spline)
-```
 
 
 **References**

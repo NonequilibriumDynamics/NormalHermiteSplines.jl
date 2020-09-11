@@ -1118,13 +1118,133 @@ function big_sur()
     return data
 end
 
+function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
+    # generating 200 uniform random nodes
+    m = 200
+    nodes = Matrix{T}(undef, 2, m)
+    rng = MersenneTwister(0);
+    rnd = rand(rng, Float64, (2, m))
+    for i = 1:m
+        nodes[1, i] = rnd[1, i]
+        nodes[2, i] = rnd[2, i]
+    end
 
-function param1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
+    u = Vector{T}(undef, m)     # function values at nodes
+    for i = 1:m
+        x = nodes[1,i]
+        y = nodes[2,i]
+        u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+    end
+
+    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
+    t = 100
+    x = collect(range(0.0, 1.0; step = 1.0/t))
+    y = collect(range(0.0, 1.0; step = 1.0/t))
+    t1 = t + 1
+    n = t1^2
+    grid = Matrix{T}(undef, 2, n)
+    for i = 1:t1
+        for j = 1:t1
+            r = (i - 1) * t1 + j
+            grid[1,r] = x[i]
+            grid[2,r] = y[j]
+        end
+    end
+    f = Vector{T}(undef, n)
+    for k = 1:n
+        x = grid[1,k]
+        y = grid[2,k]
+        f[k] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+    end
+
+    if eps == 0.0
+        rk = RK_H0()
+        if kernel_type == 1
+            rk = RK_H1()
+        elseif kernel_type == 2
+            rk = RK_H2()
+        end
+    else
+        rk = RK_H0(eps)
+        if kernel_type == 1
+            rk = RK_H1(eps)
+        elseif kernel_type == 2
+            rk = RK_H2(eps)
+        end
+    end
+    #
+    spline = interpolate(nodes, u, rk)
+    ε = get_epsilon(spline)
+    se = @sprintf "%0.1e" ε
+    cond = get_cond(spline)
+    acc = estimate_accuracy(spline)
+
+    σ = evaluate(spline, grid)
+    rmse = get_RMSE(f, σ)
+    mae = get_MAE(f, σ)
+    rrmse = get_RRMSE(f, σ)
+    rmae = get_RMAE(f, σ)
+    fmax = maximum(f)
+    fmin = minimum(f)
+    @printf "FMAX:%0.1e FMIN:%0.1e\n" fmax fmin
+    @printf "EPS:%s  COND:%0.1e  ACC:%d  RMSE:%0.1e  MAE:%0.1e  RRMSE:%0.1e  RMAE:%0.1e\n" se cond acc rmse mae rrmse rmae
+    open("c:/0/param1.txt","a") do io
+        @printf io "EPS:%s  COND:%0.1e  ACC:%d  RMSE:%0.1e  MAE:%0.1e  RRMSE:%0.1e  RMAE:%0.1e\n" se cond acc rmse mae rrmse rmae
+    end
+
+    gx = grid[1,:]
+    gy = grid[2,:]
+    x = unique(grid[1,:])
+    y = unique(grid[2,:])
+    gσ = reshape(σ, length(y), length(x))
+    gf = reshape(f, length(y), length(x))
+
+    PyPlot.clf()
+    pygui(false)
+    PyPlot.title("Nodes")
+    # PyPlot.suptitle("suptitle")
+    scatter(nodes[1,:], nodes[2,:], s=6, c="red")
+    gca().set_aspect("equal")
+    savefig("c:/0/p-grid.png", dpi=150, bbox_inches="tight")
+
+    PyPlot.clf()
+    pygui(false)
+    lvls = [-0.7;-0.6;-0.5;-0.4;-0.3;-0.2;-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1]
+    o = contourf(x, y, gσ, levels=lvls, cmap=ColorMap("gnuplot"))
+    axis("equal")
+    colorbar(o)
+    #scatter(nodes[1,:], nodes[2,:], s=60, c="red")
+
+    if typeof(eps) == Float64
+        PyPlot.title("ε:$se")
+        savefig("c:/0/p-cf,$eps,-.png", dpi=150, bbox_inches="tight")
+    else
+        PyPlot.title("ε:$se, Extended Precision")
+        savefig("c:/0/p-cf-ext,$eps,-.png", dpi=150, bbox_inches="tight")
+    end
+    PyPlot.clf()
+    pygui(false)
+
+    o = surf(gx, gy, σ, cmap=ColorMap("gnuplot"), linewidth=0, antialiased=false, alpha=1.0)
+    tick_params(axis="both", which="major", labelsize=6)
+    tick_params(axis="both", which="minor", labelsize=6)
+    cb = colorbar(o, shrink=0.75)
+    #PyPlot.suptitle("suptitle")
+    if typeof(eps) == Float64
+        PyPlot.title("ε:$se")
+        savefig("c:/0/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
+    else
+        PyPlot.title("ε:$se, Extended Precision")
+        savefig("c:/0/p-s-ext,$eps,-.png", dpi=150, bbox_inches="tight")
+    end
+end
+
+function param10(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     nodes = [0.0 1.0 1.0 0.5; 1.0 0.0 1.0 0.5]
     u = [0.0; 0.0; 0.0; 1.0]
 
     # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
-    t = 150
+    t = 50
     t1 = t + 1
     x = collect(range(0.0, 1.0; step = 1.0/t))
     y = collect(range(0.0, 1.0; step = 1.0/t))

@@ -43,14 +43,14 @@ A)
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = prepare(x, RK_H1())
     
-    # An estimation of the Gram matrix condition number
-    cond = get_cond(spline)
-```
-
-```@example A
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
+```
+
+```@example A
+    # An estimation of the Gram matrix condition number
+    cond = get_cond(spline)
 ```
 
 ```@example A
@@ -136,14 +136,14 @@ B)
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, s, v, RK_H1())
 
-    # An estimation of the Gram matrix condition number
-    cond = get_cond(spline)
-```
-
-```@example B
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
+```
+
+```@example B
+    # An estimation of the Gram matrix condition number
+    cond = get_cond(spline)
 ```
 
 ```@example B
@@ -203,15 +203,15 @@ Now let's interpolate function ``f(x)`` using a spline built with reproducing ke
     # Build a continuous spline by values of function in nodes
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, RK_H0())
-    
-    # An estimation of the Gram matrix condition number
-    cond = get_cond(spline)
-```
 
-```@example C
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
+```
+
+```@example C
+    # An estimation of the Gram matrix condition number
+    cond = get_cond(spline)
 ```
 
 ```@example C
@@ -328,15 +328,16 @@ Following is the code example for case A:
     # the value of the 'scaling parameter' ε is estimated
     # in the interpolate procedure.
     rk = RK_H1()
-    #
     spline = interpolate(nodes, u, rk)
-    cond = get_cond(spline)
-```
-
-```@example 2A
+    #
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
+```
+
+```@example 2A
+    # An estimation of the Gram matrix condition number
+    cond = get_cond(spline)
 ```
 
 ```@example 2A
@@ -479,15 +480,16 @@ Corresponding code example for case B:
     # Here spline is being constructed with RK_H1 kernel,
     # the 'scaling parameter' ε is defined explicitly.
     rk = RK_H1(1.0)
-    #
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
-    cond = get_cond(spline)
-```
-
-```@example 2B
+    #
     # A value of the 'scaling parameter' of Bessel Potential space
     # the normal spline was built in.
     ε = get_epsilon(spline)
+```
+
+```@example 2B
+    # An estimation of the Gram matrix condition number
+    cond = get_cond(spline)
 ```
 
 ```@example 2B
