@@ -33,6 +33,13 @@ sampled on set of 200 pseudo-random nodes uniformly distributed on unit square `
 ```
 (the complete code example can be found here: [Example usage](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Usage/#D-interpolation-case-2/))
 
+The results of this function interpolation with reproducing kernel ```RK_H0``` are displayed in Table I, results of interpolation with reproducing kernel ```RK_H1``` are displayed in Table II and results of interpolation received with reproducing kernel ```RK_H2``` - in Table III.
+Condition numbers ```κ``` of the interpolation problems Gram matrix were estimated by procedure described in [1]. The root mean squared error and the maximum absolute error are defined as follows:
+
+
+
+
+
 Let's get values of scaling parameter, estimation of the Gram matrix condition number (algorithm is taken from [3]) and assessed value of the interpolation quality (value of the maximum of relative residual error calculated
 using data of the function value interpolation nodes).
 
