@@ -1,3 +1,29 @@
+function _estimate_accuracy(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    n = size(spline._nodes, 1)
+    m = size(spline._nodes, 2)
+    nodes = similar(spline._nodes)
+    @inbounds for i = 1:n
+        for j = 1:m
+            nodes[i,j] = spline._min_bound[i] + spline._compression * spline._nodes[i,j]
+        end
+    end
+    σ = evaluate(spline, nodes)
+    # calculating a value of the Relative Maximum Absolute Error (RMAE) of interpolation
+    # at the function value interpolation nodes.
+    fun_max = maximum(abs.(spline._values))
+    if fun_max > 0.0
+        rmae = maximum(abs.(spline._values .- σ)) / fun_max
+    else
+        rmae = maximum(abs.(spline._values .- σ))
+    end
+    rmae = rmae > eps(T) ? rmae : eps(T)
+    res = -floor(log10(rmae)) - 1
+    if res <= 0
+        res = 0
+    end
+    return trunc(Int, res)
+end
+
 function _estimate_ε(nodes::Matrix{T}) where T <: AbstractFloat
     n = size(nodes, 1)
     n_1 = size(nodes, 2)
@@ -316,53 +342,6 @@ function _construct(spline::NormalSpline{T, RK},
                          )
     return spline
 end
-
-function _estimate_accuracy(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-    n = size(spline._nodes, 1)
-    m = size(spline._nodes, 2)
-    nodes = similar(spline._nodes)
-    @inbounds for i = 1:n
-        for j = 1:m
-            nodes[i,j] = spline._min_bound[i] + spline._compression * spline._nodes[i,j]
-        end
-    end
-    σ = evaluate(spline, nodes)
-    # calculating a value of the Relative Maximum Absolute Error (RMAE) of interpolation
-    # at the function value interpolation nodes.
-    fun_max = maximum(abs.(spline._values))
-    if fun_max > 0.0
-        rmae = maximum(abs.(spline._values .- σ)) / fun_max
-    else
-        rmae = maximum(abs.(spline._values .- σ))
-    end
-    rmae = rmae > eps(T) ? rmae : eps(T)
-    res = -floor(log10(rmae)) - 1
-    if res <= 0
-        res = 0
-    end
-    return trunc(Int, res)
-end
-
-# function _estimate_accuracy(spline::NormalSpline{T, RK}) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
-#     n = size(spline._nodes, 1)
-#     m = size(spline._nodes, 2)
-#     nodes = similar(spline._nodes)
-#     @inbounds for i = 1:n
-#         for j = 1:m
-#             nodes[i,j] = spline._min_bound[i] + spline._compression * spline._nodes[i,j]
-#         end
-#     end
-#     σ = evaluate(spline, nodes)
-#     # calculating a value of the Relative Root Mean Square Error (RRMSE) of interpolation
-#     # at the function value interpolation nodes.
-#     rrmse = norm(spline._values .- σ) / (sqrt(length(spline._values)) * maximum(abs.(spline._values)))
-#     rrmse = rrmse > eps(T) ? rrmse : eps(T)
-#     res = -floor(log10(rrmse))
-#     if res <= 0
-#         res = 0
-#     end
-#     return trunc(Int, res)
-# end
 
 function _evaluate(spline::NormalSpline{T, RK},
                    points::Matrix{T},
