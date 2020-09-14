@@ -35,8 +35,9 @@ Theoretical properties of spaces ``H^s_\varepsilon`` at ``\varepsilon \gt 0`` ar
 and  norm
 
 ```math
-\| \varphi \| = \left( \langle \varphi , \varphi \rangle \right)^{1/2} =
-\| (  \varepsilon ^2 + | \xi |^2 )^{s/2} {\mathcal F} [\varphi ] \|_{L_2} \ .
+\| \varphi \|_ {H^s_\varepsilon} = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
+\mathcal | F [\varphi ] |^2  \, d \xi \ 
+ \right)^{1/2} \ .
 ```
 It is easy to see that all these norms are equivalent. It means that space ``H^s_\varepsilon (R^n)`` is equivalent to ``H^s (R^n) =  H^s_1 (R^n)`` ([3], [5]).
 
@@ -58,8 +59,10 @@ We also assume that all points ``\{p_i\}`` are different and in a case when amon
  In accordance with Riesz representation theorem [1] these linear continuous functionals can be represented in the form of inner product of some elements ``h_i, h'_j \in H^s_\varepsilon`` and ``\varphi \in H^s_\varepsilon``, for any ``\varphi \in H^s_\varepsilon``:
 
 ```math
+\begin{aligned}
  F_i(\varphi) = {\langle h_i,  \varphi \rangle} \, ,  \quad  F'_j(\varphi) = {\langle h'_j,  \varphi \rangle} \, ,  \quad  \forall \varphi \in H^s_\varepsilon \, ,
 \\  i = 1, 2, \dots, n_1 \, , \ \  j = 1, 2, \dots, n_2 \, .
+\end{aligned}
 ```
 Elements ``h_i`` and ``h'_j`` are continuously differentiable functions. Thereby the original system of constraints (1) can be written in form:
 
@@ -94,8 +97,12 @@ In accordance with generalized Lagrange method ([13], [16]) solution of the prob
 where coefficients ``\mu_i`` and ``\mu'_j`` are defined by system of linear equations
 
 ```math
+\begin{aligned}
 \tag{5}
-    \sum _{l=1}^{n_1} g_{il} \mu_l + \sum _{j=1}^{n_2} g'_{ij} \mu'_j   =  u_i - {\langle h_i,  z \rangle} \, , \quad 1 \le i \le n_1 \, , \\      \sum _{i=1}^{n_1} g'_{ij} \mu_i + \sum _{m=1}^{n_2} g''_{jm} \mu'_m\ =  v_j - {\langle h'_j,  z \rangle}  \, , \quad 1 \le j \le n_2 \, ,
+    & \sum _{l=1}^{n_1} g_{il} \mu_l + \sum _{j=1}^{n_2} g'_{ij} \mu'_j   =  u_i - {\langle h_i,  z \rangle} \, , \quad 1 \le i \le n_1 \, , 
+    \\
+    & \sum _{i=1}^{n_1} g'_{ij} \mu_i + \sum _{m=1}^{n_2} g''_{jm} \mu'_m\ =  v_j - {\langle h'_j,  z \rangle}  \, , \quad 1 \le j \le n_2 \, ,
+\end{aligned}    
 ```
 Matrix of system (5) is the positive definite symmetric Gram matrix of the set of linearly independent elements  ``\{h_i\}, \{h'_j\}`` and coefficients ``g_{il}, g'_{ij}, g''_{jm}`` are defined as follows:
 

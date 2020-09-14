@@ -20,8 +20,9 @@ Theoretical properties of spaces ``H^s_\varepsilon`` at ``\varepsilon \gt 0`` ar
 and  norm
 
 ```math
-\| \varphi \|_ {H^s_\varepsilon} = \left( \langle \varphi , \varphi \rangle _{H^s_\varepsilon} \right)^{1/2} =
-\| (  \varepsilon ^2 + | \xi |^2 )^{s/2} {\mathcal F} [\varphi ] \|_{L_2} \ .
+\| \varphi \|_ {H^s_\varepsilon} = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
+\mathcal | F [\varphi ] |^2  \, d \xi \ 
+ \right)^{1/2} \ .
 ```
 It is easy to see that all ``\| \varphi \|_{H^s_\varepsilon}`` norms are equivalent. It means that space ``H^s_\varepsilon (R^n)`` is equivalent to ``H^s (R^n) =  H^s_1 (R^n)``.
 
