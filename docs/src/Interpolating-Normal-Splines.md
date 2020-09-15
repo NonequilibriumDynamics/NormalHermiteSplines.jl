@@ -20,7 +20,7 @@ We assume that function ``f`` is an element of the Bessel Potential space ``H^s_
 
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
-  ( \varepsilon ^2 + | \xi |^2 )^{s/2}{\mathcal F} [\varphi ] \in L_2 (R^n) \right\} , \quad
+  ( \varepsilon ^2 + | \xi |^2 )^{s/2}{\mathcal F} [\varphi(\xi)] \in L_2 (R^n) \right\} , \quad
   \varepsilon \gt 0 , \ \ s = n/2 + 1/2 + r \, , \quad r = 1,2,\dots \, .
 ```
 where ``| \cdot |`` is the Euclidean norm, ``S'  (R^n)`` is space of L. Schwartz tempered distributions, parameter ``s`` may be treated as a fractional differentiation order and ``\mathcal F [\varphi ]`` is a Fourier transform of the ``\varphi``. The parameter ``\varepsilon`` can be considered as a "scaling parameter", it allows to control approximation properties of the normal spline which usually are getting better with smaller values of ``\varepsilon``, also it can be used to reduce the ill-conditioness of the related computational problem (in traditional theory ``\varepsilon = 1``).
@@ -30,16 +30,36 @@ Theoretical properties of spaces ``H^s_\varepsilon`` at ``\varepsilon \gt 0`` ar
 ```math
 \langle \varphi , \psi \rangle =
 \int ( \varepsilon ^2  + | \xi |^2 )^s
-\mathcal F [\varphi ] \overline{\mathcal F [\psi ] } \, d \xi
+\mathcal F [\varphi(\xi) ] \overline{\mathcal F [\psi(\xi) ] } \, d \xi
 ```
 and  norm
 
 ```math
 \| \varphi \|_ {H^s_\varepsilon} = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
-\mathcal | F [\varphi ] |^2  \, d \xi \ 
+\mathcal | F [\varphi(\xi) ] |^2  \, d \xi \ 
  \right)^{1/2} \ .
 ```
 It is easy to see that all these norms are equivalent. It means that space ``H^s_\varepsilon (R^n)`` is equivalent to ``H^s (R^n) =  H^s_1 (R^n)`` ([3], [5]).
+
+Obviously, ``\| \varphi \|_ {H^s_\varepsilon} \le \| \varphi \|_ {H^t_\varepsilon}`` if ``s < t``, so that the space with larger index is continuously embedded in the space with smaller index. The space ``H^0_\varepsilon (R^n)`` coincides with ``L_2 (R^n)`` in view of Parseval’s identity
+
+```math
+ \int \mathcal | F [\varphi ] |^2  \, d \xi \ = \int \mathcal |\varphi|^2  \, dx   
+```
+and the norms on these spaces coincide. Therefore, all spaces ``\| \varphi \|_ {H^s_\varepsilon}`` with nonnegative ``s`` consist of usual square integrable
+(i.e., having integrable square of absolute value) complex-valued functions [3]. 
+
+For any positive integer ``m > \frac{n}{2}``, the space ``H^s_1 (R^n)`` consists of all
+square integrable functions whose derivatives in the sense of distributions up to
+order m are square integrable. The norm on ``H^s_1 (R^n)`` can be defined by
+```math
+\| \varphi \|_ {H^s_1} = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
+\mathcal | F [\varphi(\xi) ] |^2  \, d \xi \ 
+ \right)^{1/2} \ .
+```
+
+Similarly, it can be shown that ..... TODO
+
 
  Hilbert space ``H^s_\varepsilon (R^n)`` is continuously embedded in Hölder space ``C_b^r(R^n)`` ([3],[17],[20]) of functions continuous and bounded with their first ``r`` derivatives, it means function ``f`` can be treated as an element of function class ``C^r(R^n)`` of functions continuous with their first ``r`` derivatives. Therefore functionals ``F_i`` and ``F'_j``
 

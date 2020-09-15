@@ -5,7 +5,7 @@ Interpolating normal spline ``\sigma`` is  the solution of the variational probl
 ```math
 \tag{1}
 \begin{aligned}
- & \| f \|^2_ {H^s_\varepsilon} = \int ( \varepsilon ^2  + | \xi |^2 )^s \mathcal | F [f ] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in H^s_\varepsilon (R^n) \ ,
+ & \| f \|^2_ {H^s_\varepsilon} = \int ( \varepsilon ^2  + | \xi |^2 )^s \mathcal | F [f(\xi)] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in H^s_\varepsilon (R^n) \ ,
 \\ 
  &  f(p_i) =  u_i \, , \quad  i = 1, 2, \dots, n \, ,
 \\
@@ -16,7 +16,7 @@ here ``H^s_\varepsilon`` is the Bessel Potential space, which is defined as:
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
   ( \varepsilon ^2 + | \xi |^2 )^{s/2}{\mathcal F} [\varphi ] \in L_2 (R^n) \right\} , \quad
-  \varepsilon \gt 0 , \ \ s = n/2 + 1/2 + r \, , \quad r = 1,2,\dots \, .
+  \varepsilon \gt 0 , \quad  s > \frac{n}{2}  \, .
 ```
 where ``| \cdot |`` is the Euclidean norm, ``S'  (R^n)`` is space of L. Schwartz tempered distributions, parameter ``s`` may be treated as a fractional differentiation order and ``\mathcal F [\varphi ]`` is a Fourier transform of the ``\varphi``. Space
  ``H^s_\varepsilon`` is a Hilbert space (see [Interpolating Normal Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Splines/)).
