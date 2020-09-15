@@ -4,14 +4,13 @@ Interpolating normal spline ``\sigma`` is  the solution of the variational probl
 
 ```math
 \tag{1}
-\begin{aligned}
- & \| f \|^2_ {H^s_\varepsilon} = \int ( \varepsilon ^2  + | \xi |^2 )^s \mathcal | F [f(\xi)] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in H^s_\varepsilon (R^n) \ ,
-\\ 
- &  f(p_i) =  u_i \, , \quad  i = 1, 2, \dots, n \, ,
-\\
-\end{aligned}
+  \| f \|^2_ {H^s_\varepsilon} = \int ( \varepsilon ^2  + | \xi |^2 )^s \mathcal | F [f(\xi)] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in H^s_\varepsilon (R^n) \ , \quad s > \frac{n}{2} \ , 
 ```
-here ``H^s_\varepsilon`` is the Bessel Potential space, which is defined as:
+```math
+\tag{2}
+ f(p_i) =  u_i \, , \quad  i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad 
+```
+here ``H^s_\varepsilon (R^n)`` is the Bessel Potential space, which is defined as:
 
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
@@ -22,7 +21,9 @@ where ``| \cdot |`` is the Euclidean norm, ``S'  (R^n)`` is space of L. Schwartz
  ``H^s_\varepsilon`` is a Hilbert space (see [Interpolating Normal Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Splines/)).
 
 
-
+It can be shown that for any positive integer ``m \ , m > \frac{n}{2}``, the space ``H^m_\varepsilon`` consists of all
+square integrable functions whose derivatives in the sense of distributions up to
+order ``m`` are square integrable. The norm on ``H^m_\varepsilon`` can be defined by
 
 
 

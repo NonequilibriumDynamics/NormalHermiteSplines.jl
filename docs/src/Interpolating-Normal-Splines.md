@@ -49,9 +49,9 @@ Obviously, ``\| \varphi \|_ {H^s_\varepsilon} \le \| \varphi \|_ {H^t_\varepsilo
 and the norms on these spaces coincide. Therefore, all spaces ``\| \varphi \|_ {H^s_\varepsilon}`` consist of usual square integrable
 (i.e., having integrable square of absolute value) functions [3]. 
 
-For any positive integer ``m > \frac{n}{2}``, the space ``H^s (R^n)`` consists of all
+For any positive integer ``m``,  ``m > \frac{n}{2}``, the space ``H^m (R^n)`` consists of all
 square integrable functions whose derivatives in the sense of distributions up to
-order m are square integrable. The norm on ``H^s (R^n)`` can be defined by
+order m are square integrable. The norm on ``H^m (R^n)`` can be defined by
 ```math
 \| \varphi \|_ {H^s} = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
 \mathcal | F [\varphi(\xi) ] |^2  \, d \xi \ 
