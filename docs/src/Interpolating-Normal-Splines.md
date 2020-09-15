@@ -46,14 +46,14 @@ Obviously, ``\| \varphi \|_ {H^s_\varepsilon} \le \| \varphi \|_ {H^t_\varepsilo
 ```math
  \int \mathcal | F [\varphi ] |^2  \, d \xi \ = \int \mathcal |\varphi|^2  \, dx   
 ```
-and the norms on these spaces coincide. Therefore, all spaces ``\| \varphi \|_ {H^s_\varepsilon}`` with nonnegative ``s`` consist of usual square integrable
-(i.e., having integrable square of absolute value) complex-valued functions [3]. 
+and the norms on these spaces coincide. Therefore, all spaces ``\| \varphi \|_ {H^s_\varepsilon}`` consist of usual square integrable
+(i.e., having integrable square of absolute value) functions [3]. 
 
-For any positive integer ``m > \frac{n}{2}``, the space ``H^s_1 (R^n)`` consists of all
+For any positive integer ``m > \frac{n}{2}``, the space ``H^s (R^n)`` consists of all
 square integrable functions whose derivatives in the sense of distributions up to
-order m are square integrable. The norm on ``H^s_1 (R^n)`` can be defined by
+order m are square integrable. The norm on ``H^s (R^n)`` can be defined by
 ```math
-\| \varphi \|_ {H^s_1} = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
+\| \varphi \|_ {H^s} = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
 \mathcal | F [\varphi(\xi) ] |^2  \, d \xi \ 
  \right)^{1/2} \ .
 ```
