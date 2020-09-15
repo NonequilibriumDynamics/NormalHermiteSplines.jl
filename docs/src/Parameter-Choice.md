@@ -38,7 +38,11 @@ Condition number (```κ```) of the interpolation problem Gram matrix were estima
 
 
 
+To estimate the accuracy of the solution obtained using the considered method, we computed  error
+and the root mean square (RMS) error
+where  is a set of test points, . In the experiments with different nodes distributions, the accuracy was estimated on regularly distributed nodes.
 
+Statistical analysis (descriptive statistics and hypotheses testing) have been done using SciPy subpackage stats.
 
 
 
