@@ -46,7 +46,7 @@ Obviously, ``\| \varphi \|_ {H^s_\varepsilon} \le \| \varphi \|_ {H^t_\varepsilo
 ```math
  \int \mathcal | F [\varphi ] |^2  \, d \xi \ = \int \mathcal |\varphi|^2  \, dx   
 ```
-and the norms on these spaces coincide. Therefore, all spaces ``\| \varphi \|_ {H^s_\varepsilon}`` consist of usual square integrable
+and the norms on these spaces coincide. Therefore, all spaces ``H^s_\varepsilon (R^n)`` with nonnegative ``s`` consist of usual square integrable
 (i.e., having integrable square of absolute value) functions [3]. 
 
 For any positive integer ``m`` the space ``H^m_1 (R^n)`` consists of all
