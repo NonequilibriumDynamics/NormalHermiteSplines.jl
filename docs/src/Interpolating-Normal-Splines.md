@@ -35,11 +35,11 @@ Theoretical properties of spaces ``H^s_\varepsilon`` at ``\varepsilon \gt 0`` ar
 and  norm
 
 ```math
-\| \varphi \|_ {H^s_\varepsilon} = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
+\| \varphi \| = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
 \mathcal | F [\varphi(\xi) ] |^2  \, d \xi \ 
  \right)^{1/2} \ .
 ```
-It is easy to see that all these norms are equivalent. It means that space ``H^s_\varepsilon (R^n)`` is equivalent to ``H^s (R^n) =  H^s_1 (R^n)`` ([3], [5]).
+It is easy to see that all these norms are equivalent. It means that space ``H^s_\varepsilon (R^n)`` is equivalent to ``H^s (R^n) =  H^s_1 (R^n)``.
 
 Obviously, ``\| \varphi \|_ {H^s_\varepsilon} \le \| \varphi \|_ {H^t_\varepsilon}`` if ``s < t``, so that the space with larger index is continuously embedded in the space with smaller index. The space ``H^0_\varepsilon (R^n)`` coincides with ``L_2 (R^n)`` in view of Parseval’s identity
 
@@ -49,17 +49,32 @@ Obviously, ``\| \varphi \|_ {H^s_\varepsilon} \le \| \varphi \|_ {H^t_\varepsilo
 and the norms on these spaces coincide. Therefore, all spaces ``\| \varphi \|_ {H^s_\varepsilon}`` consist of usual square integrable
 (i.e., having integrable square of absolute value) functions [3]. 
 
-For any positive integer ``m``,  ``m > \frac{n}{2}``, the space ``H^m (R^n)`` consists of all
+For any positive integer ``m`` the space ``H^m_1 (R^n)`` consists of all
 square integrable functions whose derivatives in the sense of distributions up to
-order m are square integrable. The norm on ``H^m (R^n)`` can be defined by
+order m are square integrable [3]. The norm on ``H^m_1 (R^n)`` can be defined by
 ```math
-\| \varphi \|_ {H^s} = \left( \int ( \varepsilon ^2  + | \xi |^2 )^s
-\mathcal | F [\varphi(\xi) ] |^2  \, d \xi \ 
- \right)^{1/2} \ .
+\| \varphi \|'_ {H^m_1} = \left( \int \Big [ | \varphi (x) |^2  + \sum_{|\alpha| = m} |D^\alpha \varphi (x) |^2 \Big ]
+  \, d x \ 
+ \right)^{1/2}  .
 ```
+The corresponding inner product has the form
+```math
+\langle \varphi , \psi \rangle'_ {H^m_1} =
+\left( \int \Big [ \varphi (x) \overline{\psi (x)}  + \sum_{|\alpha| = m} D^\alpha \varphi (x) \overline{D^\alpha \psi (x)}  \Big ]
+  \, d x \ 
+ \right)^{1/2} ,
+ ```
+here ``\alpha = (\alpha_1, \dots, \alpha_n )`` is multi-index with nonnegative integral
+entries, ``|\alpha| = \alpha_1 + \dots + \alpha_n`` and ``D^\alpha \varphi (x) = \frac{ \partial^{|\alpha|}{\varphi} }{ \partial{x_1^{\alpha_1}} \dots x_n^{\alpha_n}}``.
 
-Similarly, it can be shown that ..... TODO
+Therefore, the space ``H^m_1 (R^n)`` is coincides with Sobolev space. 
 
+Similarly, it can be shown that space ``H^m_\varepsilon (R^n)`` coincides with Sobolev space witch norm can be defined by
+```math
+\| \varphi \|'_ {H^m_\varepsilon} = \left( \int \Big [ \varepsilon ^{2m}| \varphi (x) |^2  + \sum_{|\alpha| = m} |D^\alpha \varphi (x) |^2 \Big ]
+  \, d x \ 
+ \right)^{1/2}  .
+```
 
  Hilbert space ``H^s_\varepsilon (R^n)`` is continuously embedded in Hölder space ``C_b^r(R^n)`` ([3],[17],[20]) of functions continuous and bounded with their first ``r`` derivatives, it means function ``f`` can be treated as an element of function class ``C^r(R^n)`` of functions continuous with their first ``r`` derivatives. Therefore functionals ``F_i`` and ``F'_j``
 
