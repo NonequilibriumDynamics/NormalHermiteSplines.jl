@@ -23,19 +23,30 @@ where ``| \cdot |`` is the Euclidean norm, ``S'  (R^n)`` is space of L. Schwartz
 
 It is known that for any positive integer ``m``, the space ``H^m_\varepsilon`` consists of all
 square integrable functions whose derivatives in the sense of distributions up to
-order ``m`` are square integrable and therefore in such case this space coincides with Sobolev space ([1], [3]).
+order ``m`` are square integrable and therefore this space coincides with Sobolev space ([1], [3]). In such case the problem (1), (2) can be written as
+
+```math
+\tag{3}
+  \int ( \varepsilon ^2  + | \xi |^2 )^m | {\mathcal F} [f(\xi)] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad s m \frac{n}{2} \ , 
+```
+```math
+\tag{4}
+ f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad\qquad
+```
+here ``W^m_2 (R^n)`` is Sobolev space.
+
 
 Polyharmonic ``D^m`` spline ``\sigma_{D^m}`` is the the result of minimization of the quadratic functional (Sobolev semi-norm) ([2], [4])
 ```math
-\tag{3}
+\tag{5}
  \int \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha f(x) |^2   \, d x \  \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad m > \frac{n}{2}
 ```
 under interpolation constraints
 ```math
-\tag{4}
+\tag{6}
  f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad\qquad 
 ```
-here ``W^m_2 (R^n)`` is the Sobolev space.
+here ``W^m_2 (R^n)`` is Sobolev space.
 
 As it is pointed out in [4] we may replace the minimizing functional (3) with 
 
@@ -47,15 +58,15 @@ As it is pointed out in [4] we may replace the minimizing functional (3) with
 ```math
  \int |{\mathcal F} [f] |^2 \sum_{|\alpha| = m} \frac{m!}{\alpha!}  \xi^{2 \alpha}   \, d \xi \  \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad m > \frac{n}{2} 
 ```
-taking into account that ``\sum_{|\alpha| = m} \frac{m!}{\alpha!}  \xi^{2 \alpha} = |\xi|^{2m}`` we get that polyharmonic ``D^m`` spline ``\sigma_{D^m}`` can be found as the solution of the variational problem
+taking into account that ``\sum_{|\alpha| = m} \frac{m!}{\alpha!}  \xi^{2 \alpha} = |\xi|^{2m}`` ([3]) we get that polyharmonic ``D^m`` spline ``\sigma_{D^m}`` can be found as the solution of the variational problem
 
 ```math
-\tag{5}
+\tag{7}
   \int | \xi |^{2m} | {\mathcal F} [f(\xi)] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad m > \frac{n}{2}
 
 ```
 ```math
-\tag{6}
+\tag{8}
  f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad 
 ```
 
