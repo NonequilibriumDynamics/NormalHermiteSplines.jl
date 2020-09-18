@@ -49,32 +49,25 @@ Obviously, ``\| \varphi \|_ {H^s_\varepsilon} \le \| \varphi \|_ {H^t_\varepsilo
 and the norms on these spaces coincide. Therefore, all spaces ``H^s_\varepsilon (R^n)`` with nonnegative ``s`` consist of usual square integrable
 (i.e., having integrable square of absolute value) functions [3]. 
 
-For any positive integer ``m`` the space ``H^m_1 (R^n)`` consists of all
+It can be shown that for any positive integer ``m`` the space ``H^m_\varepsilon (R^n)`` consists of all
 square integrable functions whose derivatives in the sense of distributions up to
-order m are square integrable [3]. The norm on ``H^m_1 (R^n)`` can be defined by
+order m are square integrable [3]. The norm on ``H^m_\varepsilon (R^n)`` can be defined by
 ```math
-\| \varphi \|'_ {H^m_1} = \left( \int \Big [ | \varphi (x) |^2  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha \varphi (x) |^2 \Big ]
+\| \varphi \|'_ {H^m_\varepsilon} = \left( \int \Big [ \varepsilon^2 | \varphi (x) |^2  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha \varphi (x) |^2 \Big ]
   \, d x \ 
  \right)^{1/2}  .
 ```
 The corresponding inner product has the form
 ```math
-\langle \varphi , \psi \rangle'_ {H^m_1} =
-\left( \int \Big [ \varphi (x) \overline{\psi (x)}  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} D^\alpha \varphi (x) \overline{D^\alpha \psi (x)}  \Big ]
+\langle \varphi , \psi \rangle'_ {H^m_\varepsilon} =
+\left( \int \Big [ \varepsilon^2 \varphi (x) \overline{\psi (x)}  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} D^\alpha \varphi (x) \overline{D^\alpha \psi (x)}  \Big ]
   \, d x \ 
  \right)^{1/2} ,
  ```
 here ``\alpha = (\alpha_1, \dots, \alpha_n )`` is multi-index with nonnegative integral
 entries, ``|\alpha| = \alpha_1 + \dots + \alpha_n \ ``, ``\alpha ! = \alpha_1 ! \dots \alpha_n !`` and ``D^\alpha \varphi (x) = \frac{ \partial^{|\alpha|}{\varphi} }{ \partial{x_1^{\alpha_1}} \dots x_n^{\alpha_n}}``.
 
-Therefore, the space ``H^m_1 (R^n)`` is coincides with Sobolev space. 
-
-Similarly, it can be shown that space ``H^m_\varepsilon (R^n)`` coincides with Sobolev space witch norm can be defined by
-```math
-\| \varphi \|'_ {H^m_\varepsilon} = \left( \int \Big [ \varepsilon ^{2m}| \varphi (x) |^2  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha \varphi (x) |^2 \Big ]
-  \, d x \ 
- \right)^{1/2}  .
-```
+Therefore, the space ``H^m_\varepsilon (R^n)`` coincides with Sobolev space. 
 
  Hilbert space ``H^s_\varepsilon (R^n)`` is continuously embedded in Hölder space ``C_b^r(R^n)`` ([3],[17],[20]) of functions continuous and bounded with their first ``r`` derivatives, it means function ``f`` can be treated as an element of function class ``C^r(R^n)`` of functions continuous with their first ``r`` derivatives. Therefore functionals ``F_i`` and ``F'_j``
 
