@@ -4,7 +4,7 @@ Interpolating normal spline ``\sigma`` is the solution of the variational proble
 
 ```math
 \tag{1}
-  \| f \|^2_ {H^s_\varepsilon} = \int ( \varepsilon ^2  + | \xi |^2 )^s | {\mathcal F} [f(\xi)] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in H^s_\varepsilon (R^n) \ , \quad s > \frac{n}{2} \ , 
+  \| f \|^2 = \int ( \varepsilon ^2  + | \xi |^2 )^s | {\mathcal F} [f(\xi)] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in H^s_\varepsilon (R^n) \ , \quad s > \frac{n}{2} \ , 
 ```
 ```math
 \tag{2}
@@ -21,54 +21,52 @@ where ``| \cdot |`` is the Euclidean norm, ``S'  (R^n)`` is space of L. Schwartz
  ``H^s_\varepsilon`` is a Hilbert space (see [Interpolating Normal Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Interpolating-Normal-Splines/)).
 
 
-It is known that for any positive integer ``m``, the space ``H^m_\varepsilon`` consists of all
-square integrable functions whose derivatives in the sense of distributions up to
-order ``m`` are square integrable and therefore this space coincides with Sobolev space ([1], [3]). In such case the problem (1), (2) can be written as
+It can be shown that for any positive integer ``m`` the space ``H^m_\varepsilon (R^n)`` consists of all square integrable functions whose derivatives in the sense of distributions up to order m are square integrable [1]. The norm on ``H^m_\varepsilon (R^n)`` can be defined by
+```math
+\| \varphi \|' = \left( \int \Big [ \varepsilon^2 | \varphi (x) |^2  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha \varphi (x) |^2 \Big ]
+  \, d x \ 
+ \right)^{1/2}  .
+```
+The corresponding inner product has the form
+```math
+\langle \varphi , \psi \rangle' =
+\left( \int \Big [ \varepsilon^2 \varphi (x) \overline{\psi (x)}  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} D^\alpha \varphi (x) \overline{D^\alpha \psi (x)}  \Big ]
+  \, d x \ 
+ \right)^{1/2} ,
+ ```
+here ``\alpha = (\alpha_1, \dots, \alpha_n )`` is multi-index with nonnegative integral
+entries, ``|\alpha| = \alpha_1 + \dots + \alpha_n \ ``, ``\alpha ! = \alpha_1 ! \dots \alpha_n !`` and ``D^\alpha \varphi (x) = \frac{ \partial^{|\alpha|}{\varphi} }{ \partial{x_1^{\alpha_1}} \dots x_n^{\alpha_n}}``.
+
+The norms ``\| \varphi \|`` and ``\| \varphi \|'`` are equivalent and space ``H^m_\varepsilon (R^n)`` coincides with Sobolev space. Therefore the problem (1), (2) can be written as
 
 ```math
 \tag{3}
-  \int ( \varepsilon ^2  + | \xi |^2 )^m | {\mathcal F} [f(\xi)] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad s m \frac{n}{2} \ , 
+  \| f \|'^2 = \int \Big [ \varepsilon^2 | f(x) |^2  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha f(x) |^2 \Big ]
+  \, d x \  \ \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad  m \gt \frac{n}{2} \ , 
 ```
 ```math
 \tag{4}
- f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad\qquad
+ f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad \qquad \qquad\qquad \qquad\quad  
 ```
-here ``W^m_2 (R^n)`` is Sobolev space.
+here ``W^m_2 (R^n)`` is Sobolev space. 
 
+Normal spline ``\sigma`` always exist if all points ``\{p_i\}`` are different and it is unique.
 
-Polyharmonic ``D^m`` spline ``\sigma_{D^m}`` is the the result of minimization of the quadratic functional (Sobolev semi-norm) ([2], [4])
+Polyharmonic ``D^m`` spline ``\sigma_{D^m}`` is the the result of minimization of the quadratic functional (Sobolev semi-norm) ([2], [3])
 ```math
 \tag{5}
- \int \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha f(x) |^2   \, d x \  \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad m > \frac{n}{2}
+ \int\limits_\Omega \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha f(x) |^2   \, d x \  \to min  \, , \qquad \forall f \in W^m_2 (\Omega) \ , \quad m > \frac{n}{2}
 ```
 under interpolation constraints
 ```math
 \tag{6}
- f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad\qquad 
+ f(p_i) =  u_i \, , \quad  p_i \in \Omega \, , \qquad i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad\qquad 
 ```
-here ``W^m_2 (R^n)`` is Sobolev space.
+here ``W^m_2 (\Omega)`` is Sobolev space (``\Omega \subset R^n`` is a bounded and
+sufficiently regular ([2, 3]) domain in ``R^n``).
 
-As it is pointed out in [4] we may replace the minimizing functional (3) with 
+``D^m`` spline ``\sigma_{D^m}`` always exist if all points ``\{p_i\}`` are different and it is unique if set ``\{p_i\}`` contains ``P_{m-1}``- unisolvent set [2].
 
-```math
- \int \sum_{|\alpha| = m} \frac{m!}{\alpha!} |{\mathcal F} [D^\alpha f] |^2   \, d \xi \  \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad m > \frac{n}{2} 
-```
-``(`` in view of Parseval’s idenitity``)``. Further, as ``{\mathcal F} [D^\alpha f] = (iξ)^\alpha{\mathcal F} [f] `` we can write (5) as
-
-```math
- \int |{\mathcal F} [f] |^2 \sum_{|\alpha| = m} \frac{m!}{\alpha!}  \xi^{2 \alpha}   \, d \xi \  \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad m > \frac{n}{2} 
-```
-taking into account that ``\sum_{|\alpha| = m} \frac{m!}{\alpha!}  \xi^{2 \alpha} = |\xi|^{2m}`` ([3]) we get that polyharmonic ``D^m`` spline ``\sigma_{D^m}`` can be found as the solution of the variational problem
-
-```math
-\tag{7}
-  \int | \xi |^{2m} | {\mathcal F} [f(\xi)] |^2  \, d \xi \ \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad m > \frac{n}{2}
-
-```
-```math
-\tag{8}
- f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad 
-```
 
 
 
@@ -81,7 +79,5 @@ taking into account that ``\sum_{|\alpha| = m} \frac{m!}{\alpha!}  \xi^{2 \alpha
 
 [2] A. Bezhaev, V. Vasilenko, Variational Theory of Splines, Springer US, 2001.
 
-[3] M. Buhmann. Radial Basis Functions. Cambridge University Press, 2003.
-
-[4] J. Duchon, Splines minimizing rotation-invariant semi-norms in Sobolev spaces, Lect. Notes in Math., Vol. 571, Springer, Berlin, 1977
+[3] J. Duchon, Splines minimizing rotation-invariant semi-norms in Sobolev spaces, Lect. Notes in Math., Vol. 571, Springer, Berlin, 1977
 
