@@ -16,7 +16,7 @@ makedocs(
 				"Reproducing Kernel of Bessel Potential space" => "Reproducing-Kernel-of-Bessel-Potential-space.md",
 				"Interpolating Normal Splines" => "Interpolating-Normal-Splines.md",
 				"Simple Normal Splines Examples"  => "Simple-examples.md",
-				"Relation to Polyharmonic Splines"  => "Relation-to-Polyharmonic-Splines.md",
+				"Comparison with Polyharmonic Splines"  => "Relation-to-Polyharmonic-Splines.md",
 				"Updating Cholesky Factorization" => "Updating-Cholesky-Factorization.md",
 			]
 )

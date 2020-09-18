@@ -1,4 +1,4 @@
-# Relation to Polyharmonic Splines
+# Comparison with Polyharmonic Splines
 
 Interpolating normal spline ``\sigma`` is the solution of the variational problem:
 
@@ -42,17 +42,17 @@ The norms ``\| \varphi \|`` and ``\| \varphi \|'`` are equivalent and space ``H^
 ```math
 \tag{3}
   \| f \|'^2 = \int \Big [ \varepsilon^2 | f(x) |^2  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha f(x) |^2 \Big ]
-  \, d x \  \ \to min  \, , \qquad \forall f \in W^m_2 (R^n) \ , \quad  m \gt \frac{n}{2} \ , 
+  \, d x \  \ \to min  \, , \quad  \forall f \in W^m_2 (R^n) \ , \quad \varepsilon \gt 0 \, , \quad m \gt \frac{n}{2} \ , 
 ```
 ```math
 \tag{4}
- f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad \qquad \qquad\qquad \qquad\quad  
+ f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad \qquad \qquad\qquad \qquad\qquad\qquad  
 ```
 here ``W^m_2 (R^n)`` is Sobolev space. 
 
 Normal spline ``\sigma`` always exist if all points ``\{p_i\}`` are different and it is unique.
 
-Polyharmonic ``D^m`` spline ``\sigma_{D^m}`` is the the result of minimization of the quadratic functional (Sobolev semi-norm) ([2], [3])
+Polyharmonic ``D^m`` spline ``\sigma_{D^m}`` is the the result of minimization of the quadratic functional (Sobolev semi-norm) ([3], [4])
 ```math
 \tag{5}
  \int\limits_\Omega \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha f(x) |^2   \, d x \  \to min  \, , \qquad \forall f \in W^m_2 (\Omega) \ , \quad m > \frac{n}{2}
@@ -63,21 +63,23 @@ under interpolation constraints
  f(p_i) =  u_i \, , \quad  p_i \in \Omega \, , \qquad i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad\qquad 
 ```
 here ``W^m_2 (\Omega)`` is Sobolev space (``\Omega \subset R^n`` is a bounded and
-sufficiently regular ([2, 3]) domain in ``R^n``).
+sufficiently regular ([3, 4]) domain in ``R^n``).
 
-``D^m`` spline ``\sigma_{D^m}`` always exist if all points ``\{p_i\}`` are different and it is unique if set ``\{p_i\}`` contains ``P_{m-1}``- unisolvent set [2].
+``D^m`` spline ``\sigma_{D^m}`` always exist if all points ``\{p_i\}`` are different and it is unique if set ``\{p_i\}`` contains ``P_{m-1}``- unisolvent set [3].
 
+Comparing the variational problems (3),(4) and (5),(6) we can expect that their solutions – the normal spline ``\sigma`` and ``D^m`` spline ``\sigma_{D^m}`` will have the similar properties when ``\varepsilon \to 0`` in (3).
 
-
-
-
+Also, in general case (when ``s`` is not an integer number), we could expect the normal spline ``\sigma`` will have similar properties as ``D^{m,s}`` spline ``\sigma_{D^{m,s}}`` constructed in an intermediate Beppo-Levi space ([2, 4]) of the corresponding smoothness once the normal spline scaling ("shape") parameter ``\varepsilon`` is small enough.
 
 
 **References**
 
 [1] M. Agranovich, Sobolev Spaces, Their Generalizations and Elliptic Problems in Smooth and Lipschitz Domains, Springer, Switzerland, 2015.
 
-[2] A. Bezhaev, V. Vasilenko, Variational Theory of Splines, Springer US, 2001.
+[2] F. Utreras, Recent results on multivariate smoothing splines, in Multivariate
+Approximation and Interpolation, ISNM 94, W. Haussmann and K. Jetter (eds.), Birkhauser, Basel, 299–312, 1990.
 
-[3] J. Duchon, Splines minimizing rotation-invariant semi-norms in Sobolev spaces, Lect. Notes in Math., Vol. 571, Springer, Berlin, 1977
+[3] A. Bezhaev, V. Vasilenko, Variational Theory of Splines, Springer US, 2001.
+
+[4] J. Duchon, Splines minimizing rotation-invariant semi-norms in Sobolev spaces, Lect. Notes in Math., Vol. 571, Springer, Berlin, 1977
 
