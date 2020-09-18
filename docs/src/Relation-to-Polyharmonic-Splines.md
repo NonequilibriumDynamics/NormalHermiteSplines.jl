@@ -33,16 +33,16 @@ The corresponding inner product has the form
 \left( \int \Big [ \varepsilon^2 \varphi (x) \overline{\psi (x)}  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} D^\alpha \varphi (x) \overline{D^\alpha \psi (x)}  \Big ]
   \, d x \ 
  \right)^{1/2} ,
- ```
+```
 here ``\alpha = (\alpha_1, \dots, \alpha_n )`` is multi-index with nonnegative integral
-entries, ``|\alpha| = \alpha_1 + \dots + \alpha_n \ ``, ``\alpha ! = \alpha_1 ! \dots \alpha_n !`` and ``D^\alpha \varphi (x) = \frac{ \partial^{|\alpha|}{\varphi} }{ \partial{x_1^{\alpha_1}} \dots x_n^{\alpha_n}}``.
+entries, ``| \alpha | = \alpha_1 + \dots + \alpha_n``, ``\, \alpha ! = \alpha_1 ! \dots \alpha_n !`` and ``D^\alpha \varphi (x) = \frac{ \partial^{|\alpha|}{\varphi} }{ \partial{x_1^{\alpha_1}} \dots x_n^{\alpha_n}}``.
 
 The norms ``\| \varphi \|`` and ``\| \varphi \|'`` are equivalent and space ``H^m_\varepsilon (R^n)`` coincides with Sobolev space. Therefore the problem (1), (2) can be written as
 
 ```math
 \tag{3}
   \| f \|'^2 = \int \Big [ \varepsilon^2 | f(x) |^2  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} |D^\alpha f(x) |^2 \Big ]
-  \, d x \  \ \to min  \, , \quad  \forall f \in W^m_2 (R^n) \ , \quad \varepsilon \gt 0 \, , \quad m \gt \frac{n}{2} \ , 
+  \, d x  \ \to min  \, , \ \  \forall f \in W^m_2 (R^n) \ , \ \varepsilon \gt 0 \, , \ m \gt \frac{n}{2} \ , 
 ```
 ```math
 \tag{4}

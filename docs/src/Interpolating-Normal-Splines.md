@@ -20,8 +20,8 @@ We assume that function ``f`` is an element of the Bessel Potential space ``H^s_
 
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
-  ( \varepsilon ^2 + | \xi |^2 )^{s/2}{\mathcal F} [\varphi(\xi)] \in L_2 (R^n) \right\} , \quad
-  \varepsilon \gt 0 , \ \ s = n/2 + 1/2 + r \, , \quad r = 1,2,\dots \, .
+  ( \varepsilon ^2 + | \xi |^2 )^{s/2}{\mathcal F} [\varphi(\xi)] \in L_2 (R^n) \right\} , \ \ 
+  \varepsilon \gt 0 , \ s = n/2 + 1/2 + r \, , \quad r = 1,2,\dots \, .
 ```
 where ``| \cdot |`` is the Euclidean norm, ``S'  (R^n)`` is space of L. Schwartz tempered distributions, parameter ``s`` may be treated as a fractional differentiation order and ``\mathcal F [\varphi ]`` is a Fourier transform of the ``\varphi``. The parameter ``\varepsilon`` can be considered as a "scaling parameter", it allows to control approximation properties of the normal spline which usually are getting better with smaller values of ``\varepsilon``, also it can be used to reduce the ill-conditioness of the related computational problem (in traditional theory ``\varepsilon = 1``).
 
@@ -63,11 +63,11 @@ The corresponding inner product has the form
 \left( \int \Big [ \varepsilon^2 \varphi (x) \overline{\psi (x)}  + \sum_{|\alpha| = m} \frac{m!}{\alpha!} D^\alpha \varphi (x) \overline{D^\alpha \psi (x)}  \Big ]
   \, d x \ 
  \right)^{1/2} ,
- ```
+```
 here ``\alpha = (\alpha_1, \dots, \alpha_n )`` is multi-index with nonnegative integral
-entries, ``|\alpha| = \alpha_1 + \dots + \alpha_n \ ``, ``\alpha ! = \alpha_1 ! \dots \alpha_n !`` and ``D^\alpha \varphi (x) = \frac{ \partial^{|\alpha|}{\varphi} }{ \partial{x_1^{\alpha_1}} \dots x_n^{\alpha_n}}``.
+entries, ``| \alpha | = \alpha_1 + \dots + \alpha_n``, ``\, \alpha ! = \alpha_1 ! \dots \alpha_n !`` and ``D^\alpha \varphi (x) = \frac{ \partial^{|\alpha|}{\varphi} }{ \partial{x_1^{\alpha_1}} \dots x_n^{\alpha_n}}``.
 
-The norms ``\| \varphi \|`` and ``\| \varphi \|'`` are equivalent and space ``H^m_\varepsilon (R^n)`` coincides with Sobolev space. 
+The norms ``| \varphi |`` and ``| \varphi |'`` are equivalent and space ``H^m_\varepsilon (R^n)`` coincides with Sobolev space. 
 
  Hilbert space ``H^s_\varepsilon (R^n)`` is continuously embedded in Hölder space ``C_b^r(R^n)`` ([3],[17],[20]) of functions continuous and bounded with their first ``r`` derivatives, it means function ``f`` can be treated as an element of function class ``C^r(R^n)`` of functions continuous with their first ``r`` derivatives. Therefore functionals ``F_i`` and ``F'_j``
 
