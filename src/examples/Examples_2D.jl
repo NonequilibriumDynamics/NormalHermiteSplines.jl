@@ -983,7 +983,6 @@ function usage2()
     nodes = Matrix{Float64}(undef, 2, m)
     rng = MersenneTwister(0);
     rnd = rand(rng, Float64, (2, m))
-    rnd = rand(rng, Float64, (2, m))
     for i = 1:m
         nodes[1, i] = rnd[1, i]
         nodes[2, i] = rnd[2, i]
@@ -1018,6 +1017,8 @@ function usage2()
         es[1,k] = 0.0
         es[2,k] = 1.0
     end
+    @printf "m #: %d\n" m
+    @printf "k #: %d\n" k
 
     # creating the uniform Cartesian grid of size 101x101 on [0, 1]x[0, 1]
     t = 100

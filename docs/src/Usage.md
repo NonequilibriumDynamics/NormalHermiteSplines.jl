@@ -439,7 +439,6 @@ Corresponding code example for case B:
     nodes = Matrix{Float64}(undef, 2, m)
     rng = MersenneTwister(0);
     rnd = rand(rng, Float64, (2, m))
-    rnd = rand(rng, Float64, (2, m))
     for i = 1:m
         nodes[1, i] = rnd[1, i]
         nodes[2, i] = rnd[2, i]
