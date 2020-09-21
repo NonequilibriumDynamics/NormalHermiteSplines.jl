@@ -898,8 +898,8 @@ end
 
 function usage1(eps::Float64 = 0.0, use_extended_precision::Bool = false)
 
-    # generating 200 uniform random nodes
-    m = 200
+    # generating 100 uniform random nodes
+    m = 100
     nodes = Matrix{Float64}(undef, 2, m)
     rng = MersenneTwister(0);
     rnd = rand(rng, Float64, (2, m))
@@ -978,8 +978,8 @@ function usage2()
         return w
     end
 
-    # generating 200 uniform random nodes
-    m = 200
+    # generating 100 uniform random nodes
+    m = 100
     nodes = Matrix{Float64}(undef, 2, m)
     rng = MersenneTwister(0);
     rnd = rand(rng, Float64, (2, m))
@@ -1120,7 +1120,7 @@ end
 
 function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
     # generating 200 uniform random nodes
-    m = 200
+    m = 100
     nodes = Matrix{T}(undef, 2, m)
     rng = MersenneTwister(0);
     rnd = rand(rng, Float64, (2, m))

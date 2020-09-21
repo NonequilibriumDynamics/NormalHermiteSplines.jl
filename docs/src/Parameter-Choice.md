@@ -19,7 +19,7 @@ As example let's consider interpolation of function
 ```math
 \phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)
 ```
-sampled on set of 200 pseudo-random nodes uniformly distributed on unit square ``\Omega = [0,1]^2``.
+sampled on set of 100 pseudo-random nodes uniformly distributed on unit square ``\Omega = [0,1]^2``.
 
 ```
     using NormalHermiteSplines
