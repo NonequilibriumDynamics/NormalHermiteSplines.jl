@@ -349,7 +349,7 @@ Following is the code example for case A:
 ```@example 2A
     σ = evaluate(spline, grid)
     # Return the Root Mean Square Error (RMSE) of interpolation
-    rmse = norm(f .- σ) / sqrt(length(f))
+    rmse = norm(f .- σ) / t1^2
 ```
 
 ```@example 2A
@@ -475,11 +475,13 @@ Corresponding code example for case B:
     y = collect(range(0.0, 1.0; step = 1.0/t))
     t1 = t + 1
     grid = Matrix{Float64}(undef, 2, t1^2)
+    f = Vector{Float64}(undef, t1^2)
     for i = 1:t1
         for j = 1:t1
             r = (i - 1) * t1 + j
             grid[1, r] = x[i]
             grid[2, r] = y[j]
+            f[r] = (2.0*cos(10.0*x[i])*sin(10.0*y[j]) + sin(10.0*x[i]*y[j]))/3.0
         end
     end
 
@@ -506,7 +508,13 @@ Corresponding code example for case B:
 
 ```@example 2B
     σ = evaluate(spline, grid)
-    σ = nothing
+    # Return the Root Mean Square Error (RMSE) of interpolation
+    rmse = norm(f .- σ) / t1^2
+```
+
+```@example 2B
+   # Return the Maximum Absolute Error (MAE) of interpolation
+   mae = maximum(abs.(f .- σ))
 ```
 
 Value of function ``\phi`` at evaluation point ``p = [0.5; 0.5]``
