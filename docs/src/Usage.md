@@ -278,11 +278,11 @@ here red dots represent the function ``\phi`` gradient value nodes.
 Spline plot                                                                         Approximation error plots
 
 ```@raw html
-<img src="../images/2d-usage/s-cf-33,33,2,1,0.0,-.png" width="256"/>
+<img src="../images/2d-usage/s-cf-33,33,2,1,1.0,-.png" width="256"/>
 ``` ```@raw html
-<img src="../images/2d-usage/delta-cf-33,33,2,1,0.0,-.png" width="256"/>
+<img src="../images/2d-usage/delta-cf-33,33,2,1,1.0,-.png" width="256"/>
 ```  ```@raw html
-<img src="../images/2d-usage/delta-s-33,33,2,1,0.0,-.png" width="256"/>
+<img src="../images/2d-usage/delta-s-33,33,2,1,1.0,-.png" width="256"/>
 ```
 Following is the code example for case A:
 
@@ -314,11 +314,13 @@ Following is the code example for case A:
     t1 = t + 1
 
     grid = Matrix{Float64}(undef, 2, t1^2)
+    f = Vector{Float64}(undef, t1^2)
     for i = 1:t1
         for j = 1:t1
             r = (i - 1) * t1 + j
             grid[1, r] = x[i]
             grid[2, r] = y[j]
+            f[r] = (2.0*cos(10.0*x[i])*sin(10.0*y[j]) + sin(10.0*x[i]*y[j]))/3.0
         end
     end
 
@@ -346,7 +348,13 @@ Following is the code example for case A:
 
 ```@example 2A
     σ = evaluate(spline, grid)
-    σ = nothing
+    # Return the Root Mean Square Error (RMSE) of interpolation
+    rmse = norm(f .- σ) / sqrt(length(f))
+```
+
+```@example 2A
+   # Return the Maximum Absolute Error (MAE) of interpolation
+   mae = maximum(abs.(f .- σ))
 ```
 
 Value of function ``\phi`` at evaluation point ``p = [0.5; 0.5]``
