@@ -253,36 +253,36 @@ Let's interpolate function ``\phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1
 ``` ```@raw html
 <img src="../images/2d-usage/m-t-32.png" width="256"/>
 ```  ```@raw html
-<img src="../images/2d-usage/m-grid-32,3.png" width="197"/>
+<img src="../images/2d-usage/m-grid-32,2.png" width="197"/>
 ```
 We built a spline using function ``\phi`` values sampled on set of 100 pseudo-random nodes uniformly distributed on ``\Omega`` (case A).
 
 Spline plot                                                                        Approximation error plots
 
 ```@raw html
-<img src="../images/2d-usage/s-cf-32,32,3,1,0.0,-.png" width="256"/>
+<img src="../images/2d-usage/s-cf-32,32,2,1,0.0,-.png" width="256"/>
 ``` ```@raw html
-<img src="../images/2d-usage/delta-cf-32,32,3,1,0.0,-.png" width="256"/>
+<img src="../images/2d-usage/delta-cf-32,32,2,1,0.0,-.png" width="256"/>
 ```  ```@raw html
-<img src="../images/2d-usage/delta-s-32,32,3,1,0.0,-.png" width="256"/>
+<img src="../images/2d-usage/delta-s-32,32,2,1,0.0,-.png" width="256"/>
 ```
 and 
 
 using function ``\phi`` values sampled on set of 100 pseudo-random nodes uniformly distributed on ``\Omega`` and 80 function ``\phi`` gradient values defined at nodes located on the border of domain ``\Omega`` (case B):
 
 ```@raw html
-<img src="../images/2d-usage/m-grid-33,3.png" width="197"/> 
+<img src="../images/2d-usage/m-grid-33,2.png" width="197"/> 
 ```
 here red dots represent the function ``\phi`` gradient value nodes. 
 
 Spline plot                                                                         Approximation error plots
 
 ```@raw html
-<img src="../images/2d-usage/s-cf-33,33,3,1,0.0,-.png" width="256"/>
+<img src="../images/2d-usage/s-cf-33,33,2,1,0.0,-.png" width="256"/>
 ``` ```@raw html
-<img src="../images/2d-usage/delta-cf-33,33,3,1,0.0,-.png" width="256"/>
+<img src="../images/2d-usage/delta-cf-33,33,2,1,0.0,-.png" width="256"/>
 ```  ```@raw html
-<img src="../images/2d-usage/delta-s-33,33,3,1,0.0,-.png" width="256"/>
+<img src="../images/2d-usage/delta-s-33,33,2,1,0.0,-.png" width="256"/>
 ```
 Following is the code example for case A:
 

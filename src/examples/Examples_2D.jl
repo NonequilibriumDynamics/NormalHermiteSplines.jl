@@ -489,7 +489,7 @@ function test_2D(model_id::Int,
     @printf "EPSILON:%0.1e   COND: %0.1e \n" ε cond
 
     iq = estimate_accuracy(spline)
-    @printf "interpolation quality: %0.1e\n" iq
+    @printf "accuracy: %d\n" iq
 
     @printf "Evaluating spline..\n"
     ts = time_ns()
