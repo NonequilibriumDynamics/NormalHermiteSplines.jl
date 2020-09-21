@@ -402,7 +402,6 @@ Corresponding code example for case B:
 
 ```@example 2B
     using Random
-    using LinearAlgebra
     using NormalHermiteSplines
 
     function get_2D_border_nodes(m::Int)
@@ -522,7 +521,7 @@ Corresponding code example for case B:
 ```@example 2B
     σ = evaluate(spline, grid)
     # Return the Root Mean Square Error (RMSE) of interpolation
-    rmse = norm(f .- σ) / sqrt(length(f))
+    rmse = sqrt(sum((f .- σ).^2)) / sqrt(length(f))
 ```
 
 ```@example 2B
