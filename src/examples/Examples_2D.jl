@@ -1006,7 +1006,6 @@ function usage2()
         k += 1
         x = bnodes[1,i]
         y = bnodes[2,i]
-        grad = [0.0; 0.0]
         d_nodes[1,k] = x
         d_nodes[2,k] = y
         du[k] = (10.0*y*cos(10.0*x*y) - 20.0*sin(10.0*x)*sin(10.0*y))/3.0
@@ -1020,12 +1019,13 @@ function usage2()
         es[2,k] = 1.0
     end
 
-    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
-    t = 50
+    # creating the uniform Cartesian grid of size 101x101 on [0, 1]x[0, 1]
+    t = 100
     x = collect(range(0.0, 1.0; step = 1.0/t))
     y = collect(range(0.0, 1.0; step = 1.0/t))
     t1 = t + 1
-    grid = Matrix{Float64}(undef, 2, t1^2)
+    n = t1^2
+    grid = Matrix{Float64}(undef, 2, n)
     for i = 1:t1
         for j = 1:t1
             r = (i - 1) * t1 + j
@@ -1034,16 +1034,33 @@ function usage2()
         end
     end
 
+    f = Vector{Float64}(undef, n)
+    for i = 1:n
+        x = grid[1,i]
+        y = grid[2,i]
+        f[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
+    end
+
     # Here spline is being constructed with RK_H1 kernel,
-    # the value of the 'scaling parameter' ε is estimated
-    # in the interpolate procedure.
-    rk = RK_H1()
+    # the 'scaling parameter' ε is defined explicitly.
+    rk = RK_H1(1.0)
     #
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
     cond = get_cond(spline)
     @printf "cond #: %0.1e\n" cond
     ε = get_epsilon(spline)
     @printf "ε #: %0.1e\n" ε
+    iq = estimate_accuracy(spline)
+    @printf "accuracy: %d\n" iq
+
+    σ = evaluate(spline, grid)
+    # Return the Root Mean Square Error (RMSE) of interpolation
+    rmse = norm(f .- σ) / sqrt(length(f))
+    # Return the Maximum Absolute Error (MAE) of interpolation
+    mae = maximum(abs.(f .- σ))
+    @printf "rmse #: %0.1e\n" rmse
+    @printf "mae #: %0.1e\n" mae
+
 end
 
 

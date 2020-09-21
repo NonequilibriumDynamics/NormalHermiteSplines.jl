@@ -307,21 +307,27 @@ Following is the code example for case A:
         u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
     end
 
-    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
-    t = 50
+    # creating the uniform Cartesian grid of size 101x101 on [0, 1]x[0, 1]
+    t = 100
     x = collect(range(0.0, 1.0; step = 1.0/t))
     y = collect(range(0.0, 1.0; step = 1.0/t))
-    t1 = t + 1
 
-    grid = Matrix{Float64}(undef, 2, t1^2)
-    f = Vector{Float64}(undef, t1^2)
+    t1 = t + 1
+    n = t1^2
+    grid = Matrix{Float64}(undef, 2, n)
     for i = 1:t1
         for j = 1:t1
             r = (i - 1) * t1 + j
             grid[1, r] = x[i]
             grid[2, r] = y[j]
-            f[r] = (2.0*cos(10.0*x[i])*sin(10.0*y[j]) + sin(10.0*x[i]*y[j]))/3.0
         end
+    end
+
+    f = Vector{Float64}(undef, n)
+    for i = 1:n
+        x = grid[1,i]
+        y = grid[2,i]
+        f[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
     end
 
     # Here spline is being constructed with RK_H1 kernel,
@@ -349,7 +355,7 @@ Following is the code example for case A:
 ```@example 2A
     σ = evaluate(spline, grid)
     # Return the Root Mean Square Error (RMSE) of interpolation
-    rmse = norm(f .- σ) / t1^2
+    rmse = sqrt(sum((f .- σ).^2)) / sqrt(length(f))
 ```
 
 ```@example 2A
@@ -396,6 +402,7 @@ Corresponding code example for case B:
 
 ```@example 2B
     using Random
+    using LinearAlgebra
     using NormalHermiteSplines
 
     function get_2D_border_nodes(m::Int)
@@ -469,20 +476,27 @@ Corresponding code example for case B:
         es[2,k] = 1.0
     end
 
-    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
-    t = 50
+    # creating the uniform Cartesian grid of size 101x101 on [0, 1]x[0, 1]
+    t = 100
     x = collect(range(0.0, 1.0; step = 1.0/t))
     y = collect(range(0.0, 1.0; step = 1.0/t))
+
     t1 = t + 1
-    grid = Matrix{Float64}(undef, 2, t1^2)
-    f = Vector{Float64}(undef, t1^2)
+    n = t1^2
+    grid = Matrix{Float64}(undef, 2, n)
     for i = 1:t1
         for j = 1:t1
             r = (i - 1) * t1 + j
             grid[1, r] = x[i]
             grid[2, r] = y[j]
-            f[r] = (2.0*cos(10.0*x[i])*sin(10.0*y[j]) + sin(10.0*x[i]*y[j]))/3.0
         end
+    end
+
+    f = Vector{Float64}(undef, n)
+    for i = 1:n
+        x = grid[1,i]
+        y = grid[2,i]
+        f[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
     end
 
     # Here spline is being constructed with RK_H1 kernel,
@@ -509,7 +523,7 @@ Corresponding code example for case B:
 ```@example 2B
     σ = evaluate(spline, grid)
     # Return the Root Mean Square Error (RMSE) of interpolation
-    rmse = norm(f .- σ) / t1^2
+    rmse = norm(f .- σ) / sqrt(length(f))
 ```
 
 ```@example 2B
