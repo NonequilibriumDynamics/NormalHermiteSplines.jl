@@ -292,6 +292,18 @@ function get_2D_model15_grad(p::Vector{Float64})
     return grad
 end
 
+# Franke, R., and Nielson, G. (1984) Surface approximation with imposed conditions,
+# in: R. E. Barnhill and W. Boehm, Surfaces in Computer Aided Geometric Design , North-Holland, Amsterdam, 135-146
+function get_2D_model16(p::Vector{Float64})
+#  (x,y) \in [-2;2]x[-1;3]
+# max f_orig = 2500
+    x = p[1]
+    y = p[2]
+    #f = 
+    return f
+end
+
+
 
 ########### 3D #########
 

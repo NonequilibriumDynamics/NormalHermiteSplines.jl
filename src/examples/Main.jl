@@ -24,7 +24,7 @@ export readme_3
 export demo
 export usage1, usage2
 
-export param1
+export param1, param10
 
 
 # Return the Root Mean Square Error (RMSE) of interpolation

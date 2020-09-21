@@ -1,6 +1,6 @@
 # Comparison with Polyharmonic Splines
 
-Interpolating normal spline ``\sigma`` is the solution of the variational problem:
+Interpolating normal spline ``\sigma`` is solution of the variational problem:
 
 ```math
 \tag{1}
@@ -10,7 +10,7 @@ Interpolating normal spline ``\sigma`` is the solution of the variational proble
 \tag{2}
  f(p_i) =  u_i \, , \quad  p_i \in R^n \, , \qquad i = 1, 2, \dots, n  \qquad \qquad\qquad\qquad\qquad\qquad\qquad 
 ```
-here ``H^s_\varepsilon (R^n)`` is the Bessel Potential space, which is defined as:
+here ``H^s_\varepsilon (R^n)`` is Bessel Potential space, which is defined as:
 
 ```math
    H^s_\varepsilon (R^n) = \left\{ \varphi | \varphi \in S' ,
@@ -69,8 +69,7 @@ sufficiently regular ([3, 4]) domain in ``R^n``).
 
 Comparing the variational problems (3),(4) and (5),(6) we can expect that their solutions – the normal spline ``\sigma`` and ``D^m`` spline ``\sigma_{D^m}`` will have the similar properties when ``\varepsilon \to 0`` in (3).
 
-Also, in general case (when ``s`` is not an integer number), we could expect the normal spline ``\sigma`` will have similar properties as ``D^{m,s}`` spline ``\sigma_{D^{m,s}}`` constructed in an intermediate Beppo-Levi space ([2, 4]) of the corresponding smoothness once the normal spline scaling ("shape") parameter ``\varepsilon`` is small enough.
-
+Also, in general case (when ``s`` is not an integer number), we could expect that once the normal spline scaling ("shape") parameter ``\varepsilon`` is small enough the normal spline ``\sigma`` will have similar properties as ``D^{m,s}`` spline ``\sigma_{D^{m,s}}`` constructed in the intermediate Beppo-Levi space ([2, 4]) of the corresponding smoothness. 
 
 **References**
 

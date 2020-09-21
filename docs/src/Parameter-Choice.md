@@ -1,11 +1,11 @@
 # Choosing the scale parameter value
 
-Approximating properties of the normal spline are getting better with the smaller value of the scaling parameter $\varepsilon$ (this parameter also is known as the "shape" parameter in RBF literature), and if the value of this parameter is small enough then normal spline become similar to Duchon's $D^m -$spline [2]. See also
-[Relation to Polyharmonic Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Relation-to-Polyharmonic-Splines/).
+Approximating properties of the normal spline are getting better with the smaller value of the scaling parameter $\varepsilon$ (this parameter also is known as the "shape" parameter in RBF literature), and if the value of this parameter is small enough then normal spline become similar to Duchon's $D^m -$spline [2] (details described in
+[Comparison with Polyharmonic Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Relation-to-Polyharmonic-Splines/)).
 
-However with decreasing value of the parameter $\varepsilon$ the condition number of the corresponding problem Gram matrix is increasing and the problem becomes numerically unstable (see "uncertainty principle" of Schaback [4]). The Gram matrix of the interpolating problem even can lost its positive deiniteness property if $\varepsilon$ is small. Also, as it was pointed out in [3] the RBF interpolation with small value of the "shape" parameter may cause the Runge phenomenon i.e. undesirable interpolant oscillations which are most likely observed at the domain border. 
+However with decreasing value of the parameter $\varepsilon$ the condition number of the corresponding problem Gram matrix is increasing and the problem becomes numerically unstable (see "uncertainty principle" of Schaback [4]). The Gram matrix of the interpolating problem even can lost its positive definiteness property if $\varepsilon$ is small. Also, as it was pointed out in [3] the RBF interpolation with small value of the "shape" parameter may cause the Runge phenomenon i.e. undesirable interpolant oscillations which are most likely observed at the domain border. 
 
-Therefore, when choosing the value of the $\varepsilon$, a compromise is needed. In practice, it is necessary to choose such value of the scaling parameter that condition number of the problem Gram matrix is a small enough number. As a rule, the heuristic algorithm implemented within the interpolation procedure produces a good estimation of the scaling parameter value (this algorithm applies if the value of the scaling parameter was not provided explicitly in creating of the reproducing kernel object.)
+Therefore, when choosing the value of the $\varepsilon$, a compromise is needed. In practice, it is necessary to choose such value of the scaling parameter that condition number of the problem Gram matrix is a small enough number. As a rule, the heuristic algorithm implemented within the interpolation procedure produces a good estimation of the scaling parameter value (this algorithm applies if the value of the scaling parameter was not provided explicitly in creation of the reproducing kernel object.)
 
 The following API functions could be useful for selecting a suitable value of the scaling parameter $\varepsilon$:
 
@@ -14,7 +14,7 @@ The following API functions could be useful for selecting a suitable value of th
 - ```estimate_accuracy```
 - ```estimate_epsilon```  
 
-Let's consider an example with interpolation of function 
+As example let's consider interpolation of function 
 
 ```math
 \phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)
@@ -36,7 +36,7 @@ sampled on set of 200 pseudo-random nodes uniformly distributed on unit square `
 The results of this function interpolation with reproducing kernel ```RK_H0``` are displayed in Table I, results of interpolation with reproducing kernel ```RK_H1``` are displayed in Table II and results of interpolation received with reproducing kernel ```RK_H2``` - in Table III.
 Condition number (```κ```) of the interpolation problem Gram matrix were estimated by procedure described in [1]. The root mean squared error (```RMSE```), the maximum absolute error (```MAE```) and estimated accuracy (```EAC```) are defined as follows:
 
-
+TODO:
 
 To estimate the accuracy of the solution obtained using the considered method, we computed  error
 and the root mean square (RMS) error

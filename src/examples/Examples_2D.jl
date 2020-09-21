@@ -1136,10 +1136,10 @@ function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
         u[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
     end
 
-    # creating the uniform Cartesian grid of size 51x51 on [0, 1]x[0, 1]
+    # creating the uniform Cartesian grid of size 101x101 on [0, 1]x[0, 1]
     t = 100
-    x = collect(range(0.0, 1.0; step = 1.0/t))
-    y = collect(range(0.0, 1.0; step = 1.0/t))
+    x = collect(range(0.0, 1.0; step = T(1.0)/t))
+    y = collect(range(0.0, 1.0; step = T(1.0)/t))
     t1 = t + 1
     n = t1^2
     grid = Matrix{T}(undef, 2, n)
@@ -1150,6 +1150,7 @@ function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
             grid[2,r] = y[j]
         end
     end
+
     f = Vector{T}(undef, n)
     for k = 1:n
         x = grid[1,k]
@@ -1187,9 +1188,9 @@ function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
     fmax = maximum(f)
     fmin = minimum(f)
     @printf "FMAX:%0.1e FMIN:%0.1e\n" fmax fmin
-    @printf "EPS:%s  COND:%0.1e  ACC:%d  RMSE:%0.1e  MAE:%0.1e  RRMSE:%0.1e  RMAE:%0.1e\n" se cond acc rmse mae rrmse rmae
+    @printf "T:%s kernel_type:%d EPS:%s  COND:%0.1e  ACC:%d  RMSE:%0.1e  MAE:%0.1e  RRMSE:%0.1e  RMAE:%0.1e\n" typeof(eps) kernel_type se cond acc rmse mae rrmse rmae
     open("c:/0/param1.txt","a") do io
-        @printf io "EPS:%s  COND:%0.1e  ACC:%d  RMSE:%0.1e  MAE:%0.1e  RRMSE:%0.1e  RMAE:%0.1e\n" se cond acc rmse mae rrmse rmae
+        @printf io "T:%s kernel_type:%d EPS:%s  COND:%0.1e  ACC:%d  RMSE:%0.1e  MAE:%0.1e  RRMSE:%0.1e  RMAE:%0.1e\n" typeof(eps) kernel_type se cond acc rmse mae rrmse rmae
     end
 
     gx = grid[1,:]
@@ -1210,33 +1211,45 @@ function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
     PyPlot.clf()
     pygui(false)
     lvls = [-0.7;-0.6;-0.5;-0.4;-0.3;-0.2;-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1]
+    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
+    axis("equal")
+    colorbar(o)
+
+    PyPlot.title("f")
+    savefig("c:/0/p-cf", dpi=150, bbox_inches="tight")
+    PyPlot.clf()
+    pygui(false)
+
+    PyPlot.clf()
+    pygui(false)
+    lvls = [-0.7;-0.6;-0.5;-0.4;-0.3;-0.2;-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1]
     o = contourf(x, y, gσ, levels=lvls, cmap=ColorMap("gnuplot"))
     axis("equal")
     colorbar(o)
     #scatter(nodes[1,:], nodes[2,:], s=60, c="red")
 
     if typeof(eps) == Float64
-        PyPlot.title("ε:$se")
-        savefig("c:/0/p-cf,$eps,-.png", dpi=150, bbox_inches="tight")
+        PyPlot.title("spline, ε:$se")
+        savefig("c:/0/p-cs,$eps,-.png", dpi=150, bbox_inches="tight")
     else
-        PyPlot.title("ε:$se, Extended Precision")
-        savefig("c:/0/p-cf-ext,$eps,-.png", dpi=150, bbox_inches="tight")
+        PyPlot.title("spline, ε:$se, Extended Precision")
+        savefig("c:/0/p-cs-ext,$eps,-.png", dpi=150, bbox_inches="tight")
     end
-    PyPlot.clf()
-    pygui(false)
 
-    o = surf(gx, gy, σ, cmap=ColorMap("gnuplot"), linewidth=0, antialiased=false, alpha=1.0)
-    tick_params(axis="both", which="major", labelsize=6)
-    tick_params(axis="both", which="minor", labelsize=6)
-    cb = colorbar(o, shrink=0.75)
-    #PyPlot.suptitle("suptitle")
-    if typeof(eps) == Float64
-        PyPlot.title("ε:$se")
-        savefig("c:/0/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
-    else
-        PyPlot.title("ε:$se, Extended Precision")
-        savefig("c:/0/p-s-ext,$eps,-.png", dpi=150, bbox_inches="tight")
-    end
+    # PyPlot.clf()
+    # pygui(false)
+    # o = surf(gx, gy, σ, cmap=ColorMap("gnuplot"), linewidth=0, antialiased=false, alpha=1.0)
+    # tick_params(axis="both", which="major", labelsize=6)
+    # tick_params(axis="both", which="minor", labelsize=6)
+    # cb = colorbar(o, shrink=0.75)
+    # #PyPlot.suptitle("suptitle")
+    # if typeof(eps) == Float64
+    #     PyPlot.title("ε:$se")
+    #     savefig("c:/0/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
+    # else
+    #     PyPlot.title("ε:$se, Extended Precision")
+    #     savefig("c:/0/p-s-ext,$eps,-.png", dpi=150, bbox_inches="tight")
+    # end
 end
 
 function param10(eps::Float64 = 0.0, use_extended_precision::Bool = false)
