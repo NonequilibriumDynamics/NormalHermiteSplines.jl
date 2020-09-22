@@ -69,7 +69,7 @@ sufficiently regular ([3, 4]) domain in ``R^n``).
 
 Comparing the variational problems (3),(4) and (5),(6) we can expect that their solutions – the normal spline ``\sigma`` and ``D^m`` spline ``\sigma_{D^m}`` will have the similar properties when ``\varepsilon \to 0`` in (3).
 
-Also, in general case (when ``s`` is not an integer number), we could expect that once the normal spline scaling ("shape") parameter ``\varepsilon`` is small enough the normal spline ``\sigma`` will have similar properties as ``D^{m,s}`` spline ``\sigma_{D^{m,s}}`` of corresponding smoothness constructed in the appropriate intermediate Beppo-Levi space ([2, 4]).
+Also, in general case (when ``s`` is not an integer number), we could expect that once the normal spline scaling ("shape") parameter ``\varepsilon`` is small enough, the normal spline ``\sigma`` will have similar properties as ``D^{m,s}`` spline ``\sigma_{D^{m,s}}`` of corresponding smoothness constructed in the appropriate intermediate Beppo-Levi space ([2, 4]).
 
 **References**
 
