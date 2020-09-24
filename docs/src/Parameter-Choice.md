@@ -1,5 +1,5 @@
-# Choosing the scale parameter value
-
+# Selecting a good value of the scale parameter
+ 
 Approximating properties of the normal spline are getting better with the smaller value of the scaling parameter $\varepsilon$ (this parameter also is known as the "shape" parameter in RBF literature), and if the value of this parameter is small enough then normal spline become similar to Duchon's $D^m -$spline [2]. Details described in
 [Comparison with Polyharmonic Splines](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Relation-to-Polyharmonic-Splines/).
 
@@ -14,12 +14,12 @@ The following API functions could be useful for selecting a suitable value of th
 - ```estimate_accuracy```
 - ```estimate_epsilon```  
 
-As example let's consider interpolation of function 
+As example let's consider interpolation of function ``\phi (x,y)``
 
 ```math
 \phi (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)
 ```
-sampled on set of 100 pseudo-random nodes uniformly distributed on unit square ``\Omega = [0,1]^2``.
+sampled on set ``\chi`` of 100 pseudo-random nodes uniformly distributed on unit square ``\Omega = [0,1]^2``.
 
 ```
     using NormalHermiteSplines
@@ -31,18 +31,32 @@ sampled on set of 100 pseudo-random nodes uniformly distributed on unit square `
     valid_digits = estimate_accuracy(spline)
     ....
 ```
-the complete code example can be found in [Example usage](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Usage/#D-interpolation-case-2/).
+the complete example code can be found in [Example usage](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Usage/#D-interpolation-case-2/).
 
-The results of this function interpolation with reproducing kernel ```RK_H0``` are displayed in Table I, results of interpolation with reproducing kernel ```RK_H1``` are displayed in Table II and results of interpolation received with reproducing kernel ```RK_H2``` - in Table III.
-Condition number (```κ```) of the interpolation problem Gram matrix were estimated by procedure described in [1]. The root mean squared error (```RMSE```), the maximum absolute error (```MAE```) and estimated accuracy (```EAC```) are defined as follows:
+The normal splines ``\sigma (x,y)`` are evaluated on a regular grid of ``S = 101 × 101`` points ``E_S= \{(x_i, y_i)\, , \ i=1, \dots, S \}``. The interpolation error is measured by means of the root mean squared error (``RMSE``)
 
-TODO:
+```math
+  RMSE = \sqrt { \frac{1}{S} \sum_{i=1}^S |\phi (x_i,y_i) - \sigma (x_i,y_i) |^2 } \ ,
+```
+and the maximum absolute error (``MAE``)
+```math
+  MAE = \max_{1 \le i \le S} |\phi (x_i,y_i) - \sigma (x_i,y_i) | \ .
+```
+The number of the interpolant 'valid digits' (``VD``) is calculated as
+```math
+VD = -[\log10(\max_{(x_k, y_k) \in \chi} |\phi (x_k,y_k) - \sigma (x_k,y_k) |)] - 1 \ ,
+```
+here ``(x_k, y_k) \in \chi`` are interplation nodes and ``[\cdot]`` denotes an integer part of number.
 
-To estimate the accuracy of the solution obtained using the considered method, we computed  error
-and the root mean square (RMS) error
-where  is a set of test points, . In the experiments with different nodes distributions, the accuracy was estimated on regularly distributed nodes.
+Condition number (``κ``) of the interpolation problem Gram matrix were estimated by procedure described in [1].
 
-Statistical analysis (descriptive statistics and hypotheses testing) have been done using SciPy subpackage stats.
+The results of this function interpolation with reproducing kernel ```RK_H0``` are displayed in Table I, results of interpolation with reproducing kernel ```RK_H1``` are displayed in Table II and results of interpolation received with reproducing kernel ```RK_H2``` – in Table III.
+
+Table I
+
+
+
+
 
 
 

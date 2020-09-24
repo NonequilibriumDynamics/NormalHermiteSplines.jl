@@ -76,6 +76,7 @@ Pages = [
       "Interpolating-Normal-Splines.md",
       "Simple-examples.md",
       "Relation-to-Polyharmonic-Splines.md",
+      "Convergence.md",
       "Updating-Cholesky-Factorization.md"
 ]
 Depth = 3

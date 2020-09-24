@@ -8,7 +8,7 @@ makedocs(
 				"Home" => "index.md",
 				"Public API" => "Public-API.md",
 				"Example Usage" => "Usage.md",
-				"Choice of the scaling parameter" => "Parameter-Choice.md",
+				"Selecting a good value of the scale parameter" => "Parameter-Choice.md",
 				"Numerical Tests" => "Numerical-Tests.md",
 				"Tests with real data" => "Tests-with-real-data.md",
 				"Normal Splines Method" => "Normal-Splines-Method.md",
@@ -17,6 +17,7 @@ makedocs(
 				"Interpolating Normal Splines" => "Interpolating-Normal-Splines.md",
 				"Simple Normal Splines Examples"  => "Simple-examples.md",
 				"Comparison with Polyharmonic Splines"  => "Relation-to-Polyharmonic-Splines.md",
+				"Convergence and Error Bounds" => "Convergence.md",
 				"Updating Cholesky Factorization" => "Updating-Cholesky-Factorization.md",
 			]
 )
