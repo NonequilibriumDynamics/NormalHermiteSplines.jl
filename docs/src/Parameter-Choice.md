@@ -50,9 +50,9 @@ and the maximum absolute error (``MAE``)
 ```math
   MAE = \max_{1 \le i \le S} |f (x_i,y_i) - \sigma (x_i,y_i) | \ .
 ```
-The number of the interpolant 'valid digits' (``VD``) is calculated as
+The number of the interpolant 'significant digits' (``SD``) is calculated as
 ```math
-VD = -[\log10(\max_{(x_k, y_k) \in \chi} |f (x_k,y_k) - \sigma (x_k,y_k) |)] - 1 \ ,
+SD = -[\log10(\max_{(x_k, y_k) \in \chi} |f (x_k,y_k) - \sigma (x_k,y_k) |)] - 1 \ ,
 ```
 here ``(x_k, y_k) \in \chi`` are interplation nodes and ``[\cdot]`` denotes an integer part of number.
 
@@ -60,9 +60,9 @@ Condition number (``COND``) of the interpolation problem Gram matrix were estima
 
 The results of this function interpolation with reproducing kernel ```RK_H0``` are displayed in Table I, results of interpolation with reproducing kernel ```RK_H1``` are displayed in Table II and results of interpolation received with reproducing kernel ```RK_H2``` – in Table III. The first row of each table corresponds to results obtained with automatically selected value of the scaling parameter ``\varepsilon``
 
-Table I. 
+Table I. Spline constructed with ```RK_H0``` reproducing kernel
 
-|     ε      |    COND    |      VD      |     RMSE     |     MAE     |
+|     ε      |    COND    |      SD      |     RMSE     |     MAE     |
 |:---------- |:----------:|:------------:|:------------:|:-----------:|
 |**1.7e+00** | **1.0e+05**|      **14**  |  **9.2e-02** |  **6.3e-01**|
 |  1.0e+01   |  1.0e+03   |      15      |   1.1e-01    |   4.7e-01   |
@@ -93,40 +93,44 @@ These plots show normal splines constructed with ```RK_H0()``` (``\varepsilon = 
 ```
 
 
+Table II. Spline constructed with ```RK_H1``` reproducing kernel
 
-
-
-
-Table II
-
-|     ε      |    COND    |      VD      |     RMSE     |     MAE     |
+|     ε      |    COND    |      SD      |     RMSE     |     MAE     |
 |:---------- |:----------:|:------------:|:------------:|:-----------:|
-|**1.7e+00** | **1.0e+05**|      **14**  |  **9.2e-02** |  **6.3e-01**|
-|  1.0e+01   |  1.0e+03   |      15      |   1.1e-01    |   4.7e-01   |
-|  1.0e+00   |  1.0e+05   |      14      |   9.2e-02    |   6.5e-01   |
-|  1.0e-01   |  1.0e+07   |      13      |   9.3e-02    |   6.8e-01   |
-|  1.0e-02   |  1.0e+08   |      12      |   9.3e-02    |   6.9e-01   |
-|  1.0e-03   |  1.0e+09   |      10      |   9.3e-02    |   6.9e-01   |
-|  1.0e-04   |  1.0e+10   |       9      |   9.3e-02    |   6.9e-01   |
-|  1.0e-05   |  1.0e+11   |       8      |   9.3e-02    |   6.9e-01   |
-|  1.0e-06   |  1.0e+12   |       8      |   9.3e-02    |   6.9e-01   |
-|  1.0e-07   |  1.0e+13   |       6      |   9.3e-02    |   6.9e-01   |
-|  1.0e-08   |  1.0e+14   |       5      |   9.3e-02    |   6.9e-01   |
-|  1.0e-09   |  1.0e+15   |       5      |   9.3e-02    |   6.9e-01   |
-|  1.0e-10   |  1.0e+16   |       4      |   9.3e-02    |   6.9e-01   |
-|  1.0e-11   |  1.0e+17   |       3      |   9.3e-02    |   6.9e-01   |
-|  1.0e-12   |  1.0e+18   |       2      |   9.3e-02    |   6.9e-01   |
-|  1.0e-13   |  1.0e+19   |       1      |   9.6e-02    |   7.1e-01   |
-|  1.0e-14   |  —         |       —      |   —          |   —         |
-|            |            |              |              |             |
-|            |            |              |              |             |
-|            |            |              |              |             |
-|            |            |              |              |             |
-| *Row* 2    | **Row** 2  | Column ``3`` |              |             |
-| Row `1`    | Column `2` |              |              |             |
-| *Row* 2    | **Row** 2  | Column ``3`` |              |             |
+|**2.6e+00** | **1.0e+08**|      **13**  |  **4.5e-02** |  **4.1e-01**|
+|  1.0e+01   |  1.0e+06   |      14      |   5.4e-02    |   4.7e-01   |
+|  1.0e+00   |  1.0e+09   |      11      |   4.4e-02    |   3.7e-01   |
+|  1.0e-01   |  1.0e+12   |       8      |   4.4e-02    |   3.7e-01   |
+|  1.0e-02   |  1.0e+15   |       5      |   4.4e-02    |   3.7e-01   |
+|  1.0e-03   |  1.0e+19   |       2      |   4.4e-02    |   3.6e-01   |
+|  1.0e-04   |  —         |       —      |   —          |   —         |
 
 
+Table III. Spline constructed with ```RK_H2``` reproducing kernel
+
+|     ε      |    COND    |      SD      |     RMSE     |     MAE     |
+|:---------- |:----------:|:------------:|:------------:|:-----------:|
+|**3.5e+00** | **1.0e+10**|      **12**  |  **2.2e-02** |  **1.8e-01**|
+|  1.0e+01   |  1.0e+07   |      13      |   3.4e-02    |   3.2e-01   |
+|  1.0e+00   |  1.0e+13   |       9      |   2.3e-02    |   2.7e-01   |
+|  1.0e-01   |  1.0e+18   |       4      |   2.5e-02    |   3.4e-01   |
+|  1.0e-02   |  —         |       —      |   —          |   —         |
+
+
+For comparison, in Table III-D are presented the results of interpolation received by using extended precision arithmetic (extended precision ``Double64`` float type from the [DoubleFloats.jl](https://github.com/JuliaMath/DoubleFloats.jl) package has 31 significant decimal digits).
+
+Table III-D. Spline constructed with ```RK_H2``` reproducing kernel using extended Double64 arithmetic
+
+|     ε      |    COND    |      SD      |     RMSE     |     MAE     |
+|:---------- |:----------:|:------------:|:------------:|:-----------:|
+|**3.5e+00** | **1.0e+10**|      **28**  |  **2.2e-02** |  **1.8e-01**|
+|  1.0e+01   |  1.0e+07   |      29      |   3.4e-02    |   3.2e-01   |
+|  1.0e+00   |  1.0e+13   |      25      |   2.3e-02    |   2.7e-01   |
+|  1.0e-01   |  1.0e+18   |      20      |   2.5e-02    |   3.4e-01   |
+|  1.0e-02   |  1.0e+23   |      15      |   2.5e-02    |   3.4e-01   |
+|  1.0e-03   |  1.0e+28   |      10      |   2.5e-02    |   3.4e-01   |
+|  1.0e-04   |  1.0e+33   |       5      |   2.5e-02    |   3.4e-01   |
+|  1.0e-05   |  —         |       —      |   —          |   —         |
 
 
 **References**
