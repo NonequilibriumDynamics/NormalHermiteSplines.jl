@@ -1,20 +1,29 @@
 # Numerical Tests
 
+## 1D interpolation case
+
+### Model
+
+### Grid
+
+### Tests
+
+
 ## 2D interpolation case
+
+### Models
 
 ### Grids
 
-### Models
-bb
 ### Tests
-c
+
 
 
 ## 3D interpolation case
 
+### Models
+
 ### Grids
 
-### Models
-h
 ### Tests
-j
+
