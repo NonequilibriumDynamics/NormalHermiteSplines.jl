@@ -57,7 +57,7 @@ Condition number (``COND``) of the interpolation problem Gram matrix were estima
 
 The results of this function interpolation with reproducing kernel ```RK_H0``` are displayed in Table I, results of interpolation with reproducing kernel ```RK_H1``` are displayed in Table II and results of interpolation received with reproducing kernel ```RK_H2``` – in Table III. The first row of each table corresponds to results obtained with automatically selected value of the scaling parameter ``\varepsilon``
 
-&#8194;
+ 
 
 Table I. Spline constructed with ```RK_H0``` reproducing kernel
 
@@ -90,7 +90,7 @@ These plots show normal splines constructed with ```RK_H0()``` (``\varepsilon = 
 ```  ```@raw html
 <img src="../images/parameter-choice/p-cs,1.0e-13,-.png" width="256"/>
 ```
-&#8194;
+ 
 
 Table II. Spline constructed with ```RK_H1``` reproducing kernel
 
@@ -104,7 +104,7 @@ Table II. Spline constructed with ```RK_H1``` reproducing kernel
 |  1.0e-03   |  1.0e+19   |       2      |   4.4e-02    |   3.6e-01   |
 |  1.0e-04   |  —         |       —      |   —          |   —         |
 
-&#8194;
+ 
 
 Table III. Spline constructed with ```RK_H2``` reproducing kernel
 
@@ -117,7 +117,7 @@ Table III. Spline constructed with ```RK_H2``` reproducing kernel
 |  1.0e-02   |  —         |       —      |   —          |   —         |
 
 
-For comparison, in Table III-D are presented the results of interpolation received by using extended precision arithmetic (extended precision ``Double64`` float type from the [DoubleFloats.jl](https://github.com/JuliaMath/DoubleFloats.jl) package has 31 significant decimal digits).
+For comparison, in Table III-D we presented the results of interpolation received by using extended precision arithmetic (extended precision ``Double64`` float type from the [DoubleFloats.jl](https://github.com/JuliaMath/DoubleFloats.jl) package has 31 significant decimal digits).
 
 Table III-D. Spline constructed with ```RK_H2``` reproducing kernel using extended Double64 arithmetic
 
@@ -132,9 +132,9 @@ Table III-D. Spline constructed with ```RK_H2``` reproducing kernel using extend
 |  1.0e-04   |  1.0e+33   |       5      |   2.5e-02    |   3.4e-01   |
 |  1.0e-05   |  —         |       —      |   —          |   —         |
 
-&#8194;
+ 
 
-As can be seen from these tables, for small values of the scaling parameter ``\varepsilon`` the interpolation results have the similar quality, and it make sense to chose such ``\varepsilon`` value that provides "good" values of result significant digits estimation (at least 7 – 10 digits in most cases) and the reasonable estimation of the problem Gram matrix condition number.
+As can be seen from these tables, for small values of the scaling parameter ``\varepsilon`` interpolation results have the similar quality, and it make sense to chose such ``\varepsilon`` value that provides "good" values of the result significant digits estimation (at least 7 – 10 digits in most cases) and reasonable estimation of the problem Gram matrix condition number.
 
 **References**
 
