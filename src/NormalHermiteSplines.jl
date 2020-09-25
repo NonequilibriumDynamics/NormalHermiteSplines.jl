@@ -9,9 +9,6 @@ export estimate_accuracy
 # -- 1D case --
 export evaluate_derivative
 # --
-####
-
-#include("./examples/Main.jl")
 
 using LinearAlgebra
 

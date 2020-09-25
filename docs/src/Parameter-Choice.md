@@ -5,7 +5,7 @@ Approximating properties of the normal spline are getting better with the smalle
 
 However with decreasing value of the parameter ``\varepsilon`` the condition number of the corresponding problem Gram matrix is increasing and the problem becomes numerically unstable (see "uncertainty principle" of Schaback [4]). The Gram matrix of the interpolating problem even can lost its positive definiteness property if ``\varepsilon`` is small. Also, as it was pointed out in [3] the RBF interpolation with small value of the "shape" parameter may cause the Runge phenomenon i.e. undesirable interpolant oscillations which are most likely observed at the domain border. 
 
-Therefore, when choosing the value of the ``\varepsilon``, a compromise is needed. In practice, it is necessary to choose such value of the scaling parameter that the problem Gram matrix condition number is a relatively small number and the value of interpolation result significant digits estimation is a good enough.  As a rule, the heuristic algorithm implemented within the interpolation procedure produces a good estimation of the scaling parameter value (this algorithm applies if the value of the scaling parameter was not provided explicitly in creation of the reproducing kernel object).
+Therefore, when choosing the value of the ``\varepsilon``, a compromise is needed. In practice, it is necessary to choose such value of the scaling parameter that estimation of the Gram matrix condition number is a relatively small number and the value of interpolation result significant digits estimation is a good enough.  As a rule, the heuristic algorithm implemented within the interpolation procedure produces a good estimation of the scaling parameter value (this algorithm applies if the value of the scaling parameter was not provided explicitly in creation of the reproducing kernel object).
 
 The following API functions are useful for selecting a suitable value of the scaling parameter
 
@@ -57,7 +57,7 @@ Condition number (``COND``) of the interpolation problem Gram matrix were estima
 
 The results of this function interpolation with reproducing kernel ```RK_H0``` are displayed in Table I, results of interpolation with reproducing kernel ```RK_H1``` are displayed in Table II and results of interpolation received with reproducing kernel ```RK_H2``` – in Table III. The first row of each table corresponds to results obtained with automatically selected value of the scaling parameter ``\varepsilon``
 
-&nbsp;
+&#8194;
 
 Table I. Spline constructed with ```RK_H0``` reproducing kernel
 
@@ -90,7 +90,7 @@ These plots show normal splines constructed with ```RK_H0()``` (``\varepsilon = 
 ```  ```@raw html
 <img src="../images/parameter-choice/p-cs,1.0e-13,-.png" width="256"/>
 ```
-&nbsp;
+&#8194;
 
 Table II. Spline constructed with ```RK_H1``` reproducing kernel
 
@@ -104,7 +104,7 @@ Table II. Spline constructed with ```RK_H1``` reproducing kernel
 |  1.0e-03   |  1.0e+19   |       2      |   4.4e-02    |   3.6e-01   |
 |  1.0e-04   |  —         |       —      |   —          |   —         |
 
-&nbsp;
+&#8194;
 
 Table III. Spline constructed with ```RK_H2``` reproducing kernel
 
@@ -132,9 +132,9 @@ Table III-D. Spline constructed with ```RK_H2``` reproducing kernel using extend
 |  1.0e-04   |  1.0e+33   |       5      |   2.5e-02    |   3.4e-01   |
 |  1.0e-05   |  —         |       —      |   —          |   —         |
 
-&nbsp;
+&#8194;
 
-As can be seen from these tables, for small values of the scaling parameter ``\varepsilon`` the interpolation results have similar quality, and it make sense to chose such ``\varepsilon`` value that provides "good" values of result significant digits estimation (at least 7 – 10 digits in most cases) and the reasonable estimation of the problem Gram matrix condition number.
+As can be seen from these tables, for small values of the scaling parameter ``\varepsilon`` the interpolation results have the similar quality, and it make sense to chose such ``\varepsilon`` value that provides "good" values of result significant digits estimation (at least 7 – 10 digits in most cases) and the reasonable estimation of the problem Gram matrix condition number.
 
 **References**
 
