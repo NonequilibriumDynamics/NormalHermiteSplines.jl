@@ -20,7 +20,7 @@ The following API functions are useful for selecting a suitable value of the sca
 As example let's consider interpolation of function ``f (x,y)``
 
 ```math
-f (x,y)  = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)
+f (x,y) = \frac{2}{3}cos(10x)sin(10y) + \frac{1}{3}sin(10xy)
 ```
 ```@raw html
 <img src="../images/parameter-choice/p-cf.png" width="256"/>
@@ -35,7 +35,7 @@ sampled on set ``\chi`` of 100 pseudo-random nodes uniformly distributed on unit
     spline = interpolate(nodes, u, rk)
     ε = get_epsilon(spline)
     cond = get_cond(spline)
-    valid_digits = estimate_accuracy(spline)
+    significant_digits = estimate_accuracy(spline)
     σ = evaluate(spline, grid)
     ....
 ```

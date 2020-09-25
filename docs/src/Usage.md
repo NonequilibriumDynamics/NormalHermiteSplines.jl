@@ -573,7 +573,7 @@ spline = interpolate(x, u, RK_H2())
 ```
 cause the following error: `PosDefException: matrix is not positive definite; Cholesky factorization failed.` What is a reason of the error and how to resolve it?
 
-A1. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this parameter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too small and corresponding  Gram matrix of the system of linear equations which defines the normal spline coefficients is very ill-conditioned and it lost its positive definiteness property because of floating-point rounding errors.  
+A1. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this parameter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too small and corresponding  Gram matrix of the system of linear equations which defines the normal spline coefficients is a very ill-conditioned one and it lost its positive definiteness property because of floating-point rounding errors.  
 
 There are two ways to fix it.
 
@@ -583,7 +583,7 @@ There are two ways to fix it.
 ``` 
 then we can call the `interpolate` function with a larger value of this parameter:
 ```julia
-larger_ε = 10.0*ε
+larger_ε = 5.0*ε
 spline = interpolate(x, u, RK_H2(larger_ε))
 ```
 
@@ -612,21 +612,20 @@ A2. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted
 ```julia
 ε = get_epsilon(spline)
 ```
-and get an estimation of the problem's Gram matrix condition number by calling `get_cond` function:
+and get an estimation of the problem's Gram matrix condition number by calling `get_cond` function and an estimation of the number of the significant digits in the interpolation result by calling `estimate_accuracy` function:
 ```julia
 cond = get_cond(spline)
+significant_digits = estimate_accuracy(spline)
 ```
-In a case when estimated condition number is not very large, i.e. it less than ``10^{12}`` with using standard `Float64` floating-point arithmetic, we may attempt to build a better interpolation spline by calling `interpolate` function with a smaller value of the scaling parameter:
+In a case when estimated number of the significant digits is bigger than 8 and estimated condition number is not very large, i.e. it less than ``10^{12}`` (when using standard `Float64` floating-point arithmetic), we may attempt to build a better interpolation spline by calling `interpolate` function with a smaller value of the scaling parameter:
 ```julia
-e_smaller = ε/5.0 
-spline = interpolate(x, u, RK_H3(e_smaller))
+e_smaller = ε/2.0 
+spline = interpolate(x, u, RK_H2(e_smaller))
+cond = get_cond(spline)
+significant_digits = estimate_accuracy(spline)
 σ = evaluate(spline, p)
 ```
-Also it is possible to make an assessment of interpolation quality by calling `assess_interpolation` function. It calculates value of the Relative Maximum Absolute Error (RMAE) using data of the function value interpolation nodes:
-```julia
-rmae = assess_interpolation(spline)
-```
-Taking into account the value of this error and the estimation of the Gram matrix condition number we can decide of making further correction of the scaling parameter.
+Taking into account new values of `cond` and `significant_digits` and  we can decide of making further correction of the scaling parameter.
 
  For further information, see [Choice of the scaling parameter](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Parameter-Choice/).
 
