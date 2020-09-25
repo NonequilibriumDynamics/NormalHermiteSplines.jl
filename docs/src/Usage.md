@@ -608,16 +608,16 @@ produce the output which is not quite satisfactoty.
 Is it possible to improve the quality of interpolation?
 
 A2. *Answer*: Creating a Bessel Potential reproducing kernel object with omitted scaling parameter `ε` means that this parameter will be estimated during interpolating procedure execution. It might happen that estimated value of the `ε` is too large and it is possible to use a smaller value of `ε` which can lead to a better quality of interpolation. 
-- We can get the estimated value of `ε` by calling `get_epsilon` function:
+- We can get the value of scaling parameter `ε` by calling `get_epsilon` function
 ```julia
 ε = get_epsilon(spline)
 ```
-and get an estimation of the problem's Gram matrix condition number by calling `get_cond` function and an estimation of the number of the significant digits in the interpolation result by calling `estimate_accuracy` function:
+and get an estimation of the problem's Gram matrix condition number by calling `get_cond` function as well as an estimation of the number of the significant digits in the interpolation result by calling `estimate_accuracy` function:
 ```julia
 cond = get_cond(spline)
 significant_digits = estimate_accuracy(spline)
 ```
-In a case when estimated number of the significant digits is bigger than 8 and estimated condition number is not very large, i.e. it less than ``10^{12}`` (when using standard `Float64` floating-point arithmetic), we may attempt to build a better interpolation spline by calling `interpolate` function with a smaller value of the scaling parameter:
+In a case when estimated number of the significant digits is bigger than 10 and estimated condition number is not very large, i.e. it is less than ``10^{12}``, we may attempt to build a better interpolation spline by calling `interpolate` function with a smaller value of the scaling parameter:
 ```julia
 e_smaller = ε/2.0 
 spline = interpolate(x, u, RK_H2(e_smaller))
@@ -625,7 +625,7 @@ cond = get_cond(spline)
 significant_digits = estimate_accuracy(spline)
 σ = evaluate(spline, p)
 ```
-Taking into account new values of `cond` and `significant_digits` and  we can decide of making further correction of the scaling parameter.
+Taking into account new `cond` and `significant_digits` values we decide of making further correction of the scaling parameter.
 
  For further information, see [Choice of the scaling parameter](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Parameter-Choice/).
 
