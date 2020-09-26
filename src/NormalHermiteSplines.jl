@@ -297,7 +297,7 @@ end
 """
 `estimate_epsilon(nodes::Matrix{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Get the estimation of the 'scaling parameter' of Bessel Potential space the spline is built in.
+Get the estimation of the 'scaling parameter' of Bessel Potential space the spline being built in.
 It coincides with the result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
@@ -321,7 +321,7 @@ end
 """
 `estimate_epsilon(nodes::Matrix{T}, d_nodes::Matrix{T}, kernel::RK = RK_H1()) where {T <: AbstractFloat, RK <: ReproducingKernel_1}`
 
-Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline is built in.
+Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline being built in.
 It coincides with the result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
@@ -542,7 +542,7 @@ end
 """
 `estimate_epsilon(nodes::Vector{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline is built in.
+Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline being built in.
 It coincides with the result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
@@ -564,7 +564,7 @@ end
 """
 `estimate_epsilon(nodes::Vector{T}, d_nodes::Vector{T}, kernel::RK = RK_H1()) where {T <: AbstractFloat, RK <: ReproducingKernel_1}`
 
-Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline is built in.
+Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline being built in.
 It coincides with the result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
