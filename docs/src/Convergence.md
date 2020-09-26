@@ -1,2 +1,0 @@
-﻿# Convergence and Error Bounds
-

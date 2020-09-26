@@ -1,7 +1,7 @@
 @doc raw"
 `struct RK_H0{T <: AbstractFloat} <: ReproducingKernel_0`
 
-Define a type of reproducing kernel of Bessel Potential space ``H^{n/2 + 1/2}_ε (R^n)``:
+Defines a type of reproducing kernel of Bessel Potential space ``H^{n/2 + 1/2}_ε (R^n)``:
 ```math
 V(\eta , \xi, \varepsilon) = \exp (-\varepsilon |\xi - \eta|) \, .
 ```
@@ -29,7 +29,7 @@ end
 @doc raw"
 `struct RK_H1{T <: AbstractFloat} <: ReproducingKernel_1`
 
-Define a type of reproducing kernel of Bessel Potential space ``H^{n/2 + 3/2}_ε (R^n)``:
+Defines a type of reproducing kernel of Bessel Potential space ``H^{n/2 + 3/2}_ε (R^n)``:
 ```math
 V(\eta , \xi, \varepsilon) = \exp (-\varepsilon |\xi - \eta|)
              (1 + \varepsilon |\xi  - \eta|) \, .
@@ -58,7 +58,7 @@ end
 @doc raw"
 `struct RK_H2{T <: AbstractFloat} <: ReproducingKernel_2`
 
-Define a type of reproducing kernel of Bessel Potential space ``H^{n/2 + 5/2}_ε (R^n)``:
+Defines a type of reproducing kernel of Bessel Potential space ``H^{n/2 + 5/2}_ε (R^n)``:
 ```math
 V(\eta , \xi, \varepsilon) = \exp (-\varepsilon |\xi - \eta|)
              (3 + 3\varepsilon |\xi  - \eta| + \varepsilon ^2 |\xi - \eta| ^2 ) \, .

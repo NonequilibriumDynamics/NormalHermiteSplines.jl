@@ -117,8 +117,8 @@ Table III. Spline constructed with ```RK_H2``` reproducing kernel
 |  1.0e-02   |  —         |       —      |   —          |   —         |
 
 
-For comparison, in Table III-D we presented the results of interpolation received by using extended precision arithmetic (extended precision ``Double64`` float type from the [DoubleFloats.jl](https://github.com/JuliaMath/DoubleFloats.jl) package has 31 significant decimal digits).
-
+For comparison, in Table III-D we presented the results of interpolation received by using extended precision arithmetic (extended precision ``Double64`` float type from the [DoubleFloats.jl](https://github.com/JuliaMath/DoubleFloats.jl) package has 31 significant decimal digits).  
+    
 Table III-D. Spline constructed with ```RK_H2``` reproducing kernel using extended Double64 arithmetic
 
 |     ε      |    COND    |      SD      |     RMSE     |     MAE     |
