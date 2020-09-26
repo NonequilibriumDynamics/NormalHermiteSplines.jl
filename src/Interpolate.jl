@@ -47,7 +47,8 @@ function _estimate_ε(nodes::Matrix{T},
     return _estimate_ε([nodes 0.1 .* d_nodes])
 end
 
-function _estimate_epsilon(nodes::Matrix{T}) where T <: AbstractFloat
+function _estimate_epsilon(nodes::Matrix{T},
+                           kernel::RK) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
     n = size(nodes, 1)
     n_1 = size(nodes, 2)
     min_bound = Vector{T}(undef, n)
@@ -73,10 +74,17 @@ function _estimate_epsilon(nodes::Matrix{T}) where T <: AbstractFloat
         end
     end
     ε = _estimate_ε(t_nodes)
+    if isa(kernel, RK_H1)
+        ε *= T(1.5)
+    elseif isa(kernel, RK_H2)
+        ε *= T(2.0)
+    end
     return ε
 end
 
-function _estimate_epsilon(nodes::Matrix{T}, d_nodes::Matrix{T}) where T <: AbstractFloat
+function _estimate_epsilon(nodes::Matrix{T},
+                           d_nodes::Matrix{T},
+                           kernel::RK) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
     n = size(nodes, 1)
     n_1 = size(nodes, 2)
     n_2 = size(d_nodes, 2)
@@ -113,6 +121,12 @@ function _estimate_epsilon(nodes::Matrix{T}, d_nodes::Matrix{T}) where T <: Abst
     end
 
     ε = _estimate_ε(t_nodes, t_d_nodes)
+    if isa(kernel, RK_H1)
+        ε *= T(2.0)
+    elseif isa(kernel, RK_H2)
+        ε *= T(2.5)
+    end
+
     return ε
 end
 

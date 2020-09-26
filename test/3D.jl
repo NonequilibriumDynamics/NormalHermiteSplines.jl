@@ -103,7 +103,7 @@
         @test isapprox(est_eps, 1.036, atol = 1e-3)
 
         est_eps = estimate_epsilon(p, dp)
-        @test isapprox(est_eps, 0.707, atol = 1e-3)
+        @test isapprox(est_eps, 1.415, atol = 1e-3)
     end
 
     @testset "Test 3D-RK_H2 kernel" begin
@@ -136,7 +136,7 @@
         @test isapprox(est_eps, 1.036, atol = 1e-3)
 
         est_eps = estimate_epsilon(p, dp)
-        @test isapprox(est_eps, 0.707, atol = 1e-3)
+        @test isapprox(est_eps, 1.415, atol = 1e-3)
     end
 
 end

@@ -35,7 +35,14 @@ A)
     for i in 11:14
         u[i] = -0.2 * i + 3.0
     end
+```
 
+```@example A
+    # An estimation of the Gram matrix condition number
+    ε_estimation = estimate_epsilon(x, RK_H1())
+```
+
+```@example A
     # Build a differentiable spline by values of function in nodes
     # (a spline built with RK_H0 kernel is a continuous function,
     #  a spline built with RK_H1 kernel is a continuously differentiable function,

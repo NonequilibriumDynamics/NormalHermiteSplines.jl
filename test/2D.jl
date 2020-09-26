@@ -77,7 +77,12 @@
         @test isapprox(σ2[3], u2[5], atol = 1e-5)
 
         est_eps = estimate_epsilon(p, dp)
-        @test est_eps ≈ 0.96 atol = 1e-2
+        @test est_eps ≈ 1.94 atol = 1e-2
+        est_eps = estimate_epsilon(p, dp, RK_H1())
+        @test est_eps ≈ 1.94 atol = 1e-2
+        eps = get_epsilon(s)
+        @test est_eps ≈ 1.94 atol = 1e-2
+
 ###
         eps = 0.0001
         rk = RK_H1(eps)
