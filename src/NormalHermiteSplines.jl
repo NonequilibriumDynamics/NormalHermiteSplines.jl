@@ -295,29 +295,34 @@ function get_epsilon(spline::NormalSpline{T, RK}
 end
 
 """
-`estimate_epsilon(nodes::Matrix{T}) where T <: AbstractFloat`
+`estimate_epsilon(nodes::Matrix{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Get the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function..
+Get the estimation of the 'scaling parameter' of Bessel Potential space the spline is built in.
+It coincides with the result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
            and `n_1` is the number of function value nodes.
            It means that each column in the matrix defines one node.
-
+- `kernel`: reproducing kernel of Bessel potential space the normal spline will be constructed in.
+           It must be a struct object of the following type:
+             `RK_H0` if the spline is constructing as a continuous function,
+             `RK_H1` if the spline is constructing as a differentiable function,
+             `RK_H2` if the spline is constructing as a twice differentiable function.
 Return: estimation of `ε`.
 """
-function estimate_epsilon(nodes::Matrix{T}
-                         ) where T <: AbstractFloat
-    ε = _estimate_epsilon(nodes)
+function estimate_epsilon(nodes::Matrix{T},
+                          kernel::RK = RK_H0()
+                         ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    ε = _estimate_epsilon(nodes, kernel)
     return ε
 end
 
 """
-`estimate_epsilon(nodes::Matrix{T}, d_nodes::Matrix{T}) where T <: AbstractFloat`
+`estimate_epsilon(nodes::Matrix{T}, d_nodes::Matrix{T}, kernel::RK = RK_H1()) where {T <: AbstractFloat, RK <: ReproducingKernel_1}`
 
-Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function.
+Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline is built in.
+It coincides with the result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
            This should be an `n×n_1` matrix, where `n` is dimension of the sampled space
@@ -326,13 +331,18 @@ It should have the same order as result returned by `get_epsilon` function.
 - `d_nodes`: The function directional derivative nodes.
            This should be an `n×n_2` matrix, where `n` is dimension of the sampled space and
            `n_2` is the number of function directional derivative nodes.
+- `kernel`: reproducing kernel of Bessel potential space the normal spline will be constructed in.
+            It must be a struct object of the following type:
+            `RK_H1` if the spline is constructing as a differentiable function,
+            `RK_H2` if the spline is constructing as a twice differentiable function.
 
 Return: estimation of `ε`.
 """
 function estimate_epsilon(nodes::Matrix{T},
-                          d_nodes::Matrix{T}
-                         ) where T <: AbstractFloat
-    ε = _estimate_epsilon(nodes, d_nodes)
+                          d_nodes::Matrix{T},
+                          kernel::RK = RK_H1()
+                         ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
+    ε = _estimate_epsilon(nodes, d_nodes, kernel)
     return ε
 end
 
@@ -530,36 +540,47 @@ function interpolate(nodes::Vector{T},
 end
 
 """
-`estimate_epsilon(nodes::Vector{T}) where T <: AbstractFloat`
+`estimate_epsilon(nodes::Vector{T}, kernel::RK = RK_H0()) where {T <: AbstractFloat, RK <: ReproducingKernel_0}`
 
-Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function.
+Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline is built in.
+It coincides with the result returned by `get_epsilon` function.
 # Arguments
 - `nodes`: The function value nodes.
-
-Return: estimation of `ε`.
-"""
-function estimate_epsilon(nodes::Vector{T}
-                         ) where T <: AbstractFloat
-    ε = _estimate_epsilon(Matrix(nodes'))
-    return ε
-end
-
-"""
-`estimate_epsilon(nodes::Vector{T}, d_nodes::Vector{T}) where T <: AbstractFloat`
-
-Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline was built in.
-It should have the same order as result returned by `get_epsilon` function.
-# Arguments
-- `nodes`: The function value nodes.
-- `d_nodes`: The function derivative nodes.
+- `kernel`: reproducing kernel of Bessel potential space the normal spline is constructed in.
+            It must be a struct object of the following type:
+              `RK_H0` if the spline is constructing as a continuous function,
+              `RK_H1` if the spline is constructing as a differentiable function,
+              `RK_H2` if the spline is constructing as a twice differentiable function.
 
 Return: estimation of `ε`.
 """
 function estimate_epsilon(nodes::Vector{T},
-                          d_nodes::Vector{T}
-                         ) where T <: AbstractFloat
-    ε = _estimate_epsilon(Matrix(nodes'), Matrix(d_nodes'))
+                          kernel::RK = RK_H0()
+                         ) where {T <: AbstractFloat, RK <: ReproducingKernel_0}
+    ε = _estimate_epsilon(Matrix(nodes'), kernel)
+    return ε
+end
+
+"""
+`estimate_epsilon(nodes::Vector{T}, d_nodes::Vector{T}, kernel::RK = RK_H1()) where {T <: AbstractFloat, RK <: ReproducingKernel_1}`
+
+Get an the estimation of the 'scaling parameter' of Bessel Potential space the spline is built in.
+It coincides with the result returned by `get_epsilon` function.
+# Arguments
+- `nodes`: The function value nodes.
+- `d_nodes`: The function derivative nodes.
+- `kernel`: reproducing kernel of Bessel potential space the normal spline is constructed in.
+            It must be a struct object of the following type:
+              `RK_H1` if the spline is constructing as a differentiable function,
+              `RK_H2` if the spline is constructing as a twice differentiable function.
+
+Return: estimation of `ε`.
+"""
+function estimate_epsilon(nodes::Vector{T},
+                          d_nodes::Vector{T},
+                          kernel::RK = RK_H1()
+                         ) where {T <: AbstractFloat, RK <: ReproducingKernel_1}
+    ε = _estimate_epsilon(Matrix(nodes'), Matrix(d_nodes'), kernel)
     return ε
 end
 
