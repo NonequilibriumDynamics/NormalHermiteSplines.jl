@@ -1,14 +1,5 @@
 # Numerical Tests
 
-## 1D interpolation case
-
-### Model
-
-### Grid
-
-### Tests
-
-
 ## 2D interpolation case
 
 ### Models
