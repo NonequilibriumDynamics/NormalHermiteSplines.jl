@@ -14,17 +14,15 @@
     end
     for i in 11:14
         u[i] = -0.2 * i + 3.0
-    end
-
-    # Build a differentiable spline by values of function in nodes
+    end</code></pre><pre><code class="language-julia">    # An estimation of the &#39;scaling parameter&#39; the spline being built with
+    ε_estimation = estimate_epsilon(x, RK_H1())</code></pre><pre><code class="language-none">0.7125346243561634</code></pre><pre><code class="language-julia">    # Build a differentiable spline by values of function in nodes
     # (a spline built with RK_H0 kernel is a continuous function,
     #  a spline built with RK_H1 kernel is a continuously differentiable function,
     #  a spline built with RK_H2 kernel is a twice continuously differentiable function).
     # Here value of the &#39;scaling parameter&#39; ε is estimated in the interpolate procedure.
     spline = prepare(x, RK_H1())
 
-    # A value of the &#39;scaling parameter&#39; of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the &#39;scaling parameter&#39; the spline was built with.
     ε = get_epsilon(spline)</code></pre><pre><code class="language-none">0.7125346243561634</code></pre><pre><code class="language-julia">    # An estimation of the Gram matrix condition number
     cond = get_cond(spline)</code></pre><pre><code class="language-none">1.0e7</code></pre><pre><code class="language-julia">    # Construct the spline for given &#39;u&#39; values
     spline = construct(spline, u)
@@ -81,8 +79,7 @@
     # Here value of the &#39;scaling parameter&#39; ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, s, v, RK_H1())
 
-    # A value of the &#39;scaling parameter&#39; of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the &#39;scaling parameter&#39; the spline was built with
     ε = get_epsilon(spline)</code></pre><pre><code class="language-none">1.1092343969889604</code></pre><pre><code class="language-julia">    # An estimation of the Gram matrix condition number
     cond = get_cond(spline)</code></pre><pre><code class="language-none">1.0e7</code></pre><pre><code class="language-julia">    # An estimation of the interpolation accuracy -
     # number of significant digits in the function value interpolation result.
@@ -118,8 +115,7 @@
     # Here value of the &#39;scaling parameter&#39; ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, RK_H0())
 
-    # A value of the &#39;scaling parameter&#39; of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the &#39;scaling parameter&#39; the spline was built with
     ε = get_epsilon(spline)</code></pre><pre><code class="language-none">0.47502308290410894</code></pre><pre><code class="language-julia">    # An estimation of the Gram matrix condition number
     cond = get_cond(spline)</code></pre><pre><code class="language-none">10000.0</code></pre><pre><code class="language-julia">    # An estimation of the interpolation accuracy -
     # number of significant digits in the function value interpolation result.
@@ -180,14 +176,13 @@
         f[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
     end
 
-    # Here spline is being constructed with RK_H1 kernel,
+    # Here spline is constructed with RK_H1 kernel,
     # the value of the &#39;scaling parameter&#39; ε is estimated
     # in the interpolate procedure.
     rk = RK_H1()
     spline = interpolate(nodes, u, rk)
     #
-    # A value of the &#39;scaling parameter&#39; of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the &#39;scaling parameter&#39; the spline was built with
     ε = get_epsilon(spline)</code></pre><pre><code class="language-none">2.6132991766352505</code></pre><pre><code class="language-julia">    # An estimation of the Gram matrix condition number
     cond = get_cond(spline)</code></pre><pre><code class="language-none">1.0e8</code></pre><pre><code class="language-julia">    # An estimation of the interpolation accuracy -
     # number of significant digits in the function value interpolation result.
@@ -299,13 +294,12 @@
         f[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
     end
 
-    # Here spline is being constructed with RK_H1 kernel,
+    # Here spline is constructed with RK_H1 kernel,
     # the &#39;scaling parameter&#39; ε is defined explicitly.
     rk = RK_H1(1.0)
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
     #
-    # A value of the &#39;scaling parameter&#39; of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the &#39;scaling parameter&#39; the spline was built with
     ε = get_epsilon(spline)</code></pre><pre><code class="language-none">1.0</code></pre><pre><code class="language-julia">    # An estimation of the Gram matrix condition number
     cond = get_cond(spline)</code></pre><pre><code class="language-none">1.0e10</code></pre><pre><code class="language-julia">    # An estimation of the interpolation accuracy -
     # number of significant digits in the function value interpolation result.
@@ -333,4 +327,4 @@ significant_digits = estimate_accuracy(spline)</code></pre><p>In a case when est
 spline = interpolate(x, u, RK_H2(e_smaller))
 cond = get_cond(spline)
 significant_digits = estimate_accuracy(spline)
-σ = evaluate(spline, p)</code></pre><p>Taking into account new <code>cond</code> and <code>significant_digits</code> values we decide of making further correction of the scaling parameter.</p><p>For further information, see <a href="https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Parameter-Choice/">Choice of the scaling parameter</a>.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Public-API/">« Public API</a><a class="docs-footer-nextpage" href="../Parameter-Choice/">Selecting a good value of the scaling parameter »</a></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Saturday 26 September 2020 04:51">Saturday 26 September 2020</span>. Using Julia version 1.5.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+σ = evaluate(spline, p)</code></pre><p>Taking into account new <code>cond</code> and <code>significant_digits</code> values we decide of making further correction of the scaling parameter.</p><p>For further information, see <a href="https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Parameter-Choice/">Choice of the scaling parameter</a>.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Public-API/">« Public API</a><a class="docs-footer-nextpage" href="../Parameter-Choice/">Selecting a good value of the scaling parameter »</a></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Saturday 26 September 2020 11:23">Saturday 26 September 2020</span>. Using Julia version 1.5.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
