@@ -38,7 +38,7 @@ A)
 ```
 
 ```@example A
-    # An estimation of the Gram matrix condition number
+    # An estimation of the 'scaling parameter' the spline being built with
     ε_estimation = estimate_epsilon(x, RK_H1())
 ```
 
@@ -50,8 +50,7 @@ A)
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = prepare(x, RK_H1())
     
-    # A value of the 'scaling parameter' of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the 'scaling parameter' the spline was built with.
     ε = get_epsilon(spline)
 ```
 
@@ -141,8 +140,7 @@ B)
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, s, v, RK_H1())
 
-    # A value of the 'scaling parameter' of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the 'scaling parameter' the spline was built with
     ε = get_epsilon(spline)
 ```
 
@@ -209,8 +207,7 @@ Now let's interpolate function ``f(x)`` using a spline built with reproducing ke
     # Here value of the 'scaling parameter' ε is estimated in the interpolate procedure.
     spline = interpolate(x, u, RK_H0())
 
-    # A value of the 'scaling parameter' of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the 'scaling parameter' the spline was built with
     ε = get_epsilon(spline)
 ```
 
@@ -337,14 +334,13 @@ Following is the code example for case A:
         f[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
     end
 
-    # Here spline is being constructed with RK_H1 kernel,
+    # Here spline is constructed with RK_H1 kernel,
     # the value of the 'scaling parameter' ε is estimated
     # in the interpolate procedure.
     rk = RK_H1()
     spline = interpolate(nodes, u, rk)
     #
-    # A value of the 'scaling parameter' of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the 'scaling parameter' the spline was built with
     ε = get_epsilon(spline)
 ```
 
@@ -504,13 +500,12 @@ Corresponding code example for case B:
         f[i] = (2.0*cos(10.0*x)*sin(10.0*y) + sin(10.0*x*y))/3.0
     end
 
-    # Here spline is being constructed with RK_H1 kernel,
+    # Here spline is constructed with RK_H1 kernel,
     # the 'scaling parameter' ε is defined explicitly.
     rk = RK_H1(1.0)
     spline = interpolate(nodes, u, d_nodes, es, du, rk)
     #
-    # A value of the 'scaling parameter' of Bessel Potential space
-    # the normal spline was built in.
+    # A value of the 'scaling parameter' the spline was built with
     ε = get_epsilon(spline)
 ```
 
