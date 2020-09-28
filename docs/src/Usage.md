@@ -629,5 +629,5 @@ significant_digits = estimate_accuracy(spline)
 ```
 Taking into account new `cond` and `significant_digits` values we decide of making further correction of the scaling parameter.
 
- For further information, see [Choice of the scaling parameter](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Parameter-Choice/).
+ For further information, see [Selecting a good value of the scaling parameter](https://igorkohan.github.io/NormalHermiteSplines.jl/stable/Parameter-Choice/).
 
