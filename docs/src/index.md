@@ -2,11 +2,11 @@
 Author = "Igor Kohanovsky"
 ```
 
-# NormalHermiteSplines.jl
+# NormalHermiteSplines.jl package
 
 *Multivariate Normal Hermite Splines in Julia*
 
-`NormalHermiteSplines.jl` implements the normal splines method for solving following interpolation problem:
+`NormalHermiteSplines.jl` package implements the normal splines method for solving following interpolation problem:
 
 *Problem:*   Given points ``\{p_i, p_i \in R^n\}_{i=1}^{n_1}``, ``\{s_j, s_j \in R^n\}_{j=1}^{n_2}`` and a set of unit vectors ``\{e_j, e_j \in R^n\}_{j=1}^{n_2}`` find a function ``f`` such that
 
