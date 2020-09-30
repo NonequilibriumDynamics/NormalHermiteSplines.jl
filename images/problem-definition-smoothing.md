@@ -11,7 +11,7 @@ This Julia package implements the normal splines method for solving following in
 \\  
 & \frac{ \partial{f} }{ \partial{e_j} }(s_j) =  v_j \, , \quad  j = 1, 2, \dots, n_3 \, ,
 \\  
-&  \underline v_j \le \frac{ \partial{f} }{ \partial{\overline e_j} } (\overline s_j) \le \overline v_j \, , \quad  j = 1, 2, \dots, n_4 \, \\
+&  \underline v_j \le \frac{ \partial{f} }{ \partial{\overline e_j} } (\overline s_j) \le \overline v_j \, , \quad  j = 1, 2, \dots, n_4 \, , \\
 & n_1 \ge 0 \, , \  n_2 \ge 0 \, , \ n_3 \ge 0 \, , \  n_4 \ge 0 \, .
 \end{aligned}
 ``` 
