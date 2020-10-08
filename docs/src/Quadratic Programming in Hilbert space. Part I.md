@@ -3,36 +3,49 @@
 Let ``H`` be a Hilbert space with inner product ``{\langle \cdot \, , \cdot \rangle}_H`` and the induced norm ``\| \cdot \|_H``, there are elements ``h_i \in H``, numbers ``u_i, \, 1 \le i \le M+L`` and positive numbers  ``\delta _i, \, 1 \le i \le M``.
 It is required to minimize functional ``J``:
 
-\begin{eqnarray}
+```math
+\tag{1}
    (J, \varphi) =  {\| \varphi \|}_H ^2 \to \min \ ,
-\end{eqnarray}
+```
 subject to constraints
-\begin{eqnarray}
-    {\langle h_i , \varphi \rangle}_H &=& u_i \, ,
-    \quad 1 \le i \le L \ ,
+
+```math
+\begin{aligned}
+\tag{2}
+&    {\langle h_i , \varphi \rangle}_H = u_i \, ,
+    \qquad\qquad\qquad 1 \le i \le L \ ,
 \\
-    | {\langle h_{i+L} , \varphi \rangle}_H - u_{i+L} | &\le& \delta _i \, ,
-    \quad 1 \le i \le M \, , \ \varphi \in H.
-\end{eqnarray}
-The elements ``h_i, \, 1 \le i \le M+L`` are assumed to be linearly independent (thereby the system (2), (3) is compatible). Solution of the problem (1)—(3) obviously exists and is unique as a solution of the problem of finding a projection of zero element of Hilbert space onto a nonempty convex closed set [1, 5]. Expanding the modules in (3) we rewrite the system (2)—(3) in form:
-\begin{eqnarray}
-    {\langle h_i , \varphi \rangle}_H &=& b_i \,\quad 1 \le i \le L \ ,
+&    | {\langle h_{i+L} , \varphi \rangle}_H - u_{i+L} | \le \delta _i \, ,
+    \quad \ \ 1 \le i \le M \, , \ \varphi \in H.
+\end{aligned}
+```
+The elements ``h_i, \, 1 \le i \le M+L`` are assumed to be linearly independent (thereby the system (2) is compatible). Solution of the problem (1)—(2) obviously exists and is unique as a solution of the problem of finding a projection of zero element of Hilbert space onto a nonempty convex closed set [1, 5]. Expanding the modules in (2) we rewrite it in form:
+
+```math
+\begin{aligned}
+\tag{3}
+&    {\langle h_i , \varphi \rangle}_H = b_i \,\quad 1 \le i \le L \ ,
 \\
-    {\langle h_i , \varphi \rangle}_H &\le& b_i \,\quad L+1 \le i \le N \ ,
-\end{eqnarray}
+&    {\langle h_i , \varphi \rangle}_H \le b_i \,\quad L+1 \le i \le N \ ,
+\end{aligned}
+```
 where:
-\begin{eqnarray}
-&&  N = L + 2M \, ,
-\\ \nonumber
-&& S = L + M \,  ,
-\\ \nonumber
- &&  b_i = u_i \,  , \quad  1 \le i \le L \, ,
-\\ \nonumber
- &&  b_{i+L} = u_{i+L} + \delta _i \  , \
+
+```math
+\begin{aligned}
+&  N = L + 2M \, ,
+\\ 
+& S = L + M \,  ,
+\\ 
+ &  b_i = u_i \,  , \quad  1 \le i \le L \, ,
+\\ 
+ &  b_{i+L} = u_{i+L} + \delta _i \  , \
    b_{i+S} = -u_{i+L} + \delta _i \  , \
    h_{i+S} = -h_{i+L} \ , \  1 \leq i \leq M \ .
-\end{eqnarray}
+\end{aligned}
+```
 Let ``\Phi`` is a convex set defined by constraints (4) and (5). We denote
+
 \begin{eqnarray}
  && I_1 = \lbrace 1, \dots , L \rbrace \,  , \quad I_2 = \lbrace L+1, \dots , N \rbrace \,  ,
 \\ \nonumber
