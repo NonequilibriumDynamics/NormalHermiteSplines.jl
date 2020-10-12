@@ -882,7 +882,7 @@ Approximation and Interpolation, ISNM 94, W. Haussmann and K. Jetter (eds.), Bir
 ....
 
 
-## Quadratic Programming in Hilbert space. Part I.
+## Quadratic Programming in Hilbert space
 
 Here an algorithm for finding a normal solution of linear inequalities system in Hilbert space is described. An original version of this algorithm was developed by V. Gorbunov and published in [3]. A modified version of that algorithm was presented in [6].
 
