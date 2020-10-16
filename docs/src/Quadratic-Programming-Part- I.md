@@ -189,11 +189,11 @@ Thereby the algorithm's iteration consist of seven steps:
 \qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \quad 
 \\ 
 & A_{k+1} = A_k \cup \{ i_k \} \ , 
-\\
- \text{and return to Step 1.} & \, 
 \end{aligned}
 ``` 
-6. Projection ``\vartheta^k`` is feasible. If exists index ``i_p, \ i_p \in A_k`` such that ``\lambda_{i_p}^k > 0`` then set
+and return to Step 1.
+
+6 . Projection ``\vartheta^k`` is feasible. If exists index ``i_p, \ i_p \in A_k`` such that ``\lambda_{i_p}^k > 0`` then set
 
 ```math
 \begin{aligned}
@@ -201,11 +201,11 @@ Thereby the algorithm's iteration consist of seven steps:
  \qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \quad
 \\
  & \mu_i^{k+1} = \lambda_i^k  \ , \quad  i \in A_{k+1} \ , 
- \\
- \text{and return to Step 1.} & \, 
 \end{aligned}
 ``` 
-7. Set ``\sigma = \vartheta^k``. Stop.
+and return to Step 1.
+
+7 . Set ``\sigma = \vartheta^k``. Stop.
 
 The algorithm starts from an initial feasible point of the system (4), (5). Such point ``\sigma^0`` can be defined as the normal solution of the system
 
