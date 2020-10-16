@@ -1065,12 +1065,9 @@ Thereby the algorithm's iteration consist of seven steps:
 2. Compute multipliers ``\lambda_j^k, \ i \in A_k`` as solution of the system (10).
 3. If ``| A_k | = S`` then go to Step 6.
 4. Compute ``t_i^k, \ \forall i \in P_k``. Find ``t^k_{min}`` and the corresponding index ``i_k``. 
-5. If ``t^k_{min} < 1`` (projection ``\vartheta^k`` is not feasible) then set
-``\mu_i^{k+1} = \mu_i^k + t^k_{min} (\lambda_i^k - \mu_i^k) \ , \ i \in A_k \,``
-and ``A_{k+1} = A_k \cup \{ i_k \} \,``. Return to Step 1.
-6. Projection ``\vartheta^k`` is feasible. If exists index ``i_p, \ i_p \in A_k`` such that ``\lambda_{i_p}^k > 0`` then set ``A_{k+1} = A_k \setminus \{ i_p \} \,``  and
-``\mu_i^{k+1} = \lambda_i^k  \ , \  i \in A_{k+1} \,``. Return to Step 1.  
-7. Set ``\sigma = \vartheta^k \,``. Stop.
+5. If ``t^k_{min} < 1`` (projection ``\vartheta^k`` is not feasible) then set ``\mu_i^{k+1} = \mu_i^k + t^k_{min} (\lambda_i^k - \mu_i^k) , \, i \in A_k`` and ``A_{k+1} = A_k \cup \{ i_k \}``. Return to Step 1.
+6. Projection ``\vartheta^k`` is feasible. If exists index ``i_p, \ i_p \in A_k`` such that ``\lambda_{i_p}^k > 0`` then set ``A_{k+1} = A_k \setminus \{ i_p \} \,`` and ``\mu_i^{k+1} = \lambda_i^k , \,  i \in A_{k+1}``. Return to Step 1.
+7. Set ``\sigma = \vartheta^k``. Stop.
 
 The algorithm starts from an initial feasible point of the system (4), (5). Such point ``\sigma^0`` can be defined as the normal solution of the system
 
