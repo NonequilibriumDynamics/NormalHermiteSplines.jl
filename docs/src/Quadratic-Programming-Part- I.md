@@ -182,30 +182,11 @@ Thereby the algorithm's iteration consist of seven steps:
 3. If ``| A_k | = S`` then go to Step 6.
 4. Compute ``t_i^k, \ \forall i \in P_k``. Find ``t^k_{min}`` and the corresponding index ``i_k``. 
 5. If ``t^k_{min} < 1`` (projection ``\vartheta^k`` is not feasible) then set
-
-```math
-\begin{aligned}
-& \mu_i^{k+1} = \mu_i^k + t^k_{min} (\lambda_i^k - \mu_i^k) \ , \quad i \in A_k \ ,
-\qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \quad 
-\\ 
-& A_{k+1} = A_k \cup \{ i_k \} \ , 
-\end{aligned}
-``` 
-and return to Step 1.
-
-6 . Projection ``\vartheta^k`` is feasible. If exists index ``i_p, \ i_p \in A_k`` such that ``\lambda_{i_p}^k > 0`` then set
-
-```math
-\begin{aligned}
- & A_{k+1} = A_k \setminus \{ i_p \} \ , 
- \qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \quad
-\\
- & \mu_i^{k+1} = \lambda_i^k  \ , \quad  i \in A_{k+1} \ , 
-\end{aligned}
-``` 
-and return to Step 1.
-
-7 . Set ``\sigma = \vartheta^k``. Stop.
+``\mu_i^{k+1} = \mu_i^k + t^k_{min} (\lambda_i^k - \mu_i^k) \ , \ i \in A_k \,``
+and ``A_{k+1} = A_k \cup \{ i_k \} \,``. Return to Step 1.
+6. Projection ``\vartheta^k`` is feasible. If exists index ``i_p, \ i_p \in A_k`` such that ``\lambda_{i_p}^k > 0`` then set ``A_{k+1} = A_k \setminus \{ i_p \} \,``  and
+``\mu_i^{k+1} = \lambda_i^k  \ , \  i \in A_{k+1} \,``. Return to Step 1.  
+7. Set ``\sigma = \vartheta^k \,``. Stop.
 
 The algorithm starts from an initial feasible point of the system (4), (5). Such point ``\sigma^0`` can be defined as the normal solution of the system
 
