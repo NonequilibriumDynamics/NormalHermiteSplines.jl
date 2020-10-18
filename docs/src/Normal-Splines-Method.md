@@ -251,7 +251,10 @@ In particular we have:
 (1 + \varepsilon |\eta - x |) \ ,
 \\
 & V_{2 + \frac{n}{2} + \frac{1}{2}}(\eta , x, \varepsilon) = \exp (-\varepsilon |\eta - x |)
-(3 + 3\varepsilon |\eta - x | + \varepsilon ^2 |\eta - x | ^2 ) \ .
+(3 + 3\varepsilon |\eta - x | + \varepsilon ^2 |\eta - x | ^2 ) \ ,
+\\
+& V_{3 + \frac{n}{2} + \frac{1}{2}}(\eta , x, \varepsilon) = \exp (-\varepsilon |\eta - x |)
+(15 + 15\varepsilon |\eta - x | + 6\varepsilon ^2 |\eta - x | ^2  + \varepsilon ^3 |\eta - x | ^3 ) \ .
 \end{aligned}
 ```
 

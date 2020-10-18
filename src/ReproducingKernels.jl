@@ -211,5 +211,3 @@ end
    end
    return value
 end
-
-# exp(−ε * r) * (ε^3 * r^3 + 6 * ε^2 * r^2 + 15 * ε * r + 15)
