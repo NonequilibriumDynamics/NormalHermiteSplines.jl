@@ -77,7 +77,7 @@ Results related to multidimensional normal spline method and its applications we
 
 [5] A. Balakrishnan, Applied Functional Analysis, New York, Springer-Verlag, 1976.
 
-[6] I. Kohanovsky, Normal Splines in Computing Tomography. Avtometriya, No. 2, 1995 (https://www.iae.nsk.su/images/stories/5_Autometria/5_Archives/1995/2/84-89.pdf).
+[6] I. Kohanovsky, Normal Splines in Computing Tomography (in Russian). [Avtometriya, No.2, 1995](https://www.iae.nsk.su/images/stories/5_Autometria/5_Archives/1995/2/84-89.pdf)
 
 [7] I. Kohanovsky, Data approximation using multidimensional normal splines, Unpublished manuscript, 1996.
 
