@@ -69,7 +69,7 @@ Results related to multidimensional normal spline method and its applications we
 
 [1] P.-J. Laurent, Approximation et optimization, Paris, 1972.
 
-[2] V. Gorbunov, A Method of  Normal Spline Collocation, Computational Mathematics and Mathematical Physics. 1989. Vol.29. No.2.
+[2] V. Gorbunov, The method of normal spline collocation. [USSR Comput.Maths.Math.Phys., Vol. 29, No. 1, 1989](https://www.sciencedirect.com/science/article/abs/pii/0041555389900591)
 
 [3] N. Aronszajn, K. Smith, Theory of bessel potentials I, Ann.Inst.Fourier, 11, 1961. 
 
@@ -87,9 +87,9 @@ Results related to multidimensional normal spline method and its applications we
 applications, The Third Siberian Congress on Applied and Industrial mathematics 
 (INPRIM-98), Novosibirsk, 1998.
 
-[10] V. Gorbunov, I. Kohanovsky, K. Makedonsky, Normal splines in reconstruction of multi-dimensional dependencies. Papers of WSEAS International Conference on Applied Mathematics, Numerical Analysis Symposium, Corfu, 2004. (http://www.wseas.us/e-library/conferences/corfu2004/papers/488-312.pdf)
+[10] V. Gorbunov, I. Kohanovsky, K. Makedonsky, Normal splines in reconstruction of multi-dimensional dependencies. [Papers of WSEAS International Conference on Applied Mathematics, Numerical Analysis Symposium, Corfu, 2004](http://www.wseas.us/e-library/conferences/corfu2004/papers/488-312.pdf)
 
-[11] I. Kohanovsky, Inequality-Constrained Multivariate Normal Splines with Some Applications in Finance. 27th GAMM-Seminar Leipzig on Approximation of Multiparametric functions, Max-Planck-Institute for Mathematics in the Sciences, Leipzig, Germany, 2011.
+[11] I. Kohanovsky, Inequality-Constrained Multivariate Normal Splines with Some Applications in Finance. [27th GAMM-Seminar Leipzig on Approximation of Multiparametric functions](https://www.mis.mpg.de/scicomp/gamm27/Igor_Kohanovsky.pdf), Max-Planck-Institute for Mathematics in the Sciences, Leipzig, Germany, 2011.
 
 [12] V. Gorbunov, I. Kohanovsky, Heterogeneous Parallel Method for the Construction of Multi-dimensional Smoothing Splines. ESCO 2014 4th European Seminar on Computing. University of West Bohemia, Plzen, Czech Republic, 2014.
 
