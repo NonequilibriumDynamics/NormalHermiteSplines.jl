@@ -132,8 +132,7 @@ here ``K(\eta, x) \in H`` as a function of the ``\eta``.
 
 [1] A. Balakrishnan. Applied Functional Analysis. // New York: Springer-Verlag, 1976.
 
-[2] N. Aronszajn, Theory of reproducing kernels, Tranzactions of the AMS.– 950 – Vol.68.
-
+[2] N. Aronszajn, Theory of reproducing kernels, Transactions of the AMS, Vol. 68, No. 3, 1950.
 
 
 ## Reproducing Kernel of Bessel Potential space
