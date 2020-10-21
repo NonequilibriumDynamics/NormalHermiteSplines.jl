@@ -23,7 +23,7 @@ To use this package, begin your code with
 ```
 using NormalHermiteSplines
 ```
-The first example is the function ```φ(x,y)=sin(4.0*sqrt(x^2+y^2))``` defined on ```Ω=[-1,1]x[-1,1]```.
+The first example is the function ```φ(x,y)=sin(4.0*sqrt(x^2+y^2))``` defined in the region ```Ω=[-1,1]x[-1,1]```.
 
  <img src="/images/m_t_6.png" width="256"/>  <img src="/images/m_cf_6.png" width="256"/>  <img src="/images/m_grid_6,2,3.png" width="256"/> 
 
@@ -90,7 +90,7 @@ Approximation error plots:
 Spline was evaluated on a uniform Cartesian grid of size 101x101. Accuracy of the interpolation was measured by calculating the Root Mean Square Error (RMSE) and the Maximum Absolute Error (MAE). For this case
 ```RMSE```: 1.6E-03, ```MAE```: 1.1E-01, estimated value of the scaling parameter ```ε``` is 8, estimation of the Gram matrix condition number is 1.0E+11.
 
-The second example is the function ```Ψ(x,y,z)=cos(π*x)*cos(y-0.5)*sin(π*(z-0.5))``` defined on ```Ω=[0,1]x[0,1]x[0,1]```.
+The second example is the function ```Ψ(x,y,z)=cos(π*x)*cos(y-0.5)*sin(π*(z-0.5))``` defined in the region ```Ω=[0,1]x[0,1]x[0,1]```.
 
 <img src="/images/m_grid_6,1,50,_.png" width="256"/>  <img src="/images/m_grid_6,2,50,_.png" width="256"/>  <img src="/images/m_nodes_6,2,4.png" width="256"/> 
 

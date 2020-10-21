@@ -69,7 +69,7 @@ entries, ``| \alpha | = \alpha_1 + \dots + \alpha_n``, ``\, \alpha ! = \alpha_1 
 
 The norms ``| \varphi |`` and ``| \varphi |'`` are equivalent and space ``H^m_\varepsilon (R^n)`` coincides with Sobolev space. 
 
- Hilbert space ``H^s_\varepsilon (R^n)`` is continuously embedded in Hölder space ``C_b^r(R^n)`` ([3],[17],[20]) of functions continuous and bounded with their first ``r`` derivatives, it means function ``f`` can be treated as an element of function class ``C^r(R^n)`` of functions continuous with their first ``r`` derivatives. Therefore functionals ``F_i`` and ``F'_j``
+ Hilbert space ``H^s_\varepsilon (R^n)`` is continuously embedded in Hölder space ``C_b^r(R^n)`` ([3], [17], [20]) of functions continuous and bounded with their first ``r`` derivatives, it means function ``f`` can be treated as an element of function class ``C^r(R^n)`` of functions continuous with their first ``r`` derivatives. Therefore functionals ``F_i`` and ``F'_j``
 
 ```math
 \begin{aligned}
