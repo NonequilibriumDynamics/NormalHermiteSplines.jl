@@ -4,7 +4,7 @@
 
 ### Models
 
-To test the accuracy of the normal spline method, we take three functions defined in the region ``Ω=[0,1] \times [0,1]``:
+To test the accuracy of the normal spline method, we take three test functions defined in the region ``Ω=[0,1] \times [0,1]``:
 
 1. Franke Exponential function ``f_1`` ([1], [2])
 
@@ -46,10 +46,13 @@ data, NPS-53-79-003, Dept. of Mathematics, Naval Postgraduate School, Monterey, 
 
 ### Grids
 
+The test functions are sampled on 
+
 
 **References**
 
-[1] [Halton sequence](https://en.wikipedia.org/wiki/Halton_sequence)
+[1] J.Halton, On the efficiency of certain quasi-random sequences of points in evaluating multi-dimensional integrals, Numer. Math., Vol.2, 1960.
+
 
 
 ### Tests
