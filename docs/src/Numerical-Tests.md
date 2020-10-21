@@ -22,7 +22,7 @@ f_1(x,y) =& \ 0.75*\exp(-((9*x - 2)^2 + (9*y - 2)^2)/4) + 0.75*\exp(-((9*x + 1)^
     f_2 (x,y) = \frac{\tanh(9*(y - x)) + 1}{\tanh(9)+ 1} \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad
 ```
 
-3. Franke nad Nielson "faults and creases" model ``f_3`` ([3]) 
+3. Franke nad Nielson "faults and creases" model ``f_3`` [3] 
 
 ```math
 f_3 (x,y) = \begin{cases}
@@ -46,7 +46,7 @@ data, NPS-53-79-003, Dept. of Mathematics, Naval Postgraduate School, Monterey, 
 
 ### Grids
 
-The test functions are sampled on 
+The test functions are sampled on two kinds of the data sets: Halton [1] and non-uniform random points.
 
 
 **References**
