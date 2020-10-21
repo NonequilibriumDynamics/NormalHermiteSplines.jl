@@ -6,7 +6,7 @@
 
 To test the accuracy of the normal spline method, we take three test functions defined in the region ``Ω=[0,1] \times [0,1]``:
 
-1. Franke Exponential function ``f_1`` ([1], [2])
+1. Franke Exponential function ``f_1`` [1]
 
 ```math
 \begin{aligned}
@@ -16,13 +16,13 @@ f_1(x,y) =& \ 0.75*\exp(-((9*x - 2)^2 + (9*y - 2)^2)/4) + 0.75*\exp(-((9*x + 1)^
 \end{aligned}
 ```
 
-2. Franke Cliff function ``f_2`` ([1], [2]))
+2. Franke Cliff function ``f_2`` [1]
 
 ```math
     f_2 (x,y) = \frac{\tanh(9*(y - x)) + 1}{\tanh(9)+ 1} \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad
 ```
 
-3. Franke nad Nielson "faults and creases" model ``f_3`` [3] 
+3. Franke nad Nielson "faults and creases" model ``f_3`` [2] 
 
 ```math
 f_3 (x,y) = \begin{cases}
@@ -40,9 +40,7 @@ f_3 (x,y) = \begin{cases}
 [1] R. Franke, A critical comparison of some methods for interpolation of scattered
 data, NPS-53-79-003, Dept. of Mathematics, Naval Postgraduate School, Monterey, CA, 1979.
 
-[2] R. Renka and R. Brown, Algorithm 792: accuracy test of ACM algorithms for interpolation of scattered data in the plane, ACM Trans. Math. Softw., No.1, Vol.25, 1999. 
-
-[3] R. Franke and G. Nielson, Surface approximation with imposed conditions, Computer Aided Geometric Design, North Holland Pubi. Co., 1983. 
+[2] R. Franke and G. Nielson, Surface approximation with imposed conditions, Computer Aided Geometric Design, North Holland Pubi. Co., 1983. 
 
 ### Grids
 
