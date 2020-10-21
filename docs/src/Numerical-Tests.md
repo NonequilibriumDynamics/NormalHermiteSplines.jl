@@ -19,7 +19,7 @@ f_1(x,y) =& \ 0.75*\exp(-((9*x - 2)^2 + (9*y - 2)^2)/4) + 0.75*\exp(-((9*x + 1)^
 2. Franke Cliff function ``f_2`` ([1], [2]))
 
 ```math
-    f_2 (x,y) = \frac{\tanh(9*(y - x)) + 1}{\tanh(9)+ 1}
+    f_2 (x,y) = \frac{\tanh(9*(y - x)) + 1}{\tanh(9)+ 1} \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad
 ```
 
 3. Franke nad Nielson "faults and creases" model ``f_3`` ([3]) 
@@ -31,6 +31,7 @@ f_3 (x,y) = \begin{cases}
             0.5((y - 1)/0.6)^2 (1 - x) / 0.8 \, ,  \qquad\qquad\qquad\qquad\qquad\qquad\qquad \ \ \,   x \ge 0.2 \, , \ y \gt 0.4  \cr
             0.5((y - 1)/0.6)^2 (x - 0.1) + (1 - ((y - 0.4)/0.6)^2) (0.2 - x)) \, ,  \quad  0.1 \lt x \le 0.2 \, , \ y \gt 0.4  \cr
             \end{cases} 
+            \quad
 ```
 
 
@@ -44,6 +45,12 @@ data, NPS-53-79-003, Dept. of Mathematics, Naval Postgraduate School, Monterey, 
 [3] R. Franke and G. Nielson, Surface approximation with imposed conditions, Computer Aided Geometric Design, North Holland Pubi. Co., 1983. 
 
 ### Grids
+
+
+**References**
+
+[1] [Halton sequence](https://en.wikipedia.org/wiki/Halton_sequence)
+
 
 ### Tests
 
