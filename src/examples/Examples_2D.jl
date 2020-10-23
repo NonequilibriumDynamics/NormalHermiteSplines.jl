@@ -672,16 +672,15 @@ function test_2D(model_id::Int,
     #     PyPlot.view_init(20,30)
     # end
     #PyPlot.view_init(30,-60) #default
-    if model_id == 13
-        PyPlot.view_init(30,30)
-    end
     if model_id == 15
         PyPlot.view_init(30,-120)
     end
     if model_id == 13
+        PyPlot.view_init(30,30)
         PyPlot.title("f1")
     end
     if model_id == 3
+        PyPlot.view_init(30,30)
         PyPlot.title("f2")
     end
     o = scatter3D(grid[1,:],grid[2,:], f, c=f,  s=1, cmap=ColorMap("gnuplot"))
@@ -746,11 +745,16 @@ function test_2D(model_id::Int,
     #     PyPlot.view_init(20,30)
     # end
     #PyPlot.view_init(30,-60)
-    if model_id == 13
-        PyPlot.view_init(30,30)
-    end
     if model_id == 15
         PyPlot.view_init(30,-120)
+    end
+    if model_id == 13
+        PyPlot.view_init(30,30)
+        PyPlot.title("f1")
+    end
+    if model_id == 3
+        PyPlot.view_init(30,30)
+        PyPlot.title("f2")
     end
     o = scatter3D(grid[1,:],grid[2,:], σ, c=σ, s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
