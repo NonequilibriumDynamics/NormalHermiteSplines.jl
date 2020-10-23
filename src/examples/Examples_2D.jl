@@ -509,7 +509,7 @@ function test_2D(model_id::Int,
     delta_min = minimum(delta)
     delta_max = maximum(delta)
     @printf "RMSE: %0.1e  MAE:%0.1e RRMSE: %0.1e RMAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e delta_min:%0.1e delta_max:%0.1e\n" rmse mae rrmse rmae spline_min spline_max delta_min delta_max
-    open("c:/0/$model_id.txt","a") do io
+    open("c:/000/$model_id.txt","a") do io
         @printf io "model_id type_of_samples  n_of_samples  type_of_kernel  regular_grid_size\n"
         @printf io "%2d      %2d             %4d             %1d               %3d\n" model_id type_of_samples n_of_samples type_of_kernel regular_grid_size
         @printf io "RMSE: %0.1e  MAE:%0.1e RRMSE: %0.1e RMAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e   EPS:%0.1e   COND: %0.1e\n" rmse mae rmse rmae spline_min spline_max ε cond
@@ -602,7 +602,7 @@ function test_2D(model_id::Int,
     end
 
     colorbar(o)
-    savefig("c:/0/s-cf-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/s-cf-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -611,7 +611,7 @@ function test_2D(model_id::Int,
         scatter(bnodes[1,:], bnodes[2,:], s=(2*ss), c="red")
     end
     gca().set_aspect("equal")
-    savefig("c:/0/m-grid-$type_of_samples,$n_of_samples.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/m-grid-$type_of_samples,$n_of_samples.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -634,7 +634,7 @@ function test_2D(model_id::Int,
         PyPlot.ylim(-1.0, 3.0)
     end
     colorbar(o)
-    savefig("c:/0/m-cf-$model_id.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/m-cf-$model_id.png", dpi=150, bbox_inches="tight")
 
     # PyPlot.clf()
     # pygui(false)
@@ -657,7 +657,7 @@ function test_2D(model_id::Int,
     #     PyPlot.ylim(-1.0, 3.0)
     # end
     # colorbar(o)
-    # #savefig("c:/0/m_c_$model_id.png", dpi=150, bbox_inches="tight")
+    # #savefig("c:/000/m_c_$model_id.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -675,7 +675,7 @@ function test_2D(model_id::Int,
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o, shrink=0.75)
-    savefig("c:/0/m-t-$model_id.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/m-t-$model_id.png", dpi=150, bbox_inches="tight")
 
 #     PyPlot.clf()
 #     pygui(false)
@@ -694,7 +694,7 @@ function test_2D(model_id::Int,
 #         PyPlot.ylim(-2.0, 2.0)
 #     end
 #     colorbar(o)
-#     savefig("c:/0/s_c_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+#     savefig("c:/000/s_c_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 #     PyPlot.clf()
 
     # pygui(false)
@@ -709,7 +709,7 @@ function test_2D(model_id::Int,
     #
     # #scatter(nodes[1,:], nodes[2,:], c="red", s= ss, zdir="z")
     # #colorbar(o)
-    # savefig("c:/0/s_s_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+    # savefig("c:/000/s_s_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
     # PyPlot.clf()
     #
     # pygui(false)
@@ -724,7 +724,7 @@ function test_2D(model_id::Int,
     # tick_params(axis="both", which="major", labelsize=6)
     # tick_params(axis="both", which="minor", labelsize=6)
     # # colorbar(o)
-    # savefig("c:/0/m_s_$model_id.png")
+    # savefig("c:/000/m_s_$model_id.png")
     #
 
     PyPlot.clf()
@@ -743,7 +743,7 @@ function test_2D(model_id::Int,
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o, shrink=0.75)
-    savefig("c:/0/s-t-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/s-t-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
     PyPlot.clf()
 ######
     gd = reshape(delta, length(y), length(x))
@@ -768,7 +768,7 @@ function test_2D(model_id::Int,
         PyPlot.ylim(-1.0, 3.0)
     end
     colorbar(o)
-    savefig("c:/0/delta-cf-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/delta-cf-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
 
     #PyPlot.clf()
     # pygui(false)
@@ -787,7 +787,7 @@ function test_2D(model_id::Int,
     #     PyPlot.ylim(-2.0, 2.0)
     # end
     # colorbar(o)
-    # savefig("c:/0/delta_c_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+    # savefig("c:/000/delta_c_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
     PyPlot.clf()
     pygui(false)
@@ -805,7 +805,7 @@ function test_2D(model_id::Int,
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     cb = colorbar(o, shrink=0.75)
-    savefig("c:/0/delta-s-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/delta-s-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
 
     #PyPlot.clf()
     # pygui(false)
@@ -816,7 +816,7 @@ function test_2D(model_id::Int,
     # tick_params(axis="both", which="major", labelsize=6)
     # tick_params(axis="both", which="minor", labelsize=6)
     # colorbar(o)
-    # savefig("c:/0/delta_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+    # savefig("c:/000/delta_t_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
     PyPlot.clf()
     @printf "Plots created.\n"
@@ -1207,7 +1207,7 @@ function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
     fmin = minimum(f)
     @printf "FMAX:%0.1e FMIN:%0.1e\n" fmax fmin
     @printf "T:%s kernel_type:%d EPS:%s  COND:%0.1e  ACC:%d  RMSE:%0.1e  MAE:%0.1e  RRMSE:%0.1e  RMAE:%0.1e\n" typeof(eps) kernel_type se cond acc rmse mae rrmse rmae
-    open("c:/0/param1.txt","a") do io
+    open("c:/000/param1.txt","a") do io
         @printf io "T:%s kernel_type:%d EPS:%s  COND:%0.1e  ACC:%d  RMSE:%0.1e  MAE:%0.1e  RRMSE:%0.1e  RMAE:%0.1e\n" typeof(eps) kernel_type se cond acc rmse mae rrmse rmae
     end
 
@@ -1224,7 +1224,7 @@ function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
     # PyPlot.suptitle("suptitle")
     scatter(nodes[1,:], nodes[2,:], s=6, c="red")
     gca().set_aspect("equal")
-    savefig("c:/0/p-grid.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/p-grid.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -1234,7 +1234,7 @@ function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
     colorbar(o)
 
     PyPlot.title("f")
-    savefig("c:/0/p-cf", dpi=150, bbox_inches="tight")
+    savefig("c:/000/p-cf", dpi=150, bbox_inches="tight")
     PyPlot.clf()
     pygui(false)
 
@@ -1248,10 +1248,10 @@ function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
 
     if typeof(eps) == Float64
         PyPlot.title("spline, ε:$se")
-        savefig("c:/0/p-cs,$eps,-.png", dpi=150, bbox_inches="tight")
+        savefig("c:/000/p-cs,$eps,-.png", dpi=150, bbox_inches="tight")
     else
         PyPlot.title("spline, ε:$se, Extended Precision")
-        savefig("c:/0/p-cs-ext,$eps,-.png", dpi=150, bbox_inches="tight")
+        savefig("c:/000/p-cs-ext,$eps,-.png", dpi=150, bbox_inches="tight")
     end
 
     # PyPlot.clf()
@@ -1263,10 +1263,10 @@ function param1(eps::T = 0.0, kernel_type::Int = 1) where T <: AbstractFloat
     # #PyPlot.suptitle("suptitle")
     # if typeof(eps) == Float64
     #     PyPlot.title("ε:$se")
-    #     savefig("c:/0/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
+    #     savefig("c:/000/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
     # else
     #     PyPlot.title("ε:$se, Extended Precision")
-    #     savefig("c:/0/p-s-ext,$eps,-.png", dpi=150, bbox_inches="tight")
+    #     savefig("c:/000/p-s-ext,$eps,-.png", dpi=150, bbox_inches="tight")
     # end
 end
 
@@ -1333,7 +1333,7 @@ function param10(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     # PyPlot.suptitle("suptitle")
     scatter(nodes[1,:], nodes[2,:], s=60, c="red")
     gca().set_aspect("equal")
-    savefig("c:/0/p-grid.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/p-grid.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -1345,10 +1345,10 @@ function param10(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     #PyPlot.suptitle("suptitle")
     if use_extended_precision
         PyPlot.title("ε:$sε, Extended Precision")
-        savefig("c:/0/p-cf-ext,$eps,-.png", dpi=150, bbox_inches="tight")
+        savefig("c:/000/p-cf-ext,$eps,-.png", dpi=150, bbox_inches="tight")
     else
         PyPlot.title("ε:$sε")
-        savefig("c:/0/p-cf,$eps,-.png", dpi=150, bbox_inches="tight")
+        savefig("c:/000/p-cf,$eps,-.png", dpi=150, bbox_inches="tight")
     end
     #gca().set_aspect("equal")
 
@@ -1361,10 +1361,10 @@ function param10(eps::Float64 = 0.0, use_extended_precision::Bool = false)
     #PyPlot.suptitle("suptitle")
     if use_extended_precision
         PyPlot.title("ε:$sε, Extended Precision")
-        savefig("c:/0/p-s-ext,$eps,-.png", dpi=150, bbox_inches="tight")
+        savefig("c:/000/p-s-ext,$eps,-.png", dpi=150, bbox_inches="tight")
     else
         PyPlot.title("ε:$sε")
-        savefig("c:/0/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
+        savefig("c:/000/p-s,$eps,-.png", dpi=150, bbox_inches="tight")
     end
 
 end

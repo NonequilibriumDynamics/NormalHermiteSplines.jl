@@ -382,7 +382,7 @@ function test_3D(model_id::Int,
     delta_min = minimum(delta)
     delta_max = maximum(delta)
     @printf "RMSE: %0.1e  MAE:%0.1e RRMSE: %0.1e RMAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e delta_min:%0.1e delta_max:%0.1e\n" rmse mae rrmse rmae spline_min spline_max delta_min delta_max
-    open("c:/0/$model_id.txt","a") do io
+    open("c:/000/$model_id.txt","a") do io
         @printf io "model_id type_of_samples  n_of_samples  type_of_kernel   plot_grid_size  use_grad\n"
         @printf io "%2d      %2d             %4d             %1d                 %5d            %s\n" model_id type_of_samples n_of_samples type_of_kernel m use_grad
         @printf io "RMSE: %0.1e  MAE:%0.1e RRMSE: %0.1e RMAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e   EPS:%0.1e   COND: %0.1e\n" rmse mae rmse rmae spline_min spline_max ε cond
@@ -403,7 +403,7 @@ function test_3D(model_id::Int,
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o, shrink=0.75)
-    savefig("c:/0/m_nodes_$model_id,$type_of_samples,$n_of_samples.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/m_nodes_$model_id,$type_of_samples,$n_of_samples.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -418,7 +418,7 @@ function test_3D(model_id::Int,
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o, shrink=0.75)
-    savefig("c:/0/m_grid_$model_id,$plot_grid_type,$plot_grid_size,_.png", dpi=150, bbox_inches="tight") # dpi=300 for bettr quality
+    savefig("c:/000/m_grid_$model_id,$plot_grid_type,$plot_grid_size,_.png", dpi=150, bbox_inches="tight") # dpi=300 for bettr quality
 
     PyPlot.clf()
     PyPlot.clf()
@@ -439,7 +439,7 @@ function test_3D(model_id::Int,
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
     colorbar(o, shrink=0.75)
-    savefig("c:/0/s_grid_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/s_grid_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png", dpi=150, bbox_inches="tight")
     PyPlot.clf()
 
     PyPlot.clf()
@@ -457,7 +457,7 @@ function test_3D(model_id::Int,
     colorbar(o, shrink=0.75)
 #    gca().set_axis_off() # hide grid
 
-    savefig("c:/0/delta_t_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/delta_t_$model_id,$use_grad,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$plot_grid_type,$plot_grid_size,_.png", dpi=150, bbox_inches="tight")
     PyPlot.clf()
 
     if plot_grid_type == 2 && model_id != 1
@@ -503,7 +503,7 @@ function test_3D(model_id::Int,
            #     PyPlot.ylim(-2.0, 2.0)
            # end
            colorbar(o)
-           savefig("c:/0/sc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
+           savefig("c:/000/sc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
 
            PyPlot.clf()
            pygui(false)
@@ -519,7 +519,7 @@ function test_3D(model_id::Int,
            #     PyPlot.ylim(-2.0, 2.0)
            # end
            colorbar(o)
-           savefig("c:/0/fc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
+           savefig("c:/000/fc_$model_id,_$k,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png", dpi=150, bbox_inches="tight")
 
            # PyPlot.clf()
            # pygui(false)
@@ -534,7 +534,7 @@ function test_3D(model_id::Int,
            # tick_params(axis="both", which="major", labelsize=6)
            # tick_params(axis="both", which="minor", labelsize=6)
            # colorbar(o)
-           # savefig("c:/0/m_t_$model_id,_$k.png", dpi=150, bbox_inches="tight")
+           # savefig("c:/000/m_t_$model_id,_$k.png", dpi=150, bbox_inches="tight")
 
            # PyPlot.clf()
            # pygui(false)
@@ -549,7 +549,7 @@ function test_3D(model_id::Int,
            # tick_params(axis="both", which="major", labelsize=6)
            # tick_params(axis="both", which="minor", labelsize=6)
            # colorbar(o)
-           # savefig("c:/0/s_t_$model_id,_$k,_$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
+           # savefig("c:/000/s_t_$model_id,_$k,_$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,_.png")
 
 ########## Animation
 
@@ -578,7 +578,7 @@ function test_3D(model_id::Int,
                global gσ1 = gσ
 #               imshow(gf1, interpolation="none", extent=[0, 1, 0, 1], origin="lower", cmap=ColorMap("gnuplot"))
            end
-           # savefig("c:/0/imshow_$model_id,_$k.png")
+           # savefig("c:/000/imshow_$model_id,_$k.png")
            # PyPlot.clf()
        end # for k = 1:5
 
@@ -590,7 +590,7 @@ function test_3D(model_id::Int,
 #       fig = figure(figsize=(3,3))
        withfig(fig) do
            anim = anim.FuncAnimation(fig, make_frame_gf, init_func=init_gf, frames=22, interval=500)
-           anim.save("c:/0/model.mp4", bitrate=-1, extra_args=["-vcodec", "libx264", "-pix_fmt", "yuv420p"])
+           anim.save("c:/000/model.mp4", bitrate=-1, extra_args=["-vcodec", "libx264", "-pix_fmt", "yuv420p"])
        end
 
        PyPlot.clf()
@@ -601,7 +601,7 @@ function test_3D(model_id::Int,
 #       fig = figure(figsize=(3,3))
        withfig(fig) do
            anim = anim.FuncAnimation(fig, make_frame_gs, init_func=init_gs, frames=22, interval=500, repeat=true)
-           anim.save("c:/0/spline.mp4", bitrate=-1, extra_args=["-vcodec", "libx264", "-pix_fmt", "yuv420p"])
+           anim.save("c:/000/spline.mp4", bitrate=-1, extra_args=["-vcodec", "libx264", "-pix_fmt", "yuv420p"])
        end
        PyPlot.clf()
    end # if plot_grid_type == 2

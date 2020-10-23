@@ -61,7 +61,7 @@ function demo(type_of_kernel::Int = 1)
               Guide.manual_color_key("Legend", ["Nodes", "True", "Spline"], ["orange", "red", "blue"]),
               Guide.xlabel("Nodes"), Guide.ylabel("f, σ"),
               Guide.title("Fig.1a"))
-        Gadfly.draw(SVG("c:/0/example-1a.svg", 13cm, 13cm), plt)
+        Gadfly.draw(SVG("c:/000/example-1a.svg", 13cm, 13cm), plt)
 
         dσ = similar(σ)
         for i=1:length(p)
@@ -73,7 +73,7 @@ function demo(type_of_kernel::Int = 1)
               Guide.manual_color_key("Legend", ["Nodes", "Spline 1st derivative"], ["orange", "green"]),
               Guide.xlabel("Nodes"), Guide.ylabel(raw"σ'"),
               Guide.title("Fig.2a"))
-        Gadfly.draw(SVG("c:/0/example-1a-der.svg", 13cm, 13cm), plt)
+        Gadfly.draw(SVG("c:/000/example-1a-der.svg", 13cm, 13cm), plt)
     else
         plt = Gadfly.plot(layer(x = x, y = u, Geom.point, Theme(default_color=colorant"orange")),
               layer(x = p, y = r, Geom.line, Theme(default_color=colorant"red")),
@@ -82,7 +82,7 @@ function demo(type_of_kernel::Int = 1)
               Guide.manual_color_key("Legend", ["Nodes", "True", "Spline"], ["orange", "red", "blue"]),
               Guide.xlabel("Nodes"), Guide.ylabel("f, σ"),
               Guide.title("Fig.1c"))
-        Gadfly.draw(SVG("c:/0/example-1c.svg", 13cm, 13cm), plt)
+        Gadfly.draw(SVG("c:/000/example-1c.svg", 13cm, 13cm), plt)
     end
 
     σ = evaluate(spline, [3.1, 8.1, 18.1])
@@ -113,7 +113,7 @@ function demo(type_of_kernel::Int = 1)
             Guide.manual_color_key("Legend", ["Nodes", "True", "Spline"], ["orange", "red", "blue"]),
             Guide.xlabel("Nodes"), Guide.ylabel("f, σ"),
             Guide.title("Fig.1b"))
-      Gadfly.draw(SVG("c:/0/example-1b.svg", 13cm, 13cm), plt)
+      Gadfly.draw(SVG("c:/000/example-1b.svg", 13cm, 13cm), plt)
 
       dσ = similar(σ)
       for i=1:length(p)
@@ -125,6 +125,6 @@ function demo(type_of_kernel::Int = 1)
             Guide.manual_color_key("Legend", ["Nodes", "Spline 1st derivative"], ["orange", "green"]),
             Guide.xlabel("Nodes"), Guide.ylabel(raw"σ'"),
             Guide.title("Fig.2b"))
-      Gadfly.draw(SVG("c:/0/example-1b-der.svg", 13cm, 13cm), plt)
+      Gadfly.draw(SVG("c:/000/example-1b-der.svg", 13cm, 13cm), plt)
 
 end

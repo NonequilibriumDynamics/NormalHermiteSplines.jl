@@ -122,7 +122,7 @@ function test_1D(model_id::Int,
     delta_min = minimum(delta)
     delta_max = maximum(delta)
     @printf "RMSE: %0.1e  MAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e delta_min:%0.1e delta_max:%0.1e\n" rmse mae spline_min spline_max delta_min delta_max
-    open("c:/0/$model_id.txt","a") do io
+    open("c:/000/$model_id.txt","a") do io
         @printf io "model_id type_of_samples  n_of_samples  type_of_kernel  regular_grid_size  use_derivatives\n"
         @printf io "%2d      %2d             %4d             %1d               %3d               %s\n" model_id type_of_samples n_of_samples type_of_kernel regular_grid_size use_derivatives
         @printf io "RMSE: %0.1e  MAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e   EPS:%0.1e   COND: %0.1e\n" rmse mae spline_min spline_max ε cond
@@ -150,7 +150,7 @@ function test_1D(model_id::Int,
     elseif type_of_samples == 3
         PyPlot.title("Samples: $(samples_size[n_of_samples]) regular nodes")
     end
-    savefig("c:/0/sca_$model_id,$type_of_samples,$n_of_samples,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/sca_$model_id,$type_of_samples,$n_of_samples,_.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -160,7 +160,7 @@ function test_1D(model_id::Int,
     PyPlot.xlabel("x")
     PyPlot.ylabel("f")
     PyPlot.title("Function f(x)=1.0+x^2+log(abs(3.0*(1.0-x)+1.0))/3.3")
-    savefig("c:/0/fun_$model_id,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/fun_$model_id,_.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -176,7 +176,7 @@ function test_1D(model_id::Int,
     end
     scatter(nodes, u, alpha=1.0, s=ss, c ="Red", label="Nodes")
     legend()
-    savefig("c:/0/spl_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$use_derivatives,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/spl_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$use_derivatives,_.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     pygui(false)
@@ -192,7 +192,7 @@ function test_1D(model_id::Int,
         PyPlot.title("Error (σ-f): $(samples_size[n_of_samples]) regular nodes")
     end
     legend()
-    savefig("c:/0/err_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$use_derivatives,_.png", dpi=150, bbox_inches="tight")
+    savefig("c:/000/err_$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,_$eps,$use_derivatives,_.png", dpi=150, bbox_inches="tight")
 
     PyPlot.clf()
     @printf "Plots created.\n"
