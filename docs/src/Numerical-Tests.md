@@ -4,7 +4,7 @@
 
 ### Models
 
-To test the accuracy of the normal spline method, we take three test functions defined in the region ``Ω=[0,1]~\times~[0,1]``:
+To test the accuracy of the normal spline method, we take three test functions defined in the region ``Ω~=~[0,1]~\times~[0,1]``:
 
 1. Franke Exponential function ``f_1`` [1]
 
