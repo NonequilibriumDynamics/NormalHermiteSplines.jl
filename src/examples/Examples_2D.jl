@@ -629,10 +629,17 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-4.0, 4.0)
         PyPlot.ylim(-2.0, 2.0)
     end
+    if model_id == 13
+        PyPlot.title("f1")
+    end
+    if model_id == 3
+        PyPlot.title("f2")
+    end
     if model_id == 15
         PyPlot.xlim(-2.0, 2.0)
         PyPlot.ylim(-1.0, 3.0)
     end
+
     colorbar(o)
     savefig("c:/000/m-cf-$model_id.png", dpi=150, bbox_inches="tight")
 
@@ -670,6 +677,12 @@ function test_2D(model_id::Int,
     end
     if model_id == 15
         PyPlot.view_init(30,-120)
+    end
+    if model_id == 13
+        PyPlot.title("f1")
+    end
+    if model_id == 3
+        PyPlot.title("f2")
     end
     o = scatter3D(grid[1,:],grid[2,:], f, c=f,  s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
