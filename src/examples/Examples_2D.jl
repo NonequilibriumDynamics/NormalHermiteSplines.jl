@@ -506,11 +506,15 @@ function test_2D(model_id::Int,
     rmae = get_RMAE(f, σ)
     spline_min = minimum(σ)
     spline_max = maximum(σ)
+    f_min = minimum(f)
+    f_max = maximum(f)
     delta_min = minimum(delta)
     delta_max = maximum(delta)
+    @printf "F_MIN:%0.1e  F_MAX:%0.1e \n" f_min f_max
     @printf "RMSE: %0.1e  MAE:%0.1e RRMSE: %0.1e RMAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e delta_min:%0.1e delta_max:%0.1e\n" rmse mae rrmse rmae spline_min spline_max delta_min delta_max
     open("c:/000/$model_id.txt","a") do io
         @printf io "model_id type_of_samples  n_of_samples  type_of_kernel  regular_grid_size\n"
+        @printf io "F_MIN:%0.1e  F_MAX:%0.1e \n" f_min f_max
         @printf io "%2d      %2d             %4d             %1d               %3d\n" model_id type_of_samples n_of_samples type_of_kernel regular_grid_size
         @printf io "RMSE: %0.1e  MAE:%0.1e RRMSE: %0.1e RMAE:%0.1e  SPLINE_MIN:%0.1e  SPLINE_MAX:%0.1e   EPS:%0.1e   COND: %0.1e\n" rmse mae rmse rmae spline_min spline_max ε cond
         @printf io "c_time: %0.1e  e_time: %0.1e\n\n" c_time e_time
@@ -586,7 +590,13 @@ function test_2D(model_id::Int,
 
     if model_id == 3
         PyPlot.title("f2")
-        lvls=[0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0]
+        lvls=[-0.1;0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1;1.2;1.3]
+        lvls2 = lvls
+    end
+
+    if model_id == 13
+        PyPlot.title("f1")
+        lvls=[0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1;1.2;1.3]
         lvls2 = lvls
     end
 
@@ -636,14 +646,18 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-4.0, 4.0)
         PyPlot.ylim(-2.0, 2.0)
     end
-    if model_id == 13
-        PyPlot.title("f1")
-    end
+
     if model_id == 3
         PyPlot.title("f2")
         lvls=[0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0]
         lvls2 = lvls
     end
+    if model_id == 13
+        PyPlot.title("f1")
+        lvls=[0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1;1.2;1.3]
+        lvls2 = lvls
+    end
+
     if model_id == 15
         PyPlot.xlim(-2.0, 2.0)
         PyPlot.ylim(-1.0, 3.0)
