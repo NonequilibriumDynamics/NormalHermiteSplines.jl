@@ -15,11 +15,21 @@ f_1(x,y) =& \ 0.75*\exp(-((9*x - 2)^2 + (9*y - 2)^2)/4) + 0.75*\exp(-((9*x + 1)^
 & \ 0.5*\exp(-((9*x - 7)^2 + (9*y - 3)^2)/4) - 0.2*\exp(-(9*x - 4)^2 - (9*y - 7)^2)
 \end{aligned}
 ```
+```@raw html
+<img src="../images/2d-numerical-tests/m-t-13.png" width="256"/>
+```  ```@raw html
+<img src="../images/2d-numerical-tests/m-cf-13.png" width="256"/>
+```
 
 2. Franke Cliff function ``f_2`` [1]
 
 ```math
     f_2 (x,y) = \frac{\tanh(9*(y - x)) + 1}{\tanh(9)+ 1} \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad
+```
+```@raw html
+<img src="../images/2d-numerical-tests/m-t-3.png" width="256"/>
+```  ```@raw html
+<img src="../images/2d-numerical-tests/m-cf-3.png" width="256"/>
 ```
 
 3. Franke nad Nielson "faults and creases" model ``f_3`` [2] 

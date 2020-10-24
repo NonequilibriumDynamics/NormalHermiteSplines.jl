@@ -818,6 +818,9 @@ function test_2D(model_id::Int,
     if model_id == 15
         PyPlot.view_init(30,-120)
     end
+    if model_id == 3
+        PyPlot.view_init(30,30)
+    end
     o = surf(gx, gy, delta, cmap=ColorMap("jet"), linewidth=0, antialiased=false, alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
