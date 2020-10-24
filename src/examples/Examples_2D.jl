@@ -583,6 +583,13 @@ function test_2D(model_id::Int,
 
     PyPlot.clf()
     pygui(false)
+
+    if model_id == 3
+        PyPlot.title("f2")
+        lvls=[0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0]
+        lvls2 = lvls
+    end
+
     o = contourf(x, y, gσ, levels=lvls, cmap=ColorMap("gnuplot"))
     axis("equal")
     # if n_of_samples <= 2
@@ -634,6 +641,8 @@ function test_2D(model_id::Int,
     end
     if model_id == 3
         PyPlot.title("f2")
+        lvls=[0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0]
+        lvls2 = lvls
     end
     if model_id == 15
         PyPlot.xlim(-2.0, 2.0)
@@ -683,6 +692,7 @@ function test_2D(model_id::Int,
         PyPlot.view_init(30,30)
         PyPlot.title("f2")
     end
+
     o = scatter3D(grid[1,:],grid[2,:], f, c=f,  s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
