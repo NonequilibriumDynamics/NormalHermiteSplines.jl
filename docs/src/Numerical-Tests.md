@@ -36,10 +36,10 @@ f_1(x,y) =& \ 0.75*\exp(-((9*x - 2)^2 + (9*y - 2)^2)/4) + 0.75*\exp(-((9*x + 1)^
 
 ```math
 f_3 (x,y) = \begin{cases}
-            0.5 \, ,  \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad \ \ y \le 0.4  \cr
-            0.5(1 - ((y - 0.4)/0.6)^2)\, ,  \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \  x \le 0.1 \, , \ y \gt 0.4  \cr
-            0.5((y - 1)/0.6)^2 (1 - x) / 0.8 \, ,  \qquad\qquad\qquad\qquad\qquad\qquad\qquad \ \ \,   x \ge 0.2 \, , \ y \gt 0.4  \cr
-            0.5((y - 1)/0.6)^2 (x - 0.1) + (1 - ((y - 0.4)/0.6)^2) (0.2 - x)) \, ,  \quad  0.1 \lt x \le 0.2 \, , \ y \gt 0.4  \cr
+            0.5 \, ,  \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad\qquad \ \ y \le 0.4  \cr
+            0.5(1 - ((y - 0.4)/0.6)^2)\, ,  \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad \  x \le 0.1 \, , \ y \gt 0.4  \cr
+            0.5((y - 1)/0.6)^2 * (1 - x) / 0.8 \, ,  \qquad\qquad\qquad\qquad\qquad\qquad\qquad \quad \ \ \  x \ge 0.2 \, , \ y \gt 0.4  \cr
+            5(((y - 1)/0.6)^2 * (x - 0.1) + (1 - ((y - 0.4)/0.6)^2) * (0.2 - x))) \, ,  \quad  0.1 \lt x \le 0.2 \, , \ y \gt 0.4  \cr
             \end{cases} 
             \quad
 ```

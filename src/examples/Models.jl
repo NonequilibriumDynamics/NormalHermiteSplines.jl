@@ -295,14 +295,61 @@ end
 # Franke, R., and Nielson, G. (1984) Surface approximation with imposed conditions,
 # in: R. E. Barnhill and W. Boehm, Surfaces in Computer Aided Geometric Design , North-Holland, Amsterdam, 135-146
 function get_2D_model16(p::Vector{Float64})
-#  (x,y) \in [-2;2]x[-1;3]
-# max f_orig = 2500
+    #  (x,y) \in [0;1][0;1]
     x = p[1]
     y = p[2]
-    #f = 
+    f = 0.0
+    if x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 0.4
+       f = 0.5
+    end
+    if x >= 0.0 && x <= 0.1 && y > 0.4 && y <= 1.0
+       f = 0.5*(1.0 - ((y - 0.4)/0.6)^2)
+    end
+    if x >= 0.2 && x <= 1.0 && y > 0.4 && y <= 1.0
+       f = 0.5*((y - 1.0)/0.6)^2 * (1.0 - x) / 0.8
+    end
+    if x <= 0.2 && x > 0.1 && y <= 1.0 && y > 0.4
+       f = 5.0*(((y - 1.0)/0.6)^2 * (x - 0.1) + (1.0 - ((y - 0.4)/0.6)^2) * (0.2 - x))
+    end
     return f
 end
 
+# # H Montegranario, J Espinosa - Variational Regularization of 3D Data_ Experiments with MATLAB® 2014
+# function get_2D_model16Bis(p::Vector{Float64})
+#     #  (x,y) \in [0;1][0;1]
+#     x = p[1]
+#     y = p[2]
+#     f = 0.0
+#     if x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 0.4
+#        f = 0.5
+#     end
+#     if x >= 0.0 && x <= 0.2 && y > 0.4 && y <= 1.0
+#        f = 0.5*(1.0 - (25.0/9.0)*(y - 0.4)^2)
+#     end
+#     if x > 0.2 && x <= 1.0 && y <= 1.0 && y > 0.4
+#        f = (125.0/72.0)*(1.0 - y)^2 * (1.0 - x)
+#     end
+#     return f
+# end
+
+function get_2D_model16_grad(p::Vector{Float64})
+    grad = [0.0; 0.0]
+    x = p[1]
+    y = p[2]
+    if x >= 0.0 && x <= 0.1 && y > 0.4 && y <= 1.0
+       grad[1] = 0.0
+       grad[2] = -5.0*(5.0*y - 2.0) / 9.0
+    end
+    if x >= 0.2 && x <= 1.0 && y > 0.4 && y <= 1.0
+       grad[1] = -5.0*(y - 1)^2 / (8.0 * 0.36)
+       grad[2] = -10.0*(x - 1.0)*(y - 1.0) / (8.0 * 0.36)
+    end
+    if x <= 0.2 && x > 0.1 && y <= 1.0 && y > 0.4
+        grad[1] = 11.1111 - 38.8889*y + 27.7778*y^2
+        grad[2] = 5.0 - 8.33333*y + x*(-38.8889 + 55.5556*y)
+    end
+    return grad
+end
 
 
 ########### 3D #########

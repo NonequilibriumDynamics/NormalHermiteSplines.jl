@@ -452,6 +452,36 @@ function test_2D(model_id::Int,
         for i = 1:m
             f[i] = get_2D_model15(grid[:, i])
         end
+    elseif model_id == 16
+        d_nodes = Matrix{Float64}(undef, 2, 2 * n_1)
+        es = Matrix{Float64}(undef, 2, 2 * n_1)
+        du = Vector{Float64}(undef, 2 * n_1)
+        k = 0
+        for i = 1:n_1
+            k += 1
+            grad = get_2D_model16_grad(nodes[:, i])
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            du[k] = grad[1]
+            es[1,k] = 1.0
+            es[2,k] = 0.0
+            k += 1
+            d_nodes[1,k] = nodes[1,i]
+            d_nodes[2,k] = nodes[2,i]
+            du[k] = grad[2]
+            es[1,k] = 0.0
+            es[2,k] = 1.0
+        end
+        d_nodes = d_nodes[:,1:k]
+        es = es[:,1:k]
+        du = du[1:k]
+
+        for i = 1:n_1
+            u[i] = get_2D_model16(nodes[:, i])
+        end
+        for i = 1:m
+            f[i] = get_2D_model16(grid[:, i])
+        end
     else
         error("Incorrect value of 'model_id'")
         return
@@ -579,6 +609,10 @@ function test_2D(model_id::Int,
         lvls=[-0.1;0.0;0.01;0.02;0.03;0.04;0.05;0.06;0.07;0.08;0.09;0.1;0.12;0.14;0.16;0.18;0.2;0.22;0.24;0.26;0.28;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.05;1.1]
         lvls2 = lvls
     end
+    if model_id == 16
+        lvls=[-0.05;0.0;0.05;0.1;0.15;0.2;0.25;0.3;0.35;0.4;0.45;0.5;0.55]
+        lvls2 = lvls
+    end
     if model_id == 32 || model_id == 33
         lvls=[-0.7; -0.6; -0.5; -0.4; -0.3; -0.2; -0.1; 0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0] # 14
         #lvls=[-0.1;-0.05;0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0;1.05;1.1] # 3
@@ -600,11 +634,6 @@ function test_2D(model_id::Int,
         lvls2 = lvls
     end
 
-    o = contourf(x, y, gσ, levels=lvls, cmap=ColorMap("gnuplot"))
-    axis("equal")
-    # if n_of_samples <= 2
-    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
-    # end
     if model_id == 6
         PyPlot.xlim(-1.0, 1.0)
         PyPlot.ylim(-1.0, 1.0)
@@ -617,6 +646,26 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-2.0, 2.0)
         PyPlot.ylim(-1.0, 3.0)
     end
+
+    if model_id == 3
+        PyPlot.title("σ2")
+        lvls=[0.0;0.05;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;0.95;1.0]
+        lvls2 = lvls
+    end
+    if model_id == 13
+        PyPlot.title("σ1")
+        lvls=[0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1;1.2;1.3]
+        lvls2 = lvls
+    end
+    if model_id == 16
+        PyPlot.title("σ3")
+    end
+
+    o = contourf(x, y, gσ, levels=lvls, cmap=ColorMap("gnuplot"))
+    axis("equal")
+    # if n_of_samples <= 2
+    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
+    # end
 
     colorbar(o)
     savefig("c:/000/s-cf-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
@@ -632,12 +681,6 @@ function test_2D(model_id::Int,
 
     PyPlot.clf()
     pygui(false)
-    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
-#    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
-    axis("equal")
-    # if n_of_samples <= 2
-    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
-    # end
     if model_id == 6
         PyPlot.xlim(-1.0, 1.0)
         PyPlot.ylim(-1.0, 1.0)
@@ -657,11 +700,21 @@ function test_2D(model_id::Int,
         lvls=[0.0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1.0;1.1;1.2;1.3]
         lvls2 = lvls
     end
+    if model_id == 16
+        PyPlot.title("f3")
+    end
 
     if model_id == 15
         PyPlot.xlim(-2.0, 2.0)
         PyPlot.ylim(-1.0, 3.0)
     end
+
+    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
+#    o = contourf(x, y, gf, levels=lvls, cmap=ColorMap("gnuplot"))
+    axis("equal")
+    # if n_of_samples <= 2
+    #     scatter(nodes[1,:], nodes[2,:], c="red", s= ss)
+    # end
 
     colorbar(o)
     savefig("c:/000/m-cf-$model_id.png", dpi=150, bbox_inches="tight")
@@ -705,6 +758,11 @@ function test_2D(model_id::Int,
     if model_id == 3
         PyPlot.view_init(30,30)
         PyPlot.title("f2")
+    end
+
+    if model_id == 16
+        PyPlot.view_init(30,30)
+        PyPlot.title("f3")
     end
 
     o = scatter3D(grid[1,:],grid[2,:], f, c=f,  s=1, cmap=ColorMap("gnuplot"))
@@ -774,12 +832,17 @@ function test_2D(model_id::Int,
     end
     if model_id == 13
         PyPlot.view_init(30,30)
-        PyPlot.title("f1")
+        PyPlot.title("σ1")
     end
     if model_id == 3
         PyPlot.view_init(30,30)
-        PyPlot.title("f2")
+        PyPlot.title("σ2")
     end
+    if model_id == 16
+        PyPlot.view_init(30,30)
+        PyPlot.title("σ3")
+    end
+
     o = scatter3D(grid[1,:],grid[2,:], σ, c=σ, s=1, cmap=ColorMap("gnuplot"))
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
@@ -808,6 +871,18 @@ function test_2D(model_id::Int,
         PyPlot.xlim(-2.0, 2.0)
         PyPlot.ylim(-1.0, 3.0)
     end
+
+    if model_id == 13
+        PyPlot.title("f1 - σ1")
+    end
+    if model_id == 3
+        PyPlot.title("f2 - σ2")
+    end
+
+    if model_id == 16
+        PyPlot.title("f3 - σ3")
+    end
+
     colorbar(o)
     savefig("c:/000/delta-cf-$model_id,$type_of_samples,$n_of_samples,$type_of_kernel,$eps,-.png", dpi=150, bbox_inches="tight")
 
@@ -833,18 +908,27 @@ function test_2D(model_id::Int,
     PyPlot.clf()
     pygui(false)
     # if model_id == 3
-    #     PyPlot.view_init(20,30)
+    #     PyPlot.view_init(30,30)
     # end
     #o = surf(gx, gy, σ, cmap=ColorMap("viridis"), alpha=0.75)
-    if model_id == 13
-        PyPlot.view_init(30,30)
-    end
     if model_id == 15
         PyPlot.view_init(30,-120)
     end
+
+    if model_id == 13
+        PyPlot.view_init(30,30)
+        PyPlot.title("f1 - σ1")
+    end
     if model_id == 3
         PyPlot.view_init(30,30)
+        PyPlot.title("f2 - σ2")
     end
+
+    if model_id == 16
+        PyPlot.view_init(30,30)
+        PyPlot.title("f3 - σ3")
+    end
+
     o = surf(gx, gy, delta, cmap=ColorMap("jet"), linewidth=0, antialiased=false, alpha=1.0)
     tick_params(axis="both", which="major", labelsize=6)
     tick_params(axis="both", which="minor", labelsize=6)
@@ -864,8 +948,8 @@ function test_2D(model_id::Int,
 
     PyPlot.clf()
     @printf "Plots created.\n"
-    return nothing
-#    return spline
+#    return nothing
+    return spline
 end
 
 function readme_1()
